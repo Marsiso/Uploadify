@@ -1,8 +1,57 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{4AFC06C6-A1D8-4A15-B9D3-0B878143E6A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B10F7C6B-D89D-4B33-9DA5-F51F2CC2DA74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{D8E95E4D-3D8C-45BD-9011-00009B3920EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{8EF54A91-BBE5-40E0-B310-225B2FC7E615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.IdentityServer", "src\Uploadify.Server.IdentityServer\Uploadify.Server.IdentityServer.csproj", "{C30B26C4-8525-45A4-8FB2-8914CE275859}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.Application", "src\Uploadify.Server.Application\Uploadify.Server.Application.csproj", "{42531089-4BF8-48A4-BA42-E0A863626ABE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.Core", "src\Uploadify.Server.Core\Uploadify.Server.Core.csproj", "{BED7BF85-0E18-48A7-B197-B040BB206DD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.Data", "src\Uploadify.Server.Data\Uploadify.Server.Data.csproj", "{5A72C195-D41A-4D35-B89E-B865CBBDAEE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.Domain", "src\Uploadify.Server.Domain\Uploadify.Server.Domain.csproj", "{0AFBEF36-3209-4E4C-A353-C3AFB205D431}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8E95E4D-3D8C-45BD-9011-00009B3920EF} = {4AFC06C6-A1D8-4A15-B9D3-0B878143E6A8}
+		{8EF54A91-BBE5-40E0-B310-225B2FC7E615} = {4AFC06C6-A1D8-4A15-B9D3-0B878143E6A8}
+		{C30B26C4-8525-45A4-8FB2-8914CE275859} = {D8E95E4D-3D8C-45BD-9011-00009B3920EF}
+		{42531089-4BF8-48A4-BA42-E0A863626ABE} = {D8E95E4D-3D8C-45BD-9011-00009B3920EF}
+		{BED7BF85-0E18-48A7-B197-B040BB206DD1} = {D8E95E4D-3D8C-45BD-9011-00009B3920EF}
+		{5A72C195-D41A-4D35-B89E-B865CBBDAEE8} = {D8E95E4D-3D8C-45BD-9011-00009B3920EF}
+		{0AFBEF36-3209-4E4C-A353-C3AFB205D431} = {D8E95E4D-3D8C-45BD-9011-00009B3920EF}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C30B26C4-8525-45A4-8FB2-8914CE275859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30B26C4-8525-45A4-8FB2-8914CE275859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30B26C4-8525-45A4-8FB2-8914CE275859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30B26C4-8525-45A4-8FB2-8914CE275859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42531089-4BF8-48A4-BA42-E0A863626ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42531089-4BF8-48A4-BA42-E0A863626ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42531089-4BF8-48A4-BA42-E0A863626ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42531089-4BF8-48A4-BA42-E0A863626ABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BED7BF85-0E18-48A7-B197-B040BB206DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED7BF85-0E18-48A7-B197-B040BB206DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED7BF85-0E18-48A7-B197-B040BB206DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED7BF85-0E18-48A7-B197-B040BB206DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A72C195-D41A-4D35-B89E-B865CBBDAEE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A72C195-D41A-4D35-B89E-B865CBBDAEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A72C195-D41A-4D35-B89E-B865CBBDAEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A72C195-D41A-4D35-B89E-B865CBBDAEE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AFBEF36-3209-4E4C-A353-C3AFB205D431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AFBEF36-3209-4E4C-A353-C3AFB205D431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AFBEF36-3209-4E4C-A353-C3AFB205D431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AFBEF36-3209-4E4C-A353-C3AFB205D431}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

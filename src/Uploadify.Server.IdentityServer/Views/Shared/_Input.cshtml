@@ -1,0 +1,30 @@
+﻿@model Uploadify.Server.IdentityServer.Views.Shared.InputViewModel
+@{
+    var isInvalid = Model.Errors != null && Model.Errors.Any();
+}
+
+<div>
+    <label class="@(isInvalid ? "validation-error" : string.Empty)">
+        @Model.Label&nbsp;
+        @if (Model.IsOptional)
+        {
+            <small>Optional</small>
+        }
+        <input class="@(isInvalid ? "validation-error" : string.Empty)"
+               id ="@Model.PropertyName.ToLowerInvariant()"
+               name="@Model.PropertyName.ToLowerInvariant()"
+               value="@Model.Value"
+               novalidate
+               type="@Model.InputType" />
+    </label>
+    @if (isInvalid)
+    {
+        <p class="help-text">
+            @foreach (var error in Model.Errors ?? Array.Empty<string>())
+            {
+                <span>@error</span>
+                <br/>
+            }
+        </p>
+    }
+</div>
