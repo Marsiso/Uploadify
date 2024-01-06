@@ -15,9 +15,6 @@ public static class AuthenticationHelpers
 
         var claims = new List<Claim>
         {
-            new Claim(OpenIddictConstants.Claims.Subject, user.UserName),
-            new Claim(OpenIddictConstants.Claims.Name, user.UserName),
-            new Claim(OpenIddictConstants.Claims.Email, user.Email),
             new Claim(OpenIddictConstants.Claims.PhoneNumber, user.PhoneNumber),
             new Claim(OpenIddictConstants.Claims.GivenName, user.GivenName),
             new Claim(OpenIddictConstants.Claims.FamilyName, user.FamilyName),
@@ -29,7 +26,6 @@ public static class AuthenticationHelpers
         if (user.Roles != null)
         {
             claims.Add(new Claim(Claims.Permission, user.Roles.Select(assignment => (int)assignment.Role.Permission).Aggregate(0, (l, r) => l | r).ToString()));
-            claims.AddRange(user.Roles.Select(role => new Claim(OpenIddictConstants.Claims.Role, role.Role.Name)));
         }
 
         return claims;

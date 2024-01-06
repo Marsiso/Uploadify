@@ -467,6 +467,9 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.8.0" />
+      <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />
+      <PackageReference Include="OpenIddict.Quartz" Version="5.0.1" />
     </ItemGroup>
 
 </Project>

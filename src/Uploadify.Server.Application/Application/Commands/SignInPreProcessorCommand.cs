@@ -67,6 +67,20 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
             });
         }
 
+        response.User.DateLastLoggedIn = DateTime.UtcNow;
+
+        _context.Update(response.User);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        var claims = await _manager.GetClaimsAsync(response.User);
+        if (claims.Count > 0)
+        {
+            await _manager.RemoveClaimsAsync(response.User, claims);
+        }
+
+        await _manager.AddClaimsAsync(response.User, AuthenticationHelpers.GetClaimsFrom(response.User));
+
         var result = await _signInManager.PasswordSignInAsync(response.User, request.Password, request.RememberMe, response.User.LockoutEnabled);
         if (result.IsNotAllowed || result.IsLockedOut)
         {
@@ -91,20 +105,6 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
                 }
             });
         }
-
-        response.User.DateLastLoggedIn = DateTime.UtcNow;
-
-        _context.Update(response.User);
-
-        await _context.SaveChangesAsync(cancellationToken);
-
-        var claims = await _manager.GetClaimsAsync(response.User);
-        if (claims.Count > 0)
-        {
-            await _manager.RemoveClaimsAsync(response.User, claims);
-        }
-
-        await _manager.AddClaimsAsync(response.User, AuthenticationHelpers.GetClaimsFrom(response.User));
 
         return new SignInPreProcessorCommandResponse(response.User);
     }

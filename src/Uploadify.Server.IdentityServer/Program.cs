@@ -5,15 +5,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 using OpenIddict.Abstractions;
+using Quartz;
 using Uploadify.Server.Application.Application.Commands;
 using Uploadify.Server.Application.Authentication.Validators;
 using Uploadify.Server.Application.Infrastructure.Requests.Services;
+using Uploadify.Server.Application.Infrastructure.Seed.Services;
 using Uploadify.Server.Application.Security.Services;
 using Uploadify.Server.Core.Application.Commands;
-using Uploadify.Server.Data.Infrastructure;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Data.Infrastructure.EF.Services;
 using Uploadify.Server.Domain.Application.Models;
+using Uploadify.Server.Domain.Infrastructure.Authorization.Constants;
 using Uploadify.Server.Domain.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +53,7 @@ builder.Services.AddIdentity<User, Role>(options =>
         options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
         options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
         options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
+        options.ClaimsIdentity.SecurityStampClaimType = Claims.SecurityStamp;
 
         options.SignIn.RequireConfirmedAccount = false;
         options.SignIn.RequireConfirmedPhoneNumber = false;
@@ -76,7 +79,7 @@ builder.Services.AddIdentity<User, Role>(options =>
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
 
 builder.Services.AddOptions<ArgonPasswordHasherOptions>()
-    .Configure(options => options.Pepper = "7C846A6A9825F8F8215541967EB7ABACD683AA23F95F2B91A9F125901B60F05A")
+    .Configure(options => options.Pepper = "482A7A9331DD7693FFBCF2C3CD0CAF9D101736B7708563943594F7F08CE062A3CBA0D084ABF3BAA9FB6754F0871034C121C7959DBBB67D488AF6F71FFB9C046A")
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
@@ -122,16 +125,56 @@ builder.Services.AddMediatR(options =>
     options.RegisterServicesFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
 });
 
-var application = builder.Build();
-
-using var scope = application.Services.CreateScope();
-using var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-if (builder.Environment.IsDevelopment() && settings.Database.IsSeedEnabled)
+builder.Services.AddQuartz(options =>
 {
-    context.Database.EnsureDeleted();
-}
+    options.UseMicrosoftDependencyInjectionJobFactory();
+    options.UseSimpleTypeLoader();
+    options.UseInMemoryStore();
+});
 
-context.Database.Migrate();
+builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+builder.Services.AddOpenIddict()
+    .AddCore(options =>
+    {
+        options.UseEntityFrameworkCore()
+            .UseDbContext<DataContext>();
+
+        options.UseQuartz();
+    })
+    .AddServer(options =>
+    {
+        options.SetAuthorizationEndpointUris("connect/authorize")
+            .SetLogoutEndpointUris("connect/logout")
+            .SetIntrospectionEndpointUris("connect/introspect")
+            .SetTokenEndpointUris("connect/token")
+            .SetUserinfoEndpointUris("connect/userinfo")
+            .SetVerificationEndpointUris("connect/verify");
+
+        options.AllowAuthorizationCodeFlow();
+
+        options.AddDevelopmentEncryptionCertificate();
+        options.AddDevelopmentSigningCertificate();
+
+        options.RegisterScopes(settings.IdentityProvider.SupportedScopes);
+        options.RegisterClaims(settings.IdentityProvider.SupportedScopes);
+
+        options.UseAspNetCore()
+            .EnableAuthorizationEndpointPassthrough()
+            .EnableLogoutEndpointPassthrough()
+            .EnableTokenEndpointPassthrough()
+            .EnableUserinfoEndpointPassthrough()
+            .EnableStatusCodePagesIntegration();
+    })
+    .AddValidation(options =>
+    {
+        options.UseLocalServer();
+        options.UseAspNetCore();
+    });
+
+builder.Services.AddHostedService<Worker>();
+
+var application = builder.Build();
 
 application.UseCors(options =>
 {

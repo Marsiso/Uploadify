@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Identity;
+using Uploadify.Server.Domain.Application.Constants;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Infrastructure.Localization;
 using Uploadify.Server.Domain.Infrastructure.Requests.Exceptions;
@@ -61,6 +62,8 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Creat
                 Exception = new InternalServerException()
             });
         }
+
+        await _manager.AddToRoleAsync(user, Roles.Defaults.User);
 
         return new CreateUserCommandResponse(user);
     }
