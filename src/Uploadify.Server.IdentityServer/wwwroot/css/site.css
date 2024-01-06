@@ -1,0 +1,72 @@
+:root {
+    --text-primary: #0a0a0a;
+    --text-error: #F44336;
+    --border-primary: #e6e6e6;
+}
+
+html, body {
+    position: relative;
+}
+
+body > div {
+    min-height: 100vh;
+}
+
+div:has(> h1) {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+form {
+    width: 24rem;
+}
+
+.brand-logo {
+    width: 7.5rem;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    border-color: var(--border-primary) !important;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .card {
+        border-color: transparent !important;
+    }
+}
+
+.fieldset {
+    border-color: var(--border-primary) !important;
+}
+
+.card {
+    padding: 3rem .5rem .5rem;
+}
+
+label.validation-error {
+    color: var(--text-error);
+}
+
+.help-text {
+    color: var(--text-error);
+}
+
+label.validation-error:has(> input.validation-error) {
+    color: var(--text-error) !important;
+}
+
+input.validation-error {
+    border-color: var(--text-error) !important;
+}
