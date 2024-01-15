@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Uploadify.Server.Domain.Infrastructure.Data.Contracts;
+using Uploadify.Server.Domain.Common.Contracts;
 
 namespace Uploadify.Server.Domain.Application.Models;
 

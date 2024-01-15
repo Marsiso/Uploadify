@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using OpenIddict.Abstractions;
-using Uploadify.Server.Domain.Infrastructure.Authorization.Constants;
+using Uploadify.Server.Domain.Authorization.Constants;
 
 namespace Uploadify.Server.Application.Authorization.Helpers;
 
@@ -10,13 +10,21 @@ public static class AuthorizationHelpers
     {
         switch (claim.Type)
         {
+            case OpenIddictConstants.Claims.Subject:
+                yield return OpenIddictConstants.Destinations.AccessToken;
+                yield return OpenIddictConstants.Destinations.IdentityToken;
+
+                yield break;
+
             case OpenIddictConstants.Claims.Name:
             case OpenIddictConstants.Claims.GivenName:
             case OpenIddictConstants.Claims.FamilyName:
                 yield return OpenIddictConstants.Destinations.AccessToken;
 
                 if (claim.Subject.HasScope(Scopes.Name))
+                {
                     yield return OpenIddictConstants.Destinations.IdentityToken;
+                }
 
                 yield break;
 
@@ -25,7 +33,9 @@ public static class AuthorizationHelpers
                 yield return OpenIddictConstants.Destinations.AccessToken;
 
                 if (claim.Subject.HasScope(Scopes.Email))
+                {
                     yield return OpenIddictConstants.Destinations.IdentityToken;
+                }
 
                 yield break;
 
@@ -34,7 +44,9 @@ public static class AuthorizationHelpers
                 yield return OpenIddictConstants.Destinations.AccessToken;
 
                 if (claim.Subject.HasScope(Scopes.Phone))
+                {
                     yield return OpenIddictConstants.Destinations.IdentityToken;
+                }
 
                 yield break;
 
@@ -43,7 +55,9 @@ public static class AuthorizationHelpers
                 yield return OpenIddictConstants.Destinations.AccessToken;
 
                 if (claim.Subject.HasScope(Scopes.Roles))
+                {
                     yield return OpenIddictConstants.Destinations.IdentityToken;
+                }
 
                 yield break;
 

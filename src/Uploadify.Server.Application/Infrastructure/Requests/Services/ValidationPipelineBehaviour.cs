@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
 using Uploadify.Server.Application.Infrastructure.Validators.Extensions;
-using Uploadify.Server.Domain.Infrastructure.Localization;
-using Uploadify.Server.Domain.Infrastructure.Requests.Exceptions;
-using Uploadify.Server.Domain.Infrastructure.Requests.Models;
-using Uploadify.Server.Domain.Infrastructure.Requests.Services;
+using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Requests.Exceptions;
+using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Requests.Services;
 
 namespace Uploadify.Server.Application.Infrastructure.Requests.Services;
 

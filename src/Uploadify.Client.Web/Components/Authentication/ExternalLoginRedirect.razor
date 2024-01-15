@@ -1,0 +1,9 @@
+﻿@using Uploadify.Client.Domain.Routing.Constants
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo(ApiRoutes.Account.LogIn, true);
+    }
+}

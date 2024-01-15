@@ -1,5 +1,5 @@
 ﻿using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Infrastructure.Data.Models;
+using Uploadify.Server.Domain.Common.Models;
 
 namespace Uploadify.Server.Domain.Files.Models;
 

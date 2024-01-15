@@ -3,23 +3,26 @@ using System.Security.Claims;
 using CommunityToolkit.Diagnostics;
 using OpenIddict.Abstractions;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Infrastructure.Authorization.Constants;
+using Uploadify.Server.Domain.Authorization.Constants;
 
 namespace Uploadify.Server.Application.Authentication.Helpers;
 
 public static class AuthenticationHelpers
 {
-    public static IEnumerable<Claim> GetClaimsFrom(User user)
+    public static IEnumerable<Claim> GetClaims(User user)
     {
         Guard.IsNotNull(user);
 
         var claims = new List<Claim>
         {
+            new Claim(OpenIddictConstants.Claims.Subject, user.Id),
             new Claim(OpenIddictConstants.Claims.PhoneNumber, user.PhoneNumber),
+            new Claim(OpenIddictConstants.Claims.PhoneNumberVerified, user.PhoneNumberConfirmed.ToString()),
+            new Claim(OpenIddictConstants.Claims.Name, user.UserName),
             new Claim(OpenIddictConstants.Claims.GivenName, user.GivenName),
             new Claim(OpenIddictConstants.Claims.FamilyName, user.FamilyName),
+            new Claim(OpenIddictConstants.Claims.Email, user.Email),
             new Claim(OpenIddictConstants.Claims.EmailVerified, user.EmailConfirmed.ToString()),
-            new Claim(OpenIddictConstants.Claims.PhoneNumberVerified, user.PhoneNumberConfirmed.ToString()),
             new Claim(OpenIddictConstants.Claims.UpdatedAt, user.DateUpdated.ToString(CultureInfo.InvariantCulture))
         };
 

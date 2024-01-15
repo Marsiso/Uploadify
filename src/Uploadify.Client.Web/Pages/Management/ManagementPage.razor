@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Uploadify.Client.Domain.Routing.Constants
+
+@attribute [Authorize]
+@attribute [Route(PageRoutes.Management)]
+
+<PageTitle>Spravovat uživatele a oprávnění</PageTitle>
+<MudText Typo="Typo.h1">Spravovat uživatele a oprávnění</MudText>
+<MudText Typo="Typo.body1" Class="mt-4">Jednoduché a rychlé nastavení oprávnění pro vaši aplikaci.</MudText>
+<MudTabs Rounded="true" Color="Color.Dark" Class="mt-8">
+    <MudTabPanel Text="Správa uživatelů" Icon="@Icons.Material.Rounded.PeopleAlt">
+        <ChildContent>
+            <MudText Typo="Typo.body1" Class="mt-4">Procházejte a spravujte uživatelské účty nebo sledujte aktivitu.</MudText>
+        </ChildContent>
+    </MudTabPanel>
+    <MudTabPanel Text="Správa oprávnění" Icon="@Icons.Material.Rounded.AdminPanelSettings">
+        <ChildContent>
+            <MudText Typo="Typo.body1" Class="mt-4">Definujte různé úrovně přístupu a přiřaďte oprávnění podle potřeby vaší aplikace.</MudText>
+        </ChildContent>
+    </MudTabPanel>
+</MudTabs>

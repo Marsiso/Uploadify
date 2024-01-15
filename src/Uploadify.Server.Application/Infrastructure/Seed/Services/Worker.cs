@@ -7,9 +7,9 @@ using OpenIddict.Abstractions;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Constants;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Infrastructure.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Authorization.Models;
-using Uploadify.Server.Domain.Infrastructure.Models;
+using Uploadify.Server.Domain.Authorization.Constants;
+using Uploadify.Server.Domain.Authorization.Models;
+using Uploadify.Server.Domain.Infrastructure.Services.Models;
 
 namespace Uploadify.Server.Application.Infrastructure.Seed.Services;
 
@@ -52,6 +52,11 @@ public class Worker : IHostedService
         await context.Database.MigrateAsync();
     }
 
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
     private static async Task SeedScopesTable(SystemSettings settings, IOpenIddictScopeManager manager)
     {
         var api = new OpenIddictScopeDescriptor
@@ -60,25 +65,17 @@ public class Worker : IHostedService
             Name = Scopes.Api,
             Resources =
             {
-                Scopes.Resources.Write,
-                Scopes.Resources.Read
+                settings.Api.ID
             }
         };
 
         var scope = await manager.FindByNameAsync(Scopes.Api);
-        if (scope == null)
+        if (scope != null)
         {
-            await manager.CreateAsync(api);
+            await manager.DeleteAsync(scope);
         }
-        else
-        {
-            await manager.UpdateAsync(scope, api);
-        }
-    }
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
+        await manager.CreateAsync(api);
     }
 
     private static async Task SeedClientsTable(SystemSettings settings, IOpenIddictApplicationManager manager)
@@ -96,14 +93,12 @@ public class Worker : IHostedService
         };
 
         var application = await manager.FindByClientIdAsync(settings.Api.ID);
-        if (application == null)
+        if (application != null)
         {
-            await manager.CreateAsync(api);
+            await manager.DeleteAsync(application);
         }
-        else
-        {
-            await manager.UpdateAsync(application, api);
-        }
+
+        await manager.CreateAsync(api);
 
         var client = new OpenIddictApplicationDescriptor
         {
@@ -140,14 +135,12 @@ public class Worker : IHostedService
         };
 
         application = await manager.FindByClientIdAsync(settings.Client.ID);
-        if (application == null)
+        if (application != null)
         {
-            await manager.CreateAsync(client);
+            await manager.DeleteAsync(application);
         }
-        else
-        {
-            await manager.UpdateAsync(application, client);
-        }
+
+        await manager.CreateAsync(client);
     }
 
     private static async Task SeedRolesTable(RoleManager<Role> manager)
