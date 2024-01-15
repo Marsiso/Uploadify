@@ -1,7 +1,10 @@
 :root {
     --text-primary: #0a0a0a;
-    --text-error: #F44336;
-    --border-primary: #e6e6e6;
+    --text-error: #cc4b37;
+    --light-gray: #e6e6e6;
+    --medium-gray: #cacaca;
+    --background-contrast: #1779ba;
+    --secondary: #767676;
 }
 
 html, body {
@@ -36,7 +39,7 @@ form {
 }
 
 .card {
-    border-color: var(--border-primary) !important;
+    border-color: var(--light-gray) !important;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
@@ -48,7 +51,7 @@ form {
 }
 
 .fieldset {
-    border-color: var(--border-primary) !important;
+    border-color: var(--light-gray) !important;
 }
 
 .card {

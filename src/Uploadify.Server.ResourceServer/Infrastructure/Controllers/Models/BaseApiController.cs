@@ -1,0 +1,48 @@
+﻿using System.Runtime.CompilerServices;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Requests.Models;
+
+namespace Uploadify.Server.ResourceServer.Infrastructure.Controllers.Models;
+
+[ApiController]
+public class BaseApiController<TController> : ControllerBase where TController : class
+{
+    protected readonly IMediator Mediator;
+    protected readonly ILogger<TController> Logger;
+
+    public BaseApiController(IMediator mediator, ILogger<TController> logger)
+    {
+        Mediator = mediator;
+        Logger = logger;
+    }
+
+    protected IActionResult ConvertToActionResult(BaseResponse response, [CallerMemberName] string? action = null)
+    {
+        try
+        {
+            return response.Status switch
+            {
+                Status.Ok => Ok(response),
+                Status.Created => StatusCode((int)response.Status, response),
+                Status.NotFound => NotFound(response),
+                Status.BadRequest => BadRequest(response),
+                Status.ClientClosedRequest => StatusCode((int)response.Status, response),
+                Status.InternalServerError => HandleError(response, action),
+                _ => StatusCode((int)response.Status, response)
+            };
+        }
+        catch (Exception exception)
+        {
+            Logger.LogError($"Controller: `{nameof(TController)}` Action: `{action}` Message: `{response.Failure?.UserFriendlyMessage}` Exception: `{exception}`.");
+            return StatusCode((int)Status.InternalServerError, new BaseResponse(Status.InternalServerError, new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError }));
+        }
+    }
+
+    protected IActionResult HandleError(BaseResponse response, string? action)
+    {
+        Logger.LogError($"Controller: `{nameof(TController)}` Action: `{action}` Message: `{response.Failure?.UserFriendlyMessage}` Exception: `{response.Failure?.Exception}`.");
+        return StatusCode((int)response.Status, response);
+    }
+}

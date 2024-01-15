@@ -15,8 +15,8 @@ using Uploadify.Server.Core.Application.Commands;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Data.Infrastructure.EF.Services;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Infrastructure.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Models;
+using Uploadify.Server.Domain.Authorization.Constants;
+using Uploadify.Server.Domain.Infrastructure.Services.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -144,6 +144,8 @@ builder.Services.AddOpenIddict()
     })
     .AddServer(options =>
     {
+        options.SetIssuer(settings.IdentityProvider.Issuer);
+
         options.SetAuthorizationEndpointUris("connect/authorize")
             .SetLogoutEndpointUris("connect/logout")
             .SetIntrospectionEndpointUris("connect/introspect")

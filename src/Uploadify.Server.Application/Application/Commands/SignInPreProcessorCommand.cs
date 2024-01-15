@@ -4,9 +4,9 @@ using Uploadify.Server.Application.Authentication.Helpers;
 using Uploadify.Server.Core.Application.Queries;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Infrastructure.Localization;
-using Uploadify.Server.Domain.Infrastructure.Requests.Models;
-using Uploadify.Server.Domain.Infrastructure.Requests.Services;
+using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Requests.Services;
 
 namespace Uploadify.Server.Application.Application.Commands;
 
@@ -72,14 +72,6 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
         _context.Update(response.User);
 
         await _context.SaveChangesAsync(cancellationToken);
-
-        var claims = await _manager.GetClaimsAsync(response.User);
-        if (claims.Count > 0)
-        {
-            await _manager.RemoveClaimsAsync(response.User, claims);
-        }
-
-        await _manager.AddClaimsAsync(response.User, AuthenticationHelpers.GetClaimsFrom(response.User));
 
         var result = await _signInManager.PasswordSignInAsync(response.User, request.Password, request.RememberMe, response.User.LockoutEnabled);
         if (result.IsNotAllowed || result.IsLockedOut)

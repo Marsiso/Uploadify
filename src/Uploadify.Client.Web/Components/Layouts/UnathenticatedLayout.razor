@@ -1,0 +1,10 @@
+﻿<div>
+    <div class="mx-6 mt-16">
+        <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Rounded="true" Size="Size.Medium"/>
+    </div>
+    @Body @Body
+</div>
+
+ @code {
+    [Parameter] public RenderFragment? Body { get; set; }
+}

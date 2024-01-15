@@ -1,0 +1,63 @@
+﻿@using Uploadify.Server.IdentityServer.Views.Shared
+@model Uploadify.Server.Application.Authentication.ViewModels.RegisterViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Sign up";
+}
+
+<form asp-controller="Account" asp-action="HandleRegister" asp-route-returnUrl="@Model.ReturnUrl" method="post" asp-antiforgery="true" novalidate>
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+            <div class="small-12 cell" style="margin-bottom: 1rem;">
+                @await Html.PartialAsync("_Logo")
+            </div>
+            <div class="small-12 cell" style="margin-bottom: 1rem;">
+                <h1 class="text-center">Sign up</h1>
+            </div>
+            <div class="small-12 cell">
+                <fieldset class="fieldset">
+                    <legend>Credentials</legend>
+                    <div class="grid-container">
+                        <div class="grid-x grid-padding-x">
+                            <div class="small-12 cell">
+                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Login", InputType = "text", PropertyName = nameof(Model.Form.UserName), Value = Model.Form.UserName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.UserName)) })
+                            </div>
+                            <div class="small-12 cell">
+                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Password", InputType = "password", PropertyName = nameof(Model.Form.Password), Value = Model.Form.Password, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.Password)) })
+                            </div>
+                            <div class="small-12 cell">
+                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "ConfirmPassword", InputType = "password", PropertyName = nameof(Model.Form.PasswordRepeat), Value = Model.Form.PasswordRepeat, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.PasswordRepeat)) })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="small-12 cell">
+                <fieldset class="fieldset">
+                    <legend>Personal data</legend>
+                    <div class="grid-container">
+                        <div class="grid-x grid-padding-x">
+                            <div class="small-12 cell">
+                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Given name", InputType = "text", PropertyName = nameof(Model.Form.GivenName), Value = Model.Form.GivenName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.GivenName)) })
+                            </div>
+                            <div class="small-12 cell">
+                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Family name", InputType = "text", PropertyName = nameof(Model.Form.FamilyName), Value = Model.Form.FamilyName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.FamilyName)) })
+                            </div>
+                            <div class="small-12 cell">
+                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Phone number", InputType = "tel", PropertyName = nameof(Model.Form.PhoneNumber), Value = Model.Form.PhoneNumber, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.PhoneNumber)) })
+                            </div>
+                            <div class="small-12 cell">
+                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Email", InputType = "email", PropertyName = nameof(Model.Form.Email), Value = Model.Form.Email, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.Email)) })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="small-12 cell">
+                <button type="submit" class="button expanded">Sign up</button>
+                <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="button secondary expanded">Sign in</a>
+            </div>
+        </div>
+    </div>
+</form>

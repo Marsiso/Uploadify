@@ -3,7 +3,7 @@
     ViewData["Title"] = "Homepage";
 }
 
-<form asp-controller="Authentication" asp-action="HandleLogout" method="post" asp-antiforgery="true" novalidate>
+<form asp-controller="Account" asp-action="HandleLogout" method="post" asp-antiforgery="true" novalidate>
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
             <div class="small-12 cell">
@@ -20,7 +20,7 @@
                         @foreach (var claim in User.Claims)
                         {
                             <tr>
-                                <td>@claim.Type</td>
+                                <td><span style="color: var(--secondary)">@claim.Type</span></td>
                                 <td>@claim.Value</td>
                             </tr>
                         }
@@ -37,8 +37,8 @@
                     <h1 class="text-center">Welcome</h1>
                 </div>
                 <div class="small-12 cell">
-                    <a asp-controller="Authentication" asp-action="Login" class="button expanded">Sign in</a>
-                    <a asp-controller="Authentication" asp-action="Register" class="button secondary expanded">Sign up</a>
+                    <a asp-controller="Account" asp-action="Login" class="button expanded">Sign in</a>
+                    <a asp-controller="Account" asp-action="Register" class="button secondary expanded">Sign up</a>
                 </div>
             }
         </div>

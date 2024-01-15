@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Uploadify.Server.Domain.Infrastructure.Data.Contracts;
+using Uploadify.Server.Domain.Common.Contracts;
 
 namespace Uploadify.Server.Data.Infrastructure.EF.Services;
 
@@ -36,25 +36,23 @@ public class AuditInterceptor : SaveChangesInterceptor
 
         foreach (var entry in context.ChangeTracker.Entries<IBaseEntity>())
         {
-            switch (entry.State)
+            if (entry.State == EntityState.Added)
             {
-                case EntityState.Added:
-                    entry.Entity.IsActive = true;
-                    continue;
+                entry.Entity.IsActive = true;
             }
         }
 
         foreach (var entry in context.ChangeTracker.Entries<IChangeTrackingBaseEntity>())
         {
-            switch (entry.State)
+            if (entry.State == EntityState.Added)
             {
-                case EntityState.Added:
-                    entry.Entity.DateCreated = entry.Entity.DateUpdated = DateTime.UtcNow;
-                    continue;
+                entry.Entity.DateCreated = entry.Entity.DateUpdated = DateTime.UtcNow;
+                continue;
+            }
 
-                case EntityState.Modified:
-                    entry.Entity.DateUpdated = DateTime.UtcNow;
-                    continue;
+            if (entry.State == EntityState.Modified)
+            {
+                entry.Entity.DateUpdated = DateTime.UtcNow;
             }
         }
     }

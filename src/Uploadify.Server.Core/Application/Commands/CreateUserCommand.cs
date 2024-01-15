@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Uploadify.Server.Domain.Application.Constants;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Infrastructure.Localization;
-using Uploadify.Server.Domain.Infrastructure.Requests.Exceptions;
-using Uploadify.Server.Domain.Infrastructure.Requests.Models;
-using Uploadify.Server.Domain.Infrastructure.Requests.Services;
+using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Requests.Exceptions;
+using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Requests.Services;
 
 namespace Uploadify.Server.Core.Application.Commands;
 

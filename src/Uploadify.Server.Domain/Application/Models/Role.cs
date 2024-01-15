@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Uploadify.Server.Domain.Infrastructure.Authorization.Models;
-using Uploadify.Server.Domain.Infrastructure.Data.Contracts;
+using Uploadify.Server.Domain.Authorization.Models;
+using Uploadify.Server.Domain.Common.Contracts;
 
 namespace Uploadify.Server.Domain.Application.Models;
 

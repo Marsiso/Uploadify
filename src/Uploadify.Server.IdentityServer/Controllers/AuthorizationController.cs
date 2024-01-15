@@ -8,6 +8,7 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
+using Uploadify.Server.Application.Authentication.Helpers;
 using Uploadify.Server.Application.Authentication.ViewModels;
 using Uploadify.Server.Application.Authorization.Helpers;
 using Uploadify.Server.Core.Infrastructure.Types.Extensions;
@@ -103,7 +104,7 @@ public class AuthorizationController : Controller
                     nameType: OpenIddictConstants.Claims.Name,
                     roleType: OpenIddictConstants.Claims.Role);
 
-                foreach (var claim in await _userManager.GetClaimsAsync(user))
+                foreach (var claim in AuthenticationHelpers.GetClaims(user)) // TODO: BLBOST
                 {
                     identity.SetClaim(claim.Type, claim.Value);
                 }
@@ -177,9 +178,9 @@ public class AuthorizationController : Controller
             nameType: OpenIddictConstants.Claims.Name,
             roleType: OpenIddictConstants.Claims.Role);
 
-        await _userManager.GetClaimsAsync(user);
+        ;
 
-        foreach (var claim in await _userManager.GetClaimsAsync(user))
+        foreach (var claim in AuthenticationHelpers.GetClaims(user))
         {
             identity.SetClaim(claim.Type, claim.Value);
         }
@@ -237,7 +238,7 @@ public class AuthorizationController : Controller
             var result = await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
 
             var user = await _userManager.FindByIdAsync(result.Principal.GetClaim(OpenIddictConstants.Claims.Subject));
-            if (user is null)
+            if (user == null)
             {
                 return Forbid(
                     authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
@@ -264,7 +265,7 @@ public class AuthorizationController : Controller
                 nameType: OpenIddictConstants.Claims.Name,
                 roleType: OpenIddictConstants.Claims.Role);
 
-            foreach (var claim in await _userManager.GetClaimsAsync(user))
+            foreach (var claim in AuthenticationHelpers.GetClaims(user))
             {
                 identity.SetClaim(claim.Type, claim.Value);
             }

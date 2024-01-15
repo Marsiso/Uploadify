@@ -2,8 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using OpenIddict.Abstractions;
-using Uploadify.Server.Domain.Infrastructure.Requests.Models;
-using Uploadify.Server.Domain.Infrastructure.Requests.Services;
+using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Requests.Services;
 
 namespace Uploadify.Server.Application.Infrastructure.Requests.Services;
 
