@@ -11,7 +11,7 @@ using Polly;
 using Polly.Extensions.Http;
 using Uploadify.Client.Application.Authentication.Services;
 using Uploadify.Client.Application.Authorization.Services;
-using Uploadify.Client.Core.Infrastructure.HttpClients;
+using Uploadify.Client.Core.Infrastructure.Services;
 using Uploadify.Client.Web;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

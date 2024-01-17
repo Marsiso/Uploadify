@@ -441,7 +441,9 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(256)
@@ -622,7 +624,7 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                     b.ToTable("UserTokens", "Application");
                 });
 
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.File", b =>
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.File", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -698,55 +700,10 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
 
                     b.HasIndex("UpdatedBy");
 
-                    b.ToTable("Files", "Files");
+                    b.ToTable("Files", "FileSystem");
                 });
 
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.FileLink", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("FileId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("FileId");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("UpdatedBy");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("FileLinks", "Files");
-                });
-
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.Folder", b =>
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.Folder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -807,7 +764,52 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Folders", "Files");
+                    b.ToTable("Folders", "FileSystem");
+                });
+
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.SharedFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("FileId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("FileId");
+
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SharedFiles", "FileSystem");
                 });
 
             modelBuilder.Entity("OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreAuthorization", b =>
@@ -946,7 +948,7 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.File", b =>
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.File", b =>
                 {
                     b.HasOne("Uploadify.Server.Domain.Application.Models.CodeListItem", "Category")
                         .WithMany()
@@ -958,7 +960,7 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Uploadify.Server.Domain.Files.Models.Folder", "Folder")
+                    b.HasOne("Uploadify.Server.Domain.FileSystem.Models.Folder", "Folder")
                         .WithMany("Files")
                         .HasForeignKey("FolderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -978,40 +980,7 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                     b.Navigation("UserUpdatedBy");
                 });
 
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.FileLink", b =>
-                {
-                    b.HasOne("Uploadify.Server.Domain.Application.Models.User", "UserCreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Uploadify.Server.Domain.Files.Models.File", "File")
-                        .WithMany("FileLinks")
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Uploadify.Server.Domain.Application.Models.User", "UserUpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdatedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Uploadify.Server.Domain.Application.Models.User", "User")
-                        .WithMany("FileLinks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("File");
-
-                    b.Navigation("User");
-
-                    b.Navigation("UserCreatedBy");
-
-                    b.Navigation("UserUpdatedBy");
-                });
-
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.Folder", b =>
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.Folder", b =>
                 {
                     b.HasOne("Uploadify.Server.Domain.Application.Models.CodeListItem", "Category")
                         .WithMany()
@@ -1023,7 +992,7 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Uploadify.Server.Domain.Files.Models.Folder", "Parent")
+                    b.HasOne("Uploadify.Server.Domain.FileSystem.Models.Folder", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1042,6 +1011,39 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Parent");
+
+                    b.Navigation("User");
+
+                    b.Navigation("UserCreatedBy");
+
+                    b.Navigation("UserUpdatedBy");
+                });
+
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.SharedFile", b =>
+                {
+                    b.HasOne("Uploadify.Server.Domain.Application.Models.User", "UserCreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Uploadify.Server.Domain.FileSystem.Models.File", "File")
+                        .WithMany("Users")
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uploadify.Server.Domain.Application.Models.User", "UserUpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Uploadify.Server.Domain.Application.Models.User", "User")
+                        .WithMany("SharedFiles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("File");
 
                     b.Navigation("User");
 
@@ -1078,23 +1080,23 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                 {
                     b.Navigation("Claims");
 
-                    b.Navigation("FileLinks");
-
                     b.Navigation("Folders");
 
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
 
+                    b.Navigation("SharedFiles");
+
                     b.Navigation("Tokens");
                 });
 
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.File", b =>
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.File", b =>
                 {
-                    b.Navigation("FileLinks");
+                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Uploadify.Server.Domain.Files.Models.Folder", b =>
+            modelBuilder.Entity("Uploadify.Server.Domain.FileSystem.Models.Folder", b =>
                 {
                     b.Navigation("Children");
 

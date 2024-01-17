@@ -26,6 +26,9 @@ public class UserController : BaseApiController<UserController>
     ///     Sample request:
     ///
     ///         GET /api/user/cc0fe880-efc2-4c11-917e-fd9bd74557d0
+    ///
+    ///     Sample response:
+    ///
     ///         {
     ///             "id": "cc0fe880-efc2-4c11-917e-fd9bd74557d0",
     ///             "userName": "John",

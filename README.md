@@ -15,8 +15,3 @@
 <code>
     dotnet ef migrations add AddTablesAndSchemas --project .\src\Uploadify.Server.Data\ --startup-project .\src\Uploadify.Server.IdentityServer\ --output-dir .\Infrastructure\EF\Migrations\
 </code>
-
-<p>Remove</p>
-<code>
-dotnet ef migrations remove --project .\src\Uploadify.Server.Data\ --startup-project .\src\Uploadify.Server.IdentityServer\ --output-dir .\Infrastructure\EF\Migrations
-</code>

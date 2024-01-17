@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Uploadify.Server.Domain.Application.Constants;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
@@ -63,7 +64,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Creat
             });
         }
 
-        await _manager.AddToRoleAsync(user, Roles.Defaults.User);
+        await _manager.AddToRoleAsync(user, Roles.Defaults.DefaultUser);
 
         return new CreateUserCommandResponse(user);
     }
@@ -83,7 +84,6 @@ public class CreateUserCommandResponse : BaseResponse
     {
         Status = Status.Created;
         User = user;
-        Failure = null;
     }
 
     public User? User { get; set; }

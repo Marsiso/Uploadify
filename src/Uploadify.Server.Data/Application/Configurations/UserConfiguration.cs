@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Uploadify.Server.Data.Infrastructure;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Data.Infrastructure.EF.Helpers;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Files.Models;
 
 namespace Uploadify.Server.Data.Application.Configurations;
 
@@ -99,7 +97,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(entity => entity.FileLinks)
+        builder.HasMany(entity => entity.SharedFiles)
             .WithOne(entity => entity.User)
             .HasForeignKey(entity => entity.UserId)
             .IsRequired()

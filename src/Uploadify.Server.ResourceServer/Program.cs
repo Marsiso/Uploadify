@@ -1,88 +1,26 @@
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Npgsql;
 using NSwag;
-using OpenIddict.Abstractions;
 using OpenIddict.Validation.AspNetCore;
-using Uploadify.Server.Application.Application.Commands;
-using Uploadify.Server.Application.Authentication.Validators;
-using Uploadify.Server.Application.Infrastructure.Requests.Services;
-using Uploadify.Server.Application.Security.Services;
-using Uploadify.Server.Core.Application.Commands;
-using Uploadify.Server.Data.Infrastructure.EF;
-using Uploadify.Server.Data.Infrastructure.EF.Services;
-using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Services.Models;
+using Uploadify.Server.Application.Infrastructure.Extensions;
+using Uploadify.Server.Domain.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var settings = builder.Configuration.GetSection(SystemSettings.SectionName).Get<SystemSettings>() ?? throw new InvalidOperationException();
+var services = builder.Services;
+var environment = builder.Environment;
 
-builder.Services.AddSingleton(settings);
-builder.Services.AddSingleton(builder.Configuration);
-builder.Services.AddSingleton(builder.Environment);
+services.AddSingleton(settings);
+services.AddSingleton(builder.Configuration);
+services.AddSingleton(environment);
 
-builder.Services.AddTransient<ISaveChangesInterceptor, AuditInterceptor>();
-builder.Services.AddNpgsql<DataContext>(new NpgsqlConnectionStringBuilder
-{
-    Username = settings.Database.Username,
-    Password = settings.Database.Password,
-    Host = settings.Database.Host,
-    Database = settings.Database.Database,
-    Pooling = settings.Database.Pooling,
-    Port = settings.Database.Port
-}.ConnectionString, options =>
-{
-    options.EnableRetryOnFailure(5);
-    options.MigrationsAssembly("Uploadify.Server.Data");
-}, options =>
-{
-    options.EnableDetailedErrors(builder.Environment.IsDevelopment());
-    options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
-});
+services.AddDatabase(environment.IsDevelopment(), settings)
+    .AddIdentity(settings)
+    .AddValidations(settings)
+    .AddRequests(settings)
+    .AddControllers();
 
-builder.Services.AddIdentity<User, Role>(options =>
-    {
-        options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
-        options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
-        options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
-        options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
-        options.ClaimsIdentity.SecurityStampClaimType = Claims.SecurityStamp;
-
-        options.SignIn.RequireConfirmedAccount = false;
-        options.SignIn.RequireConfirmedPhoneNumber = false;
-        options.SignIn.RequireConfirmedEmail = false;
-
-        options.Password.RequireDigit = true;
-        options.Password.RequireLowercase = true;
-        options.Password.RequireUppercase = true;
-        options.Password.RequireNonAlphanumeric = true;
-        options.Password.RequiredLength = 10;
-        options.Password.RequiredUniqueChars = 1;
-
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-        options.Lockout.MaxFailedAccessAttempts = 5;
-        options.Lockout.AllowedForNewUsers = true;
-
-        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-        options.User.RequireUniqueEmail = true;
-    })
-    .AddEntityFrameworkStores<DataContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
-
-builder.Services.AddOptions<ArgonPasswordHasherOptions>()
-    .Configure(options => options.Pepper = "482A7A9331DD7693FFBCF2C3CD0CAF9D101736B7708563943594F7F08CE062A3CBA0D084ABF3BAA9FB6754F0871034C121C7959DBBB67D488AF6F71FFB9C046A")
-    .ValidateDataAnnotations()
-    .ValidateOnStart();
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument(options =>
+services.AddEndpointsApiExplorer();
+services.AddOpenApiDocument(options =>
 {
     options.PostProcess = document =>
     {
@@ -97,7 +35,7 @@ builder.Services.AddOpenApiDocument(options =>
     };
 });
 
-builder.Services.AddOpenIddict()
+services.AddOpenIddict()
     .AddValidation(options =>
     {
         options.SetIssuer(settings.IdentityProvider.Issuer);
@@ -111,19 +49,8 @@ builder.Services.AddOpenIddict()
         options.UseAspNetCore();
     });
 
-builder.Services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
-builder.Services.AddAuthorization();
-
-builder.Services.AddValidatorsFromAssembly(typeof(CreateUserCommandValidator).Assembly);
-builder.Services.AddValidatorsFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddMediatR(options =>
-{
-    options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthenticationPipelineBehaviour<,>));
-    options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
-    options.RegisterServicesFromAssembly(typeof(CreateUserCommand).Assembly);
-    options.RegisterServicesFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
-});
+services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+services.AddAuthorization();
 
 var application = builder.Build();
 

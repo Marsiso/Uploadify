@@ -5,12 +5,7 @@ public class BaseResponse
     public BaseResponse()
     {
         Status = Status.BadRequest;
-        Failure = new RequestFailure
-        {
-            Errors = null,
-            UserFriendlyMessage = null,
-            Exception = null
-        };
+        Failure = new RequestFailure();
     }
 
     public BaseResponse(Status status, RequestFailure? failure)

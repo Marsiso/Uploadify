@@ -8,49 +8,34 @@ using OpenIddict.Abstractions;
 using OpenIddict.Client;
 using OpenIddict.Client.AspNetCore;
 using Quartz;
+using Uploadify.Server.Application.Infrastructure.Extensions;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Data.Infrastructure.EF.Services;
 using Uploadify.Server.Domain.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Services.Models;
+using Uploadify.Server.Domain.Infrastructure.Services;
 using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Transforms;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var settings = builder.Configuration.GetSection(SystemSettings.SectionName).Get<SystemSettings>() ?? throw new InvalidOperationException();
+var services = builder.Services;
+var environment = builder.Environment;
 
-builder.Services.AddSingleton(settings);
-builder.Services.AddSingleton(builder.Configuration);
-builder.Services.AddSingleton(builder.Environment);
+services.AddSingleton(settings);
+services.AddSingleton(builder.Configuration);
+services.AddSingleton(environment);
 
-builder.Services.AddTransient<ISaveChangesInterceptor, AuditInterceptor>();
-builder.Services.AddNpgsql<DataContext>(new NpgsqlConnectionStringBuilder
-{
-    Username = settings.Database.Username,
-    Password = settings.Database.Password,
-    Host = settings.Database.Host,
-    Database = settings.Database.Database,
-    Pooling = settings.Database.Pooling,
-    Port = settings.Database.Port
-}.ConnectionString, options =>
-{
-    options.EnableRetryOnFailure(5);
-    options.MigrationsAssembly("Uploadify.Server.Data");
-}, options =>
-{
-    options.EnableDetailedErrors(builder.Environment.IsDevelopment());
-    options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
-});
-
-builder.Services.AddAntiforgery(options =>
-{
-    options.HeaderName = "X-XSRF-TOKEN";
-    options.Cookie.Name = "__Host-X-XSRF-TOKEN";
-    options.Cookie.SameSite = SameSiteMode.Strict;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-});
-
-builder.Services.AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+services.AddDatabase(environment.IsDevelopment(), settings)
+    .AddHttpClient()
+    .AddAntiforgery(options =>
+    {
+        options.HeaderName = "X-XSRF-TOKEN";
+        options.Cookie.Name = "__Host-X-XSRF-TOKEN";
+        options.Cookie.SameSite = SameSiteMode.Strict;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    })
+    .AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.Cookie.Name  = "X-COOKIE";
@@ -60,16 +45,14 @@ builder.Services.AddAuthentication(options => options.DefaultScheme = CookieAuth
         options.SlidingExpiration = false;
     });
 
-builder.Services.AddQuartz(options =>
+services.AddQuartz(options =>
 {
     options.UseMicrosoftDependencyInjectionJobFactory();
     options.UseSimpleTypeLoader();
     options.UseInMemoryStore();
-});
+}).AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
-builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-
-builder.Services.AddOpenIddict()
+services.AddOpenIddict()
     .AddCore(options =>
     {
         options.UseEntityFrameworkCore()
@@ -112,16 +95,15 @@ builder.Services.AddOpenIddict()
         });
     });
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+services.AddControllersWithViews();
+services.AddRazorPages();
 
-builder.Services.AddAuthorization(options => options.AddPolicy("CookieAuthenticationPolicy", builder =>
-{
-    builder.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
-    builder.RequireAuthenticatedUser();
-}));
-
-builder.Services.AddHttpClient();
+services.AddAuthorizationBuilder()
+    .AddPolicy("CookieAuthenticationPolicy", options =>
+    {
+        options.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
+        options.RequireAuthenticatedUser();
+    });
 
 var routes = new[]
 {
@@ -149,14 +131,11 @@ var clusters = new[]
     }
 };
 
-builder.Services.AddReverseProxy()
+services.AddReverseProxy()
     .LoadFromMemory(routes, clusters)
-    .AddTransforms(builder => builder.AddRequestTransform(async context =>
+    .AddTransforms(options => options.AddRequestTransform(async context =>
     {
-        var token = await context.HttpContext.GetTokenAsync(
-            scheme: CookieAuthenticationDefaults.AuthenticationScheme,
-            tokenName: OpenIddictClientAspNetCoreConstants.Tokens.BackchannelAccessToken);
-
+        var token = await context.HttpContext.GetTokenAsync(scheme: CookieAuthenticationDefaults.AuthenticationScheme, tokenName: OpenIddictClientAspNetCoreConstants.Tokens.BackchannelAccessToken);
         context.ProxyRequest.Headers.Authorization = new AuthenticationHeaderValue(OpenIddictConstants.Schemes.Bearer, token);
     }));
 

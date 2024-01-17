@@ -1,8 +1,8 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
@@ -63,7 +63,6 @@ public class UniqueUserNameValidationQueryResponse : BaseResponse
     {
         Status = Status.Ok;
         IsUnique = isUnique;
-        Failure = null;
     }
 
     public bool IsUnique { get; set; }

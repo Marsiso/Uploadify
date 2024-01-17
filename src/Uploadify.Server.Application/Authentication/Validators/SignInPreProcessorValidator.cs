@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Uploadify.Server.Application.Application.Commands;
 using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Localization.Constants;
 
 namespace Uploadify.Server.Application.Authentication.Validators;
 

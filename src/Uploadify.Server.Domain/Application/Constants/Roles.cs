@@ -4,9 +4,9 @@ public static class Roles
 {
     public static class Defaults
     {
-        public const string SystemAdministrator = "system_admin";
-        public const string UserAdministrator = "user_admin";
-        public const string RoleAdministrator = "role_admin";
-        public const string User = "user";
+        public const string SystemAdmin = "system_admin";
+        public const string UserAdmin = "user_admin";
+        public const string RoleAdmin = "role_admin";
+        public const string DefaultUser = "user";
     }
 }

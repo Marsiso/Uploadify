@@ -6,7 +6,7 @@ public static class PageRoutes
     public const string About = "/about";
     public const string Privacy = "/privacy";
     public const string Management = "/management";
-    public const string Account = "/account";
+    public const string Profile = "/profile";
     public const string Dashboard = "/files";
     public const string Detail = "/detail/{fileID:int?}";
     public const string Shared = "/shared";

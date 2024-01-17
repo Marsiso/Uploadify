@@ -1,140 +1,55 @@
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Npgsql;
-using OpenIddict.Abstractions;
 using Quartz;
-using Uploadify.Server.Application.Application.Commands;
-using Uploadify.Server.Application.Authentication.Validators;
-using Uploadify.Server.Application.Infrastructure.Requests.Services;
-using Uploadify.Server.Application.Infrastructure.Seed.Services;
-using Uploadify.Server.Application.Security.Services;
-using Uploadify.Server.Core.Application.Commands;
+using Uploadify.Server.Application.Infrastructure.Extensions;
+using Uploadify.Server.Application.Infrastructure.Services;
 using Uploadify.Server.Data.Infrastructure.EF;
-using Uploadify.Server.Data.Infrastructure.EF.Services;
-using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Services.Models;
+using Uploadify.Server.Domain.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-
 var settings = builder.Configuration.GetSection(SystemSettings.SectionName).Get<SystemSettings>() ?? throw new InvalidOperationException();
+var services = builder.Services;
+var environment = builder.Environment;
 
-builder.Services.AddSingleton(settings);
-builder.Services.AddSingleton(builder.Configuration);
-builder.Services.AddSingleton(builder.Environment);
+services.AddSingleton(settings);
+services.AddSingleton(builder.Configuration);
+services.AddSingleton(environment);
 
-builder.Services.AddTransient<ISaveChangesInterceptor, AuditInterceptor>();
-builder.Services.AddNpgsql<DataContext>(new NpgsqlConnectionStringBuilder
+services.AddDatabase(environment.IsDevelopment(), settings)
+    .AddIdentity(settings)
+    .AddValidations(settings)
+    .AddRequests(settings)
+    .AddControllersWithViews();
+
+services.AddAntiforgery(options =>
 {
-    Username = settings.Database.Username,
-    Password = settings.Database.Password,
-    Host = settings.Database.Host,
-    Database = settings.Database.Database,
-    Pooling = settings.Database.Pooling,
-    Port = settings.Database.Port
-}.ConnectionString, options =>
-{
-    options.EnableRetryOnFailure(5);
-    options.MigrationsAssembly("Uploadify.Server.Data");
-}, options =>
-{
-    options.EnableDetailedErrors(builder.Environment.IsDevelopment());
-    options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
-});
-
-builder.Services.AddIdentity<User, Role>(options =>
-    {
-        options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
-        options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
-        options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
-        options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
-        options.ClaimsIdentity.SecurityStampClaimType = Claims.SecurityStamp;
-
-        options.SignIn.RequireConfirmedAccount = false;
-        options.SignIn.RequireConfirmedPhoneNumber = false;
-        options.SignIn.RequireConfirmedEmail = false;
-
-        options.Password.RequireDigit = true;
-        options.Password.RequireLowercase = true;
-        options.Password.RequireUppercase = true;
-        options.Password.RequireNonAlphanumeric = true;
-        options.Password.RequiredLength = 10;
-        options.Password.RequiredUniqueChars = 1;
-
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-        options.Lockout.MaxFailedAccessAttempts = 5;
-        options.Lockout.AllowedForNewUsers = true;
-
-        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-        options.User.RequireUniqueEmail = true;
-    })
-    .AddEntityFrameworkStores<DataContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(1));
-
-builder.Services.AddOptions<ArgonPasswordHasherOptions>()
-    .Configure(options => options.Pepper = "482A7A9331DD7693FFBCF2C3CD0CAF9D101736B7708563943594F7F08CE062A3CBA0D084ABF3BAA9FB6754F0871034C121C7959DBBB67D488AF6F71FFB9C046A")
-    .ValidateDataAnnotations()
-    .ValidateOnStart();
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.Name = "X-IDENTITY-PROVIDER-COOKIE";
+    options.Cookie.Name = "X-IDP-XSRF-TOKEN";
     options.Cookie.HttpOnly = true;
     options.Cookie.SameSite = SameSiteMode.Strict;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Cookie.MaxAge = TimeSpan.FromHours(1);
-});
-
-builder.Services.ConfigureExternalCookie(options =>
+}).ConfigureApplicationCookie(options =>
 {
-    options.Cookie.Name = "X-IDENTITY-PROVIDER-EXTERNAL-COOKIE";
+    options.Cookie.Name = "X-IDP-COOKIE";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.MaxAge = TimeSpan.FromHours(1);
+}).ConfigureExternalCookie(options =>
+{
+    options.Cookie.Name = "X-IDP-EXTERNAL-COOKIE";
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     options.Cookie.MaxAge = TimeSpan.FromHours(1);
 });
 
-builder.Services.AddSingleton<IPasswordHasher<User>, ArgonPasswordHasher<User>>();
-
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddAntiforgery(options =>
-{
-    options.Cookie.Name = "X-IDENTITY-PROVIDER-XSRF";
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.Strict;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.MaxAge = TimeSpan.FromHours(1);
-});
-
-builder.Services.AddValidatorsFromAssembly(typeof(CreateUserCommandValidator).Assembly);
-builder.Services.AddValidatorsFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddMediatR(options =>
-{
-    options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthenticationPipelineBehaviour<,>));
-    options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
-    options.RegisterServicesFromAssembly(typeof(CreateUserCommand).Assembly);
-    options.RegisterServicesFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
-});
-
-builder.Services.AddQuartz(options =>
+services.AddQuartz(options =>
 {
     options.UseMicrosoftDependencyInjectionJobFactory();
     options.UseSimpleTypeLoader();
     options.UseInMemoryStore();
-});
+}).AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
-builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-
-builder.Services.AddOpenIddict()
+services.AddOpenIddict()
     .AddCore(options =>
     {
         options.UseEntityFrameworkCore()
@@ -174,7 +89,7 @@ builder.Services.AddOpenIddict()
         options.UseAspNetCore();
     });
 
-builder.Services.AddHostedService<Worker>();
+services.AddHostedService<Worker>();
 
 var application = builder.Build();
 

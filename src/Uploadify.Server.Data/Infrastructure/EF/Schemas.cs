@@ -3,6 +3,6 @@
 public static class Schemas
 {
     public const string Application = nameof(Application);
-    public const string Files = nameof(Files);
+    public const string FileSystem = nameof(FileSystem);
     public const string OpenIdConnect = nameof(OpenIdConnect);
 }
