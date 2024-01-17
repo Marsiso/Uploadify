@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using OpenIddict.EntityFrameworkCore.Models;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Files.Models;
-using File = Uploadify.Server.Domain.Files.Models.File;
+using Uploadify.Server.Domain.FileSystem.Models;
+using File = Uploadify.Server.Domain.FileSystem.Models.File;
 
 namespace Uploadify.Server.Data.Infrastructure.EF;
 
@@ -17,7 +17,7 @@ public class DataContext : IdentityDbContext<User, Role, string, UserClaim, User
     public DbSet<CodeListItem> CodeListItems { get; set; } = null!;
     public DbSet<Folder> Folders { get; set; } = null!;
     public DbSet<File> Files { get; set; } = null!;
-    public DbSet<FileLink> FileLinks { get; set; } = null!;
+    public DbSet<SharedFile> SharedFiles { get; set; } = null!;
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {

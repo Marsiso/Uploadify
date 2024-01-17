@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Uploadify.Server.Data.Infrastructure;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Data.Infrastructure.EF.Helpers;
 using Uploadify.Server.Domain.Application.Models;

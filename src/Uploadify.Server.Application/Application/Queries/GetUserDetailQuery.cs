@@ -1,11 +1,9 @@
-﻿using Mapster;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Uploadify.Server.Application.Application.DataTransferObjects;
-using Uploadify.Server.Core.Application.Queries;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
@@ -92,7 +90,6 @@ public class GetUserDetailQueryResponse : BaseResponse
     {
         Status = Ok;
         User = user;
-        Failure = null;
     }
 
     public UserDetail? User { get; set; }

@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Models;
 
 namespace Uploadify.Server.ResourceServer.Infrastructure.Controllers.Models;
@@ -25,10 +26,8 @@ public class BaseApiController<TController> : ControllerBase where TController :
             return response.Status switch
             {
                 Status.Ok => Ok(response),
-                Status.Created => StatusCode((int)response.Status, response),
                 Status.NotFound => NotFound(response),
                 Status.BadRequest => BadRequest(response),
-                Status.ClientClosedRequest => StatusCode((int)response.Status, response),
                 Status.InternalServerError => HandleError(response, action),
                 _ => StatusCode((int)response.Status, response)
             };

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Uploadify.Server.Application.Authentication.DataTransferObjects;
+﻿using Uploadify.Server.Application.Authentication.DataTransferObjects;
 
 namespace Uploadify.Server.Application.Authentication.ViewModels;
 

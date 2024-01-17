@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Uploadify.Server.Application.Authentication.Helpers;
 using Uploadify.Server.Core.Application.Queries;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Localization;
+using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
 
@@ -50,7 +50,7 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
                 Exception = response.Failure.Exception,
                 Errors = new Dictionary<string, string[]>
                 {
-                    { nameof(request.UserName), new [] { Translations.Validations.InvalidCredentials } }
+                    { nameof(request.UserName), [Translations.Validations.InvalidLoginForm] }
                 }
             });
         }
@@ -62,7 +62,7 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
                 UserFriendlyMessage = Translations.RequestStatuses.Forbidden,
                 Errors = new Dictionary<string, string[]>
                 {
-                    { nameof(request.UserName), new [] { Translations.Validations.UserLockedOut } }
+                    { nameof(request.UserName), [Translations.Validations.UserLockedOut] }
                 }
             });
         }
@@ -81,7 +81,7 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
                 UserFriendlyMessage = Translations.RequestStatuses.Forbidden,
                 Errors = new Dictionary<string, string[]>
                 {
-                    { nameof(request.UserName), new [] { Translations.Validations.UserLockedOut } }
+                    { nameof(request.UserName), [Translations.Validations.UserLockedOut] }
                 }
             });
         }
@@ -93,7 +93,7 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
                 UserFriendlyMessage = Translations.RequestStatuses.Forbidden,
                 Errors = new Dictionary<string, string[]>
                 {
-                    { nameof(request.UserName), new [] { Translations.Validations.InvalidCredentials } }
+                    { nameof(request.UserName), [Translations.Validations.InvalidLoginForm] }
                 }
             });
         }
@@ -116,7 +116,6 @@ public class SignInPreProcessorCommandResponse : BaseResponse
     {
         Status = Status.Ok;
         User = user;
-        Failure = null;
     }
 
     public User? User { get; set; }

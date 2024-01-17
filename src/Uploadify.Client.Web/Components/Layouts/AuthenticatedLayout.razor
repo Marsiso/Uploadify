@@ -27,10 +27,10 @@
                         <MudMenuItem Disabled="true" Icon="@Icons.Material.Rounded.Email" IconColor="Color.Primary">
                             @AuthenticationState.User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.Email)?.Value
                         </MudMenuItem>
-                        <MudMenuItem Icon="@Icons.Material.Rounded.AccountBox" IconColor="Color.Primary" Href="@PageRoutes.Account">
+                        <MudMenuItem Icon="@Icons.Material.Rounded.AccountBox" IconColor="Color.Primary" Href="@PageRoutes.Profile">
                             <MudText>Profil</MudText>
                         </MudMenuItem>
-                        <form method="post" action="@ApiRoutes.Account.LogOut">
+                        <form method="post" action="@ApiRoutes.LogOut">
                             <AntiForgeryTokenInput/>
                             <button type="submit">
                                 <MudMenuItem Icon="@Icons.Material.Rounded.Logout" IconColor="Color.Primary" AutoClose="false">Odhlásit se</MudMenuItem>

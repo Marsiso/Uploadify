@@ -11,7 +11,7 @@ using OpenIddict.Server.AspNetCore;
 using Uploadify.Server.Application.Authentication.Helpers;
 using Uploadify.Server.Application.Authentication.ViewModels;
 using Uploadify.Server.Application.Authorization.Helpers;
-using Uploadify.Server.Core.Infrastructure.Types.Extensions;
+using Uploadify.Server.Core.Infrastructure.Extensions;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.IdentityServer.Infrastructure.Routing.Filters;
 
