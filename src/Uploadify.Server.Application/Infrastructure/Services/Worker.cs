@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenIddict.Abstractions;
+using Uploadify.Authorization.Models;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Constants;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Authorization.Constants;
-using Uploadify.Server.Domain.Authorization.Models;
 using Uploadify.Server.Domain.Infrastructure.Services;
 
 namespace Uploadify.Server.Application.Infrastructure.Services;

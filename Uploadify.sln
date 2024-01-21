@@ -32,6 +32,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Client.Integratio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.ResourceServer", "src\Uploadify.Server.ResourceServer\Uploadify.Server.ResourceServer.csproj", "{54E18DF9-EBDD-4F34-A6D2-A24848106673}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A3B3410A-DB8F-4AB1-B09F-B905F8CC96CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Authorization", "libs\Uploadify.Authorization\Uploadify.Authorization.csproj", "{515498B9-5A26-4871-9838-40ED7F69018B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Authorization.Components", "libs\Uploadify.Authorization.Components\Uploadify.Authorization.Components.csproj", "{C7366DA3-C09F-4C53-92EF-9B617E4FB625}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +58,8 @@ Global
 		{F12BF95D-089C-4626-BC15-2816DC11E4F6} = {8EF54A91-BBE5-40E0-B310-225B2FC7E615}
 		{E75BA63A-BB60-4F9A-951A-72117F1E14A0} = {8EF54A91-BBE5-40E0-B310-225B2FC7E615}
 		{54E18DF9-EBDD-4F34-A6D2-A24848106673} = {D8E95E4D-3D8C-45BD-9011-00009B3920EF}
+		{515498B9-5A26-4871-9838-40ED7F69018B} = {A3B3410A-DB8F-4AB1-B09F-B905F8CC96CF}
+		{C7366DA3-C09F-4C53-92EF-9B617E4FB625} = {A3B3410A-DB8F-4AB1-B09F-B905F8CC96CF}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C30B26C4-8525-45A4-8FB2-8914CE275859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -102,5 +110,13 @@ Global
 		{54E18DF9-EBDD-4F34-A6D2-A24848106673}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54E18DF9-EBDD-4F34-A6D2-A24848106673}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54E18DF9-EBDD-4F34-A6D2-A24848106673}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515498B9-5A26-4871-9838-40ED7F69018B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515498B9-5A26-4871-9838-40ED7F69018B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515498B9-5A26-4871-9838-40ED7F69018B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515498B9-5A26-4871-9838-40ED7F69018B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7366DA3-C09F-4C53-92EF-9B617E4FB625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7366DA3-C09F-4C53-92EF-9B617E4FB625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7366DA3-C09F-4C53-92EF-9B617E4FB625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7366DA3-C09F-4C53-92EF-9B617E4FB625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

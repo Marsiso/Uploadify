@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using OpenIddict.Abstractions;
+using Uploadify.Authorization.Constants;
 using Uploadify.Server.Domain.Authorization.Constants;
 
 namespace Uploadify.Server.Application.Authorization.Helpers;
@@ -51,7 +52,7 @@ public static class AuthorizationHelpers
                 yield break;
 
             case OpenIddictConstants.Claims.Role:
-            case Claims.Permission:
+            case Permissions.Claims.Permission:
                 yield return OpenIddictConstants.Destinations.AccessToken;
 
                 if (claim.Subject.HasScope(Scopes.Roles))

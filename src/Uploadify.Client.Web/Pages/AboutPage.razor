@@ -1,7 +1,6 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@using Uploadify.Client.Domain.Routing.Constants
+﻿@using Uploadify.Client.Domain.Routing.Constants
 
-@attribute [Authorize]
+@attribute [Permission]
 @attribute [Route(PageRoutes.About)]
 
 <PageTitle>About</PageTitle>

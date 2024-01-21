@@ -60,7 +60,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "ApiClientResponse",
-      "namespace": "Uploadify.Client.Integration.ResourceServer",
+      "namespace": "Uploadify.Client.Integration.Resources",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
       "jsonConverters": null,

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using OpenIddict.Abstractions;
+using Uploadify.Authorization.Constants;
 using Uploadify.Client.Domain.Authentication.Models;
 
 namespace Uploadify.Client.Application.Authentication.Helpers;
@@ -47,6 +48,7 @@ public static class AuthenticationHelpers
                 case OpenIddictConstants.Claims.EmailVerified:
                 case OpenIddictConstants.Claims.PhoneNumber:
                 case OpenIddictConstants.Claims.PhoneNumberVerified:
+                case Permissions.Claims.Permission:
                     claims.Add(new ClaimValue(claim.Type, claim.Value));
                     continue;
             }
@@ -72,6 +74,6 @@ public static class AuthenticationHelpers
         identity.SetClaim(OpenIddictConstants.Claims.Name, principal.GetClaim(OpenIddictConstants.Claims.Name));
         identity.SetClaim(OpenIddictConstants.Claims.GivenName, principal.GetClaim(OpenIddictConstants.Claims.GivenName));
         identity.SetClaim(OpenIddictConstants.Claims.FamilyName, principal.GetClaim(OpenIddictConstants.Claims.FamilyName));
-        identity.SetClaim("permission", principal.GetClaim("permission"));
+        identity.SetClaim(Permissions.Claims.Permission, principal.GetClaim(Permissions.Claims.Permission));
     }
 }

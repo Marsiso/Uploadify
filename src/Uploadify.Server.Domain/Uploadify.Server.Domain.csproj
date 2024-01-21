@@ -16,4 +16,8 @@
       <Folder Include="Common\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\libs\Uploadify.Authorization\Uploadify.Authorization.csproj" />
+    </ItemGroup>
+
 </Project>
