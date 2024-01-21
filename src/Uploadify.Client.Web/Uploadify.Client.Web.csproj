@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\libs\Uploadify.Authorization.Components\Uploadify.Authorization.Components.csproj" />
       <ProjectReference Include="..\Uploadify.Client.Application\Uploadify.Client.Application.csproj" />
     </ItemGroup>
 

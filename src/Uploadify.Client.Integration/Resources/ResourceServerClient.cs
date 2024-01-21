@@ -1,4 +1,4 @@
-﻿namespace Uploadify.Client.Integration.ResourceServer;
+﻿namespace Uploadify.Client.Integration.Resources;
 
 public partial class ResourceServerClient;
 

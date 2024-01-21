@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using CommunityToolkit.Diagnostics;
 using OpenIddict.Abstractions;
+using Uploadify.Authorization.Constants;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Authorization.Constants;
 
@@ -9,11 +10,10 @@ namespace Uploadify.Server.Application.Authentication.Helpers;
 
 public static class AuthenticationHelpers
 {
-    public static IEnumerable<Claim> GetClaims(User user)
+    public static IEnumerable<Claim> GetClaims(User user, IEnumerable<Role> roles)
     {
         Guard.IsNotNull(user);
-
-        var claims = new List<Claim>
+        return new List<Claim>
         {
             new Claim(OpenIddictConstants.Claims.Subject, user.Id),
             new Claim(OpenIddictConstants.Claims.PhoneNumber, user.PhoneNumber),
@@ -23,14 +23,8 @@ public static class AuthenticationHelpers
             new Claim(OpenIddictConstants.Claims.FamilyName, user.FamilyName),
             new Claim(OpenIddictConstants.Claims.Email, user.Email),
             new Claim(OpenIddictConstants.Claims.EmailVerified, user.EmailConfirmed.ToString()),
-            new Claim(OpenIddictConstants.Claims.UpdatedAt, user.DateUpdated.ToString(CultureInfo.InvariantCulture))
+            new Claim(OpenIddictConstants.Claims.UpdatedAt, user.DateUpdated.ToString(CultureInfo.InvariantCulture)),
+            new Claim(Permissions.Claims.Permission, roles.Select(role => (int)role.Permission).Aggregate(0, (l, r) => l | r).ToString())
         };
-
-        if (user.Roles != null)
-        {
-            claims.Add(new Claim(Claims.Permission, user.Roles.Select(assignment => (int)assignment.Role.Permission).Aggregate(0, (l, r) => l | r).ToString()));
-        }
-
-        return claims;
     }
 }

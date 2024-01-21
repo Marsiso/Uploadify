@@ -9,26 +9,27 @@ using Microsoft.JSInterop;
 using MudBlazor.Services;
 using Polly;
 using Polly.Extensions.Http;
+using Uploadify.Authorization.Extensions;
 using Uploadify.Client.Application.Authentication.Services;
 using Uploadify.Client.Application.Authorization.Services;
 using Uploadify.Client.Core.Infrastructure.Services;
 using Uploadify.Client.Web;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+var services = builder.Services;
 
-builder.Services.AddSingleton(builder.HostEnvironment);
+services.AddSingleton(builder.HostEnvironment)
+    .AddOptions()
+    .AddMudServices()
+    .AddTransient<AuthorizedHandler>()
+    .AddPermissions();
 
-builder.Services.AddMudServices();
-
-builder.Services.AddOptions();
-builder.Services.AddAuthorizationCore();
-builder.Services.TryAddSingleton<AuthenticationStateProvider, HostAuthenticationStateProvider>();
-builder.Services.TryAddSingleton(provider => (HostAuthenticationStateProvider) provider.GetRequiredService<AuthenticationStateProvider>());
-builder.Services.AddTransient<AuthorizedHandler>();
+services.TryAddSingleton<AuthenticationStateProvider, HostAuthenticationStateProvider>();
+services.TryAddSingleton(provider => (HostAuthenticationStateProvider) provider.GetRequiredService<AuthenticationStateProvider>());
 
 builder.RootComponents.Add<App>("#app");
 
-builder.Services.AddHttpClient("default", client =>
+services.AddHttpClient("default", client =>
 {
     client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
@@ -36,7 +37,7 @@ builder.Services.AddHttpClient("default", client =>
     .AddPolicyHandler(GetCircuitBreakerPolicy())
     .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
-builder.Services.AddHttpClient("authorizedClient", client =>
+services.AddHttpClient("authorizedClient", client =>
 {
     client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
@@ -45,8 +46,8 @@ builder.Services.AddHttpClient("authorizedClient", client =>
     .AddPolicyHandler(GetCircuitBreakerPolicy())
     .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
-builder.Services.AddOptions<ApiCallWrapperOptions>().Configure(options => options.IsDevelopment = builder.HostEnvironment.IsDevelopment());
-builder.Services.AddSingleton(serviceProvider =>
+services.AddOptions<ApiCallWrapperOptions>().Configure(options => options.IsDevelopment = builder.HostEnvironment.IsDevelopment());
+services.AddSingleton(serviceProvider =>
 {
     var javascriptRuntime = serviceProvider.GetRequiredService<IJSRuntime>();
     var token = ((IJSInProcessRuntime)javascriptRuntime).Invoke<string>("getAntiForgeryToken");
@@ -62,7 +63,7 @@ builder.Services.AddSingleton(serviceProvider =>
         serviceProvider.GetRequiredService<ILogger<ApiCallWrapper>>());
 });
 
-builder.Services.AddTransient(provider => provider.GetRequiredService<IHttpClientFactory>().CreateClient("default"));
+services.AddTransient(provider => provider.GetRequiredService<IHttpClientFactory>().CreateClient("default"));
 
 var host = builder.Build();
 

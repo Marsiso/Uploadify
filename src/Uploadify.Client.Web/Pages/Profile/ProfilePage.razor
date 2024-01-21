@@ -1,10 +1,9 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@using OpenIddict.Abstractions
+﻿@using OpenIddict.Abstractions
 @using Uploadify.Client.Core.Infrastructure.Services
 @using Uploadify.Client.Domain.Routing.Constants
-@using Uploadify.Client.Integration.ResourceServer
+@using Uploadify.Client.Integration.Resources
 
-@attribute [Authorize]
+@attribute [Permission]
 @attribute [Route(PageRoutes.Profile)]
 
 @inject ApiCallWrapper ApiCallWrapper

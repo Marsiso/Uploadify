@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Uploadify.Client.Integration.ResourceServer;
+using Uploadify.Client.Integration.Resources;
 
 namespace Uploadify.Client.Core.Infrastructure.Services;
 

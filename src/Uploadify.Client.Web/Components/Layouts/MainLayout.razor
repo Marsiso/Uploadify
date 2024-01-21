@@ -1,13 +1,14 @@
 ﻿@using Uploadify.Client.Application.Utilities.Constants
+
 @inherits LayoutComponentBase
 
 <MudThemeProvider Theme="Themes.DefaultTheme" IsDarkMode="true"/>
 
-<AuthorizeView>
+<PermissionView>
     <Authorized>
         <AuthenticatedLayout Body="@Body"/>
     </Authorized>
     <NotAuthorized>
         <UnathenticatedLayout Body="@Body"/>
     </NotAuthorized>
-</AuthorizeView>
+</PermissionView>

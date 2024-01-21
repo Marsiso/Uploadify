@@ -23,6 +23,7 @@ public class AuthorizationController : Controller
     private readonly IOpenIddictAuthorizationManager _authorizationManager;
     private readonly IOpenIddictScopeManager _scopeManager;
     private readonly SignInManager<User> _signInManager;
+    private readonly RoleManager<Role> _roleManager;
     private readonly UserManager<User> _userManager;
 
     public AuthorizationController(
@@ -30,12 +31,14 @@ public class AuthorizationController : Controller
         IOpenIddictAuthorizationManager authorizationManager,
         IOpenIddictScopeManager scopeManager,
         SignInManager<User> signInManager,
+        RoleManager<Role> roleManager,
         UserManager<User> userManager)
     {
         _applicationManager = applicationManager;
         _authorizationManager = authorizationManager;
         _scopeManager = scopeManager;
         _signInManager = signInManager;
+        _roleManager = roleManager;
         _userManager = userManager;
     }
 
@@ -104,7 +107,17 @@ public class AuthorizationController : Controller
                     nameType: OpenIddictConstants.Claims.Name,
                     roleType: OpenIddictConstants.Claims.Role);
 
-                foreach (var claim in AuthenticationHelpers.GetClaims(user)) // TODO: BLBOST
+                var roles = new List<Role>();
+                foreach (var roleName in await _userManager.GetRolesAsync(user))
+                {
+                    var role = await _roleManager.FindByNameAsync(roleName);
+                    if (role != null)
+                    {
+                        roles.Add(role);
+                    }
+                }
+
+                foreach (var claim in AuthenticationHelpers.GetClaims(user, roles)) // TODO: BLBOST
                 {
                     identity.SetClaim(claim.Type, claim.Value);
                 }
@@ -153,6 +166,16 @@ public class AuthorizationController : Controller
         var request = HttpContext.GetOpenIddictServerRequest() ?? throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
         var user = await _userManager.GetUserAsync(User) ?? throw new InvalidOperationException("The user details cannot be retrieved.");
 
+        var roles = new List<Role>();
+        foreach (var roleName in await _userManager.GetRolesAsync(user))
+        {
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role != null)
+            {
+                roles.Add(role);
+            }
+        }
+
         var application = await _applicationManager.FindByClientIdAsync(request.ClientId) ?? throw new InvalidOperationException("Details concerning the calling client application cannot be found.");
 
         var authorizations = await _authorizationManager.FindAsync(
@@ -178,9 +201,7 @@ public class AuthorizationController : Controller
             nameType: OpenIddictConstants.Claims.Name,
             roleType: OpenIddictConstants.Claims.Role);
 
-        ;
-
-        foreach (var claim in AuthenticationHelpers.GetClaims(user))
+        foreach (var claim in AuthenticationHelpers.GetClaims(user, roles))
         {
             identity.SetClaim(claim.Type, claim.Value);
         }
@@ -265,7 +286,17 @@ public class AuthorizationController : Controller
                 nameType: OpenIddictConstants.Claims.Name,
                 roleType: OpenIddictConstants.Claims.Role);
 
-            foreach (var claim in AuthenticationHelpers.GetClaims(user))
+            var roles = new List<Role>();
+            foreach (var roleName in await _userManager.GetRolesAsync(user))
+            {
+                var role = await _roleManager.FindByNameAsync(roleName);
+                if (role != null)
+                {
+                    roles.Add(role);
+                }
+            }
+
+            foreach (var claim in AuthenticationHelpers.GetClaims(user, roles))
             {
                 identity.SetClaim(claim.Type, claim.Value);
             }

@@ -1,5 +1,6 @@
 using NSwag;
 using OpenIddict.Validation.AspNetCore;
+using Uploadify.Authorization.Extensions;
 using Uploadify.Server.Application.Infrastructure.Extensions;
 using Uploadify.Server.Domain.Infrastructure.Services;
 
@@ -50,7 +51,7 @@ services.AddOpenIddict()
     });
 
 services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
-services.AddAuthorization();
+services.AddPermissions();
 
 var application = builder.Build();
 

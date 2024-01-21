@@ -1,4 +1,4 @@
-﻿namespace Uploadify.Server.Domain.Authorization.Models;
+﻿namespace Uploadify.Authorization.Models;
 
 [Flags]
 public enum Permission
