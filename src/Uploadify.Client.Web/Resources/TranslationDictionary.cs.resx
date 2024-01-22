@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="pages.dashboard.title" xml:space="preserve">
+        <value>Moje soubory</value>
+    </data>
+    <data name="pages.detail.title" xml:space="preserve">
+        <value>Podrobnosti o souboru</value>
+    </data>
+    <data name="common.app_name" xml:space="preserve">
+        <value>Uploadify</value>
+    </data>
+    <data name="components.authenticated_layout.about_link" xml:space="preserve">
+        <value>O aplikaci</value>
+    </data>
+    <data name="components.authenticated_layout.dashboard_link" xml:space="preserve">
+        <value>Moje soubory</value>
+    </data>
+    <data name="components.authenticated_layout.email_label" xml:space="preserve">
+        <value>Email</value>
+    </data>
+    <data name="components.authenticated_layout.fullname_label" xml:space="preserve">
+        <value>Celé jméno</value>
+    </data>
+    <data name="components.authenticated_layout.logout_button" xml:space="preserve">
+        <value>Odhlásit se</value>
+    </data>
+    <data name="components.authenticated_layout.management_link" xml:space="preserve">
+        <value>Správa aplikace</value>
+    </data>
+    <data name="components.authenticated_layout.profile_link" xml:space="preserve">
+        <value>Profil</value>
+    </data>
+    <data name="components.authenticated_layout.shared_link" xml:space="preserve">
+        <value>Sdíleno se mnou</value>
+    </data>
+    <data name="components.authenticated_layout.privacy_link" xml:space="preserve">
+        <value>Soukromí</value>
+    </data>
+    <data name="pages.about.sections.first" xml:space="preserve">
+        <value>V dnešním proměnlivém světě informačních technologií je často pozornost soustředěna na rozsáhlé projekty vyvíjené velkými týmy. Avšak tato bakalářská práce se vydává směrem, zdůrazňujícím význam individuálního přínosu a inovace. Cílem je vytvořit projekt, který se neomezí konvenčními licenčními restrikcemi, a nabídnout místo toho řešení pod licencí typu MIT nebo lesser GNU, podporujíc tak svobodný přístup a širší aplikaci v akademické a vývojářské komunitě.</value>
+    </data>
+    <data name="pages.about.sections.second" xml:space="preserve">
+        <value>Záměrem je rovněž prohloubit odborné znalosti a dovednosti v technologii .NET, přičemž se klade důraz na vytváření robustní struktury projektu. V rámci toho se práce zaměří na vrstvenou architekturu, zahrnující domény, data, jádro, aplikaci, RESTful API a další klíčové komponenty. Zásadní význam je přikládán bezpečnostním aspektům, včetně pokročilých metod zabezpečení jako implementace standardů OAuth2 a OpenID Connect, hashování a ověřování hesel, a obrana proti běžným bezpečnostním hrozbám, jako jsou SQL injection, XSS a CSRF.</value>
+    </data>
+    <data name="pages.about.sections.third" xml:space="preserve">
+        <value>Inovace návrhových vzorů je dalším zásadním bodem, přičemž se práce neomezí na tradiční metodologie, ale začlení pokročilé vzory jako CQRS a zásady jako dependency injection, což představuje významný posun od konvenčních přístupů. V oblasti RESTful API se práce nejen zaměří na základní implementace, ale také představí OpenAPI specifikaci a zkoumá možnosti cachování dat a omezení rychlosti požadavků.</value>
+    </data>
+    <data name="pages.about.sections.fourth" xml:space="preserve">
+        <value>Zvláštní pozornost je věnována také WASM, jako jednomu ze čtyř nativně podporovaných jazyků v prohlížeči, přičemž se zkoumá jeho potenciál a integrace v .NET, zejména prostřednictvím nástrojů jako Blazor. Práce dále podtrhuje význam pečlivého unit testování v .NET, což zdůrazňuje nezbytnost spolehlivosti a odolnosti softwaru.</value>
+    </data>
+    <data name="pages.about.sections.fifth" xml:space="preserve">
+        <value>Konečně, tato disertace přezkoumá strategie pro efektivní nasazení aplikací, včetně použití moderních nástrojů a platforem jako Docker. Tímto způsobem tato bakalářská práce demonstruje, že i v rámci individuálního akademického výzkumu lze dosáhnout významného pokroku a inovace, často opomíjených ve větších, komerčně řízených projektech. Práce tak nabízí svěží a komplexní pohled na informační technologie, zdůrazňující potenciál pro hluboké odborné pochopení a praktické uplatnění teoretických znalostí.</value>
+    </data>
+    <data name="pages.about.title" xml:space="preserve">
+        <value>O aplikaci</value>
+    </data>
+    <data name="pages.privacy.description" xml:space="preserve">
+        <value>Vaše data jsou u nás v bezpečí. Zavazujeme se chránit vaše osobní informace a používat je pouze v souladu s našimi zásadami ochrany soukromí a platnými zákony. Zde naleznete podrobnosti o tom, jak shromažďujeme, používáme a chráníme vaše údaje.</value>
+    </data>
+    <data name="pages.privacy.title" xml:space="preserve">
+        <value>Soukromí</value>
+    </data>
+    <data name="pages.profile.description" xml:space="preserve">
+        <value>Zde naleznete a můžete upravit své osobní informace. Udržujte své kontaktní údaje aktuální, aby byla komunikace hladká a efektivní.</value>
+    </data>
+    <data name="pages.profile.title" xml:space="preserve">
+        <value>Profil</value>
+    </data>
+    <data name="pages.management.description" xml:space="preserve">
+        <value>Jednoduché a rychlé nastavení oprávnění pro vaši aplikaci.</value>
+    </data>
+    <data name="pages.management.title" xml:space="preserve">
+        <value>Spravovat uživatele a oprávnění</value>
+    </data>
+    <data name="pages.management.users.label" xml:space="preserve">
+        <value>Správa uživatelů</value>
+    </data>
+    <data name="pages.management.permissions.label" xml:space="preserve">
+        <value>Správa oprávnění</value>
+    </data>
+    <data name="pages.management.users.description" xml:space="preserve">
+        <value>Procházejte a spravujte uživatelské účty nebo sledujte aktivitu.</value>
+    </data>
+    <data name="pages.management.permissions.description" xml:space="preserve">
+        <value>Definujte různé úrovně přístupu a přiřaďte oprávnění podle potřeby vaší aplikace.</value>
+    </data>
+    <data name="pages.shared.title" xml:space="preserve">
+        <value>Sdíleno se mnou</value>
+    </data>
+    <data name="pages.profile.username_label" xml:space="preserve">
+        <value>Přihlašovací jméno</value>
+    </data>
+    <data name="pages.profile.email_label" xml:space="preserve">
+        <value>Email</value>
+    </data>
+    <data name="pages.profile.given_name_label" xml:space="preserve">
+        <value>Jméno</value>
+    </data>
+    <data name="pages.profile.family_name_label" xml:space="preserve">
+        <value>Příjmení</value>
+    </data>
+    <data name="pages.profile.phone_label" xml:space="preserve">
+        <value>Telefon</value>
+    </data>
+</root>

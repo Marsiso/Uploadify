@@ -1,6 +1,5 @@
 ﻿@using OpenIddict.Abstractions
 @using Uploadify.Client.Core.Infrastructure.Services
-@using Uploadify.Client.Domain.Routing.Constants
 @using Uploadify.Client.Integration.Resources
 
 @attribute [Permission]
@@ -8,18 +7,19 @@
 
 @inject ApiCallWrapper ApiCallWrapper
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStringLocalizer<TranslationDictionary> Localizer
 
-<PageTitle>Profil uživatele</PageTitle>
-<MudText Typo="Typo.h1">Profil uživatele</MudText>
-<MudText Typo="Typo.body1" Class="mt-4">Zde naleznete a můžete upravit své osobní informace. Udržujte své kontaktní údaje aktuální, aby byla komunikace hladká a efektivní.</MudText>
+<PageTitle>@Localizer[Translations.Pages.Profile.Title]</PageTitle>
+<MudText Typo="Typo.h1">@Localizer[Translations.Pages.Profile.Title]</MudText>
+<MudText Typo="Typo.body1" Class="mt-4">@Localizer[Translations.Pages.Profile.Description]</MudText>
 @if (User != null)
 {
     <MudForm Class="mt-8" ReadOnly="true">
-        <MudTextField T="string" Label="Login" Value="@User.UserName" DisableUnderLine="true"/>
-        <MudTextField T="string" Label="Email" Value="@User.Email" DisableUnderLine="true" Adornment="@(User.EmailConfirmed is true ? Adornment.End : Adornment.None)" AdornmentIcon="@Icons.Material.Rounded.Verified" IconSize="Size.Small"/>
-        <MudTextField T="string" Label="Telefon" Value="@User.PhoneNumber" DisableUnderLine="true" Adornment="@(User.PhoneNumberConfirmed is true ? Adornment.End : Adornment.None)" AdornmentIcon="@Icons.Material.Rounded.Verified" IconSize="Size.Small"/>
-        <MudTextField T="string" Label="Jméno" Value="@User.GivenName" DisableUnderLine="true"/>
-        <MudTextField T="string" Label="Příjmení" Value="@User.FamilyName" DisableUnderLine="true"/>
+        <MudTextField T="string" Label="@Localizer[Translations.Pages.Profile.UserNameLabel]" Value="@User.UserName" DisableUnderLine="true"/>
+        <MudTextField T="string" Label="@Localizer[Translations.Pages.Profile.EmailLabel]" Value="@User.Email" DisableUnderLine="true" Adornment="@(User.EmailConfirmed is true ? Adornment.End : Adornment.None)" AdornmentIcon="@Icons.Material.Rounded.Verified" IconSize="Size.Small"/>
+        <MudTextField T="string" Label="@Localizer[Translations.Pages.Profile.PhoneLabel]" Value="@User.PhoneNumber" DisableUnderLine="true" Adornment="@(User.PhoneNumberConfirmed is true ? Adornment.End : Adornment.None)" AdornmentIcon="@Icons.Material.Rounded.Verified" IconSize="Size.Small"/>
+        <MudTextField T="string" Label="@Localizer[Translations.Pages.Profile.GivenNameLabel]" Value="@User.GivenName" DisableUnderLine="true"/>
+        <MudTextField T="string" Label="@Localizer[Translations.Pages.Profile.FamilyNameLabel]" Value="@User.FamilyName" DisableUnderLine="true"/>
     </MudForm>
 }
 

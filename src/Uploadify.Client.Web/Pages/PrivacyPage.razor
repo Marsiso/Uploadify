@@ -1,12 +1,8 @@
-﻿@using Uploadify.Client.Domain.Routing.Constants
-
-@attribute [Permission]
+﻿@attribute [Permission]
 @attribute [Route(PageRoutes.Privacy)]
 
-<PageTitle>Privacy</PageTitle>
-<MudText Typo="Typo.h1">Soukromí</MudText>
-<MudText Typo="Typo.body1" Class="mt-4">
-    Vaše data jsou u nás v bezpečí.
-    Zavazujeme se chránit vaše osobní informace a používat je pouze v souladu s našimi zásadami ochrany soukromí a platnými zákony.
-    Zde naleznete podrobnosti o tom, jak shromažďujeme, používáme a chráníme vaše údaje.
-</MudText>
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<PageTitle>@Localizer[Translations.Pages.Privacy.Title]</PageTitle>
+<MudText Typo="Typo.h1">@Localizer[Translations.Pages.Privacy.Title]</MudText>
+<MudText Typo="Typo.body1" Class="mt-4">@Localizer[Translations.Pages.Privacy.Description]</MudText>

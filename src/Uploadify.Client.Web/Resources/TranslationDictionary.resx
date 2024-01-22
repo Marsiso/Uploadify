@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="pages.dashboard.title" xml:space="preserve">
+        <value>My files</value>
+    </data>
+    <data name="pages.detail.title" xml:space="preserve">
+        <value>File details</value>
+    </data>
+    <data name="common.app_name" xml:space="preserve">
+        <value>Uploadify</value>
+    </data>
+    <data name="components.authenticated_layout.profile_link" xml:space="preserve">
+        <value>Profile</value>
+    </data>
+    <data name="components.authenticated_layout.fullname_label" xml:space="preserve">
+        <value>Fullname</value>
+    </data>
+    <data name="components.authenticated_layout.email_label" xml:space="preserve">
+        <value>Email</value>
+    </data>
+    <data name="components.authenticated_layout.logout_button" xml:space="preserve">
+        <value>Log out</value>
+    </data>
+    <data name="components.authenticated_layout.dashboard_link" xml:space="preserve">
+        <value>My files</value>
+    </data>
+    <data name="components.authenticated_layout.shared_link" xml:space="preserve">
+        <value>Shared with me</value>
+    </data>
+    <data name="components.authenticated_layout.about_link" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="components.authenticated_layout.management_link" xml:space="preserve">
+        <value>Manage application</value>
+    </data>
+    <data name="components.authenticated_layout.privacy_link" xml:space="preserve">
+        <value>Privacy</value>
+    </data>
+    <data name="pages.about.sections.first" xml:space="preserve">
+        <value>In the modern, ever-changing world of information technology, attention is often directed towards large-scale projects developed by large teams. Nevertheless, this bachelor thesis takes a direction that emphasizes the significance of individual contribution and innovation. The goal is to create a project that is not constrained by conventional licensing constraints, and instead offers a solution under an MIT or lesser GNU license, encouraging free access and wider application in the academic and development community.</value>
+    </data>
+    <data name="pages.about.sections.second" xml:space="preserve">
+        <value>The purpose is also to deepen expertise and proficiency in .NET technology, with an emphasis on creating a robust project structure. Within this, the project will focus on layered architecture, including domains, data, core, application, RESTful APIs and other key components. Significant effort is given to security considerations, including advanced security measures such as the implementation of OAuth2 and OpenID Connect standards, password hashing and authentication, and defenses against common security threats such as SQL injection, XSS, and CSRF.</value>
+    </data>
+    <data name="pages.about.sections.third" xml:space="preserve">
+        <value>The innovation of design patterns is another crucial point, and the work will not be focused on traditional approaches, but will incorporate advanced patterns such as CQRS and patterns such as dependency injection, representing a significant departure from conventional approaches. In the area of RESTful APIs, the thesis will not only focus on fundamental implementations, but also introduce the OpenAPI specification and explore the possibilities of data caching and request rate limiting.</value>
+    </data>
+    <data name="pages.about.title" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="pages.about.sections.fifth" xml:space="preserve">
+        <value>Finally, this dissertation will review strategies for deploying applications effectively, including the use of modern tools and platforms such as Docker. In this way, this thesis demonstrates that even within individual academic research, significant progress and innovation can be achieved, often overlooked in larger, commercially driven projects. The thesis thus offers a fresh and comprehensive perspective on information technology, highlighting the potential for deep professional understanding and practical application of theoretical knowledge.</value>
+    </data>
+    <data name="pages.about.sections.fourth" xml:space="preserve">
+        <value>Particular attention is also devoted to WASM, as one of the four natively supported languages in the browser, exploring its capabilities and integration in .NET, especially through tools such as Blazor. The work also emphasizes the significance of rigorous unit testing in .NET, highlighting the necessity of software reliability and resilience.</value>
+    </data>
+    <data name="pages.privacy.title" xml:space="preserve">
+        <value>Privacy</value>
+    </data>
+    <data name="pages.privacy.description" xml:space="preserve">
+        <value>Your data is safe with us. We are committed to protecting your personal information and using it only in accordance with our privacy policy and applicable laws. Here you will find details of how we collect, use and protect your information.</value>
+    </data>
+    <data name="pages.profile.title" xml:space="preserve">
+        <value>Profile</value>
+    </data>
+    <data name="pages.profile.description" xml:space="preserve">
+        <value>Here you can find and edit your personal information. Keep your contact information up to date to ensure efficient and seamless communication.</value>
+    </data>
+    <data name="pages.management.title" xml:space="preserve">
+        <value>Manage users and permissions</value>
+    </data>
+    <data name="pages.management.description" xml:space="preserve">
+        <value>Simple and rapid setup of permissions for your application.</value>
+    </data>
+    <data name="pages.management.users.label" xml:space="preserve">
+        <value>Manager users</value>
+    </data>
+    <data name="pages.management.users.description" xml:space="preserve">
+        <value>Browse and manage user accounts or monitor activity.</value>
+    </data>
+    <data name="pages.management.permissions.label" xml:space="preserve">
+        <value>Manage permissions </value>
+    </data>
+    <data name="pages.management.permissions.description" xml:space="preserve">
+        <value>Define various tiers of access and assign permissions according to the requirements of your application.</value>
+    </data>
+    <data name="pages.shared.title" xml:space="preserve">
+        <value>Shared with me</value>
+    </data>
+    <data name="pages.shared.description" xml:space="preserve">
+        <value />
+    </data>
+    <data name="pages.profile.username_label" xml:space="preserve">
+        <value>Login</value>
+    </data>
+    <data name="pages.profile.email_label" xml:space="preserve">
+        <value>Email</value>
+    </data>
+    <data name="pages.profile.given_name_label" xml:space="preserve">
+        <value>Given name</value>
+    </data>
+    <data name="pages.profile.family_name_label" xml:space="preserve">
+        <value>Family name</value>
+    </data>
+    <data name="pages.profile.phone_label" xml:space="preserve">
+        <value>Phone</value>
+    </data>
+</root>

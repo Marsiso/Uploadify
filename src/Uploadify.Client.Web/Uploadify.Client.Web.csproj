@@ -20,7 +20,27 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Properties\launchSettings.json" />
+      <EmbeddedResource Update="Resources\TranslationDictionary.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>TranslationDictionary.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\TranslationDictionary.cs.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>TranslationDictionary.cs.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\TranslationDictionary.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>TranslationDictionary.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\TranslationDictionary.cs.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>TranslationDictionary.cs.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
