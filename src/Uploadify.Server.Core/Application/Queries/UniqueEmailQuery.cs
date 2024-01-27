@@ -7,12 +7,13 @@ using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
 using static System.String;
+using static Uploadify.Server.Domain.Requests.Models.Status;
 
 namespace Uploadify.Server.Core.Application.Queries;
 
-public class UniqueEmailValidationQuery : BaseRequest<UniqueEmailValidationQueryResponse>, IQuery<UniqueEmailValidationQueryResponse>
+public class UniqueEmailQuery : BaseRequest<UniqueEmailQueryResponse>, IQuery<UniqueEmailQueryResponse>
 {
-    public UniqueEmailValidationQuery(string? email)
+    public UniqueEmailQuery(string? email)
     {
         Email = email;
     }
@@ -20,7 +21,7 @@ public class UniqueEmailValidationQuery : BaseRequest<UniqueEmailValidationQuery
     public string? Email { get; set; }
 }
 
-public class UniqueEmailValidationQueryHandler : IQueryHandler<UniqueEmailValidationQuery, UniqueEmailValidationQueryResponse>
+public class UniqueEmailQueryHandler : IQueryHandler<UniqueEmailQuery, UniqueEmailQueryResponse>
 {
     private static readonly Func<DataContext, string, Task<bool>> Query = EF.CompileAsyncQuery((DataContext context, string email) =>
         context.Users.Any(user => user.NormalizedEmail == email));
@@ -28,40 +29,40 @@ public class UniqueEmailValidationQueryHandler : IQueryHandler<UniqueEmailValida
     private readonly DataContext _context;
     private readonly ILookupNormalizer _normalizer;
 
-    public UniqueEmailValidationQueryHandler(DataContext context, ILookupNormalizer normalizer)
+    public UniqueEmailQueryHandler(DataContext context, ILookupNormalizer normalizer)
     {
         _context = context;
         _normalizer = normalizer;
     }
 
-    public async Task<UniqueEmailValidationQueryResponse> Handle(UniqueEmailValidationQuery request, CancellationToken cancellationToken)
+    public async Task<UniqueEmailQueryResponse> Handle(UniqueEmailQuery request, CancellationToken cancellationToken)
     {
         if (IsNullOrWhiteSpace(request.Email))
         {
-            return new UniqueEmailValidationQueryResponse(Status.BadRequest, new RequestFailure
+            return new UniqueEmailQueryResponse(BadRequest, new RequestFailure
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new BadRequestException(nameof(request.Email))
             });
         }
 
-        return new UniqueEmailValidationQueryResponse(!await Query(_context, _normalizer.NormalizeEmail(request.Email)));
+        return new UniqueEmailQueryResponse(!await Query(_context, _normalizer.NormalizeEmail(request.Email)));
     }
 }
 
-public class UniqueEmailValidationQueryResponse : BaseResponse
+public class UniqueEmailQueryResponse : BaseResponse
 {
-    public UniqueEmailValidationQueryResponse()
+    public UniqueEmailQueryResponse()
     {
     }
 
-    public UniqueEmailValidationQueryResponse(Status status, RequestFailure failure) : base(status, failure)
+    public UniqueEmailQueryResponse(Status status, RequestFailure failure) : base(status, failure)
     {
     }
 
-    public UniqueEmailValidationQueryResponse(bool isUnique)
+    public UniqueEmailQueryResponse(bool isUnique)
     {
-        Status = Status.Ok;
+        Status = Ok;
         IsUnique = isUnique;
     }
 

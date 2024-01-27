@@ -1,6 +1,6 @@
 ﻿namespace Uploadify.Client.Integration.Resources;
 
-public partial class ResourceServerClient;
+public partial class UploadifyClient;
 
 public partial class ApiCallResponse
 {

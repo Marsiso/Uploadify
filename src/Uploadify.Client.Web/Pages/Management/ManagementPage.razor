@@ -1,5 +1,4 @@
 ﻿@using Uploadify.Authorization.Models
-
 @attribute [Permission]
 @attribute [Route(PageRoutes.Management)]
 
@@ -7,30 +6,47 @@
 
 <PageTitle>@Localizer[Translations.Pages.Management.Title]</PageTitle>
 <MudText Typo="Typo.h1">@Localizer[Translations.Pages.Management.Title]</MudText>
-<MudText Typo="Typo.body1" Class="mt-4">@Localizer[Translations.Pages.Management.Description]</MudText>
-<MudTabs Rounded="true" Color="Color.Dark" Class="mt-8">
+<MudText Class="mt-4"
+         Typo="Typo.body1">
+    @Localizer[Translations.Pages.Management.Description]
+</MudText>
+<MudTabs Class="mt-8"
+         Rounded="true">
     <PermissionView Permission="Permission.ViewUsers">
         <Authorized>
-            <MudTabPanel Text="@Localizer[Translations.Pages.Management.UsersLabel]" Icon="@Icons.Material.Rounded.PeopleAlt">
+            <MudTabPanel Icon="@Icons.Material.Rounded.PeopleAlt"
+                         Text="@Localizer[Translations.Pages.Management.UsersLabel]">
                 <ChildContent>
-                    <MudText Typo="Typo.body1" Class="mt-4">@Localizer[Translations.Pages.Management.UsersDescription]</MudText>
+                    <MudText Class="mt-4 mb-8"
+                             Typo="Typo.body1">
+                        @Localizer[Translations.Pages.Management.UsersDescription]
+                    </MudText>
                 </ChildContent>
             </MudTabPanel>
         </Authorized>
         <NotAuthorized>
-            <MudTabPanel Text="@Localizer[Translations.Pages.Management.UsersLabel]" Icon="@Icons.Material.Rounded.PeopleAlt" Disabled="true"/>
+            <MudTabPanel Disabled="true"
+                         Icon="@Icons.Material.Rounded.PeopleAlt"
+                         Text="@Localizer[Translations.Pages.Management.UsersLabel]"/>
         </NotAuthorized>
     </PermissionView>
     <PermissionView Permission="Permission.ViewRoles">
         <Authorized>
-            <MudTabPanel Text="@Localizer[Translations.Pages.Management.PermissionsLabel]" Icon="@Icons.Material.Rounded.AdminPanelSettings">
+            <MudTabPanel Icon="@Icons.Material.Rounded.AdminPanelSettings"
+                         Text="@Localizer[Translations.Pages.Management.PermissionsLabel]">
                 <ChildContent>
-                    <MudText Typo="Typo.body1" Class="mt-4">@Localizer[Translations.Pages.Management.PermissionsDescription]</MudText>
+                    <MudText Class="mt-4 mb-8"
+                             Typo="Typo.body1">
+                        @Localizer[Translations.Pages.Management.PermissionsDescription]
+                    </MudText>
+                    <PermissionDashboard Summary="Enumerable.Empty<PermissionCard.PermissionOverview>()"/>
                 </ChildContent>
             </MudTabPanel>
         </Authorized>
         <NotAuthorized>
-            <MudTabPanel Text="@Localizer[Translations.Pages.Management.PermissionsLabel]" Icon="@Icons.Material.Rounded.AdminPanelSettings" Disabled="true"/>
+            <MudTabPanel Disabled="true"
+                         Icon="@Icons.Material.Rounded.AdminPanelSettings"
+                         Text="@Localizer[Translations.Pages.Management.PermissionsLabel]"/>
         </NotAuthorized>
     </PermissionView>
 </MudTabs>

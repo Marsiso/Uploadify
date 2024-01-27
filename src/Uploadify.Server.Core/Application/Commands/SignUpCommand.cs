@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Uploadify.Server.Domain.Application.Constants;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Localization;
 using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
@@ -10,9 +9,9 @@ using Uploadify.Server.Domain.Requests.Services;
 
 namespace Uploadify.Server.Core.Application.Commands;
 
-public class CreateUserCommand : BaseRequest<CreateUserCommandResponse>, ICommand<CreateUserCommandResponse>
+public class SignUpCommand : BaseRequest<SignUpCommandResponse>, ICommand<SignUpCommandResponse>
 {
-    public CreateUserCommand(string? userName, string? email, string? phoneNumber, string? givenName, string? familyName, string? password, string? passwordRepeat)
+    public SignUpCommand(string? userName, string? email, string? phoneNumber, string? givenName, string? familyName, string? password, string? passwordRepeat)
     {
         UserName = userName;
         Email = email;
@@ -32,22 +31,22 @@ public class CreateUserCommand : BaseRequest<CreateUserCommandResponse>, IComman
     public string? PasswordRepeat { get; set; }
 }
 
-public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, CreateUserCommandResponse>
+public class SignUpCommandHandler : ICommandHandler<SignUpCommand, SignUpCommandResponse>
 {
     private readonly UserManager<User> _manager;
 
-    public CreateUserCommandHandler(UserManager<User> manager)
+    public SignUpCommandHandler(UserManager<User> manager)
     {
         _manager = manager;
     }
 
-    public async Task<CreateUserCommandResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<SignUpCommandResponse> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
         var user = request.Adapt<User>();
         var result = await _manager.CreateAsync(user);
         if (!result.Succeeded)
         {
-            return new CreateUserCommandResponse(Status.InternalServerError, new RequestFailure
+            return new SignUpCommandResponse(Status.InternalServerError, new RequestFailure
             {
                 UserFriendlyMessage = Translations.RequestStatuses.InternalServerError,
                 Exception = new InternalServerException()
@@ -57,7 +56,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Creat
         result = await _manager.AddPasswordAsync(user, request.Password);
         if (!result.Succeeded)
         {
-            return new CreateUserCommandResponse(Status.InternalServerError, new RequestFailure
+            return new SignUpCommandResponse(Status.InternalServerError, new RequestFailure
             {
                 UserFriendlyMessage = Translations.RequestStatuses.InternalServerError,
                 Exception = new InternalServerException()
@@ -66,21 +65,21 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Creat
 
         await _manager.AddToRoleAsync(user, Roles.Defaults.DefaultUser);
 
-        return new CreateUserCommandResponse(user);
+        return new SignUpCommandResponse(user);
     }
 }
 
-public class CreateUserCommandResponse : BaseResponse
+public class SignUpCommandResponse : BaseResponse
 {
-    public CreateUserCommandResponse()
+    public SignUpCommandResponse()
     {
     }
 
-    public CreateUserCommandResponse(Status status, RequestFailure failure) : base(status, failure)
+    public SignUpCommandResponse(Status status, RequestFailure failure) : base(status, failure)
     {
     }
 
-    public CreateUserCommandResponse(User user)
+    public SignUpCommandResponse(User user)
     {
         Status = Status.Created;
         User = user;

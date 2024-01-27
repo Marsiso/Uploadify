@@ -5,32 +5,38 @@ namespace Uploadify.Client.Application.Utilities.Constants;
 
 public static class Themes
 {
-    public static MudTheme DefaultTheme = new()
+    public static readonly MudTheme DefaultTheme = new()
     {
-        PaletteDark = new PaletteDark
+        Palette = new PaletteLight()
         {
-            Background = new MudColor("121212FF"),
-            BackgroundGrey =  new MudColor("424242FF"),
-            AppbarBackground = new MudColor("121212FF"),
-            AppbarText = new MudColor("FFFFFFDE"),
-            DrawerBackground = new MudColor("121212FF"),
-            DrawerText = new MudColor("FFFFFFDE"),
-            Black = new MudColor("121212FF"),
-            Primary = new MudColor("FFFFFFDE"),
-            PrimaryContrastText = new MudColor("FFFFFFDE"),
-            Secondary = new MudColor("FFFFFFDE"),
-            SecondaryContrastText = new MudColor("FFFFFFDE"),
-            Surface = new MudColor("121212FF"),
-            Error = new MudColor("CF6679FF"),
-            ErrorContrastText = new MudColor("FFFFFFDE"),
-            TextPrimary = new MudColor("FFFFFFDE"),
-            TextSecondary = new MudColor("FFFFFF99"),
-            TextDisabled = new MudColor("FFFFFF61"),
-            Dark = new MudColor("121212FF"),
-            DarkContrastText = new MudColor("FFFFFFDE"),
-            DrawerIcon = new MudColor("FFFFFFDE")
+            Primary = Colors.Shades.Black,
+            PrimaryContrastText = Colors.Shades.White,
+            Secondary = Colors.Grey.Lighten1,
+            SecondaryContrastText = Colors.Shades.White,
+
+            Error = Colors.Red.Accent4,
+            ErrorContrastText = Colors.Shades.White,
+
+            Dark = Colors.Shades.Black,
+            DarkContrastText = Colors.Shades.White,
+
+            TextPrimary = Colors.Shades.Black,
+            TextSecondary = Colors.Grey.Lighten1,
+            TextDisabled = Colors.Grey.Lighten1,
+
+            Background = Colors.Shades.White,
+            BackgroundGrey = Colors.Grey.Lighten1,
+
+            AppbarBackground = Colors.Shades.White,
+            AppbarText = Colors.Shades.Black,
+
+            DrawerBackground = Colors.Shades.White,
+            DrawerText = Colors.Shades.Black,
+            DrawerIcon = Colors.Shades.Black,
+
+            ActionDefault = Colors.Shades.Black,
         },
-        Typography = new Typography()
+        Typography = new Typography
         {
             H1 = new H1 { FontSize = "22px", FontWeight = 700 },
             H2 = new H2 { FontSize = "20px", FontWeight = 700 },
@@ -40,7 +46,7 @@ public static class Themes
             H6 = new H6 { FontSize = "14px", FontWeight = 300 },
             Body1 = new Body1 { FontSize = "14px" },
             Body2 = new Body2 { FontSize = "14px" },
-            Button= new Button { FontSize = "14px", FontWeight = 700 },
+            Button = new Button { FontSize = "14px", FontWeight = 700 },
             Caption = new Caption { FontSize = "12px" },
             Subtitle1 = new Subtitle1 { FontSize = "16px", FontWeight = 700 },
             Subtitle2 = new Subtitle2 { FontSize = "16px", FontWeight = 700 },

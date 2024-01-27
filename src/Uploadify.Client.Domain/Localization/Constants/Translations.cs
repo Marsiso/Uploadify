@@ -24,6 +24,7 @@ public static class Translations
             public const string AboutLink = $"{BaseAuthenticatedLayout}.about_link";
             public const string PrivacyLink = $"{BaseAuthenticatedLayout}.privacy_link";
             public const string ManagementLink = $"{BaseAuthenticatedLayout}.management_link";
+            public const string MoreLink = $"{BaseAuthenticatedLayout}.more_link";
         }
     }
 
@@ -75,6 +76,8 @@ public static class Translations
             public const string GivenNameLabel = $"{BaseProfile}.given_name_label";
             public const string FamilyNameLabel = $"{BaseProfile}.family_name_label";
             public const string PhoneLabel = $"{BaseProfile}.phone_label";
+            public const string ContactInformationLabel = $"{BaseProfile}.contact_information_label";
+            public const string PersonalInformationLabel = $"{BaseProfile}.personal_information_label";
         }
 
         public static class Management

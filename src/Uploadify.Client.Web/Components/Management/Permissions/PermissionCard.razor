@@ -1,0 +1,13 @@
+﻿@using Uploadify.Authorization.Models
+
+<MudExpansionPanel Text="@Overview.CodeName"></MudExpansionPanel>
+
+@code {
+    [Parameter, EditorRequired] public required PermissionOverview Overview { get; set; }
+
+    public class PermissionOverview
+    {
+        public string CodeName { get; set; } = string.Empty;
+        public Permission Code { get; set; } = Permission.None;
+    }
+}

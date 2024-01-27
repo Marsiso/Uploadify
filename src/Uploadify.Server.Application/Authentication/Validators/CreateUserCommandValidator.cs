@@ -8,7 +8,7 @@ using Uploadify.Server.Domain.Localization.Constants;
 
 namespace Uploadify.Server.Application.Authentication.Validators;
 
-public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+public class CreateUserCommandValidator : AbstractValidator<SignUpCommand>
 {
     private readonly IMediator _mediator;
 
@@ -75,11 +75,11 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 
     private async Task<bool> UniqueLogin(string? login, CancellationToken cancellationToken)
     {
-        return (await _mediator.Send(new UniqueUserNameValidationQuery(login), cancellationToken)).IsUnique;
+        return (await _mediator.Send(new UniqueUserNameQuery(login), cancellationToken)).IsUnique;
     }
 
     private async Task<bool> UniqueEmail(string? email, CancellationToken cancellationToken)
     {
-        return (await _mediator.Send(new UniqueEmailValidationQuery(email), cancellationToken)).IsUnique;
+        return (await _mediator.Send(new UniqueEmailQuery(email), cancellationToken)).IsUnique;
     }
 }

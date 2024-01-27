@@ -7,12 +7,13 @@ using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
 using static System.String;
+using static Uploadify.Server.Domain.Requests.Models.Status;
 
 namespace Uploadify.Server.Core.Application.Queries;
 
-public class UniqueUserNameValidationQuery : BaseRequest<UniqueUserNameValidationQueryResponse>, IQuery<UniqueUserNameValidationQueryResponse>
+public class UniqueUserNameQuery : BaseRequest<UniqueUserNameQueryResponse>, IQuery<UniqueUserNameQueryResponse>
 {
-    public UniqueUserNameValidationQuery(string? username)
+    public UniqueUserNameQuery(string? username)
     {
         Username = username;
     }
@@ -20,7 +21,7 @@ public class UniqueUserNameValidationQuery : BaseRequest<UniqueUserNameValidatio
     public string? Username { get; set; }
 }
 
-public class UniqueUserNameValidationQueryHandler : IQueryHandler<UniqueUserNameValidationQuery, UniqueUserNameValidationQueryResponse>
+public class UniqueUserNameQueryHandler : IQueryHandler<UniqueUserNameQuery, UniqueUserNameQueryResponse>
 {
     private static readonly Func<DataContext, string, Task<bool>> Query = EF.CompileAsyncQuery((DataContext context, string username) =>
         context.Users.Any(user => user.NormalizedUserName == username));
@@ -28,40 +29,40 @@ public class UniqueUserNameValidationQueryHandler : IQueryHandler<UniqueUserName
     private readonly DataContext _context;
     private readonly ILookupNormalizer _normalizer;
 
-    public UniqueUserNameValidationQueryHandler(DataContext context, ILookupNormalizer normalizer)
+    public UniqueUserNameQueryHandler(DataContext context, ILookupNormalizer normalizer)
     {
         _context = context;
         _normalizer = normalizer;
     }
 
-    public async Task<UniqueUserNameValidationQueryResponse> Handle(UniqueUserNameValidationQuery request, CancellationToken cancellationToken)
+    public async Task<UniqueUserNameQueryResponse> Handle(UniqueUserNameQuery request, CancellationToken cancellationToken)
     {
         if (IsNullOrWhiteSpace(request.Username))
         {
-            return new UniqueUserNameValidationQueryResponse(Status.BadRequest, new RequestFailure
+            return new UniqueUserNameQueryResponse(BadRequest, new RequestFailure
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new BadRequestException(nameof(request.Username))
             });
         }
 
-        return new UniqueUserNameValidationQueryResponse(!await Query(_context, _normalizer.NormalizeName(request.Username)));
+        return new UniqueUserNameQueryResponse(!await Query(_context, _normalizer.NormalizeName(request.Username)));
     }
 }
 
-public class UniqueUserNameValidationQueryResponse : BaseResponse
+public class UniqueUserNameQueryResponse : BaseResponse
 {
-    public UniqueUserNameValidationQueryResponse()
+    public UniqueUserNameQueryResponse()
     {
     }
 
-    public UniqueUserNameValidationQueryResponse(Status status, RequestFailure failure) : base(status, failure)
+    public UniqueUserNameQueryResponse(Status status, RequestFailure failure) : base(status, failure)
     {
     }
 
-    public UniqueUserNameValidationQueryResponse(bool isUnique)
+    public UniqueUserNameQueryResponse(bool isUnique)
     {
-        Status = Status.Ok;
+        Status = Ok;
         IsUnique = isUnique;
     }
 

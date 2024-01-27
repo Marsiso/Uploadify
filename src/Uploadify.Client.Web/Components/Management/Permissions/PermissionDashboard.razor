@@ -1,0 +1,10 @@
+﻿<MudExpansionPanels>
+    @foreach (var overview in Summary)
+    {
+        <PermissionCard Overview="overview"/>
+    }
+</MudExpansionPanels>
+
+@code {
+    [Parameter, EditorRequired] public required IEnumerable<PermissionCard.PermissionOverview> Summary { get; set; }
+}

@@ -49,7 +49,7 @@
         <value>About</value>
     </data>
     <data name="components.authenticated_layout.management_link" xml:space="preserve">
-        <value>Manage application</value>
+        <value>Management</value>
     </data>
     <data name="components.authenticated_layout.privacy_link" xml:space="preserve">
         <value>Privacy</value>
@@ -122,5 +122,14 @@
     </data>
     <data name="pages.profile.phone_label" xml:space="preserve">
         <value>Phone</value>
+    </data>
+    <data name="pages.profile.contact_information_label" xml:space="preserve">
+        <value>Contact information</value>
+    </data>
+    <data name="pages.profile.personal_information_label" xml:space="preserve">
+        <value>Personal information</value>
+    </data>
+    <data name="components.authenticated_layout.more_link" xml:space="preserve">
+        <value>More</value>
     </data>
 </root>

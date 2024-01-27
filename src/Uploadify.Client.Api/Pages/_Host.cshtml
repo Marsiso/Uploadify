@@ -21,11 +21,7 @@
 </head>
 <body>
 <div id="app">
-    <svg class="loading-progress">
-        <circle r="40%" cx="50%" cy="50%"/>
-        <circle r="40%" cx="50%" cy="50%"/>
-    </svg>
-    <div class="loading-progress-text"></div>
+    <div class="spinner"></div>
 </div>
 <div id="blazor-error-ui">
     <environment include="Staging,Production">
@@ -34,8 +30,6 @@
     <environment include="Development">
         An unhandled exception has occurred. See browser dev tools for details.
     </environment>
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
 </div>
 <script src="~/js/app.js"></script>
 <script src="_content/MudBlazor/MudBlazor.min.js"></script>

@@ -1,93 +1,78 @@
-﻿@using System.Security.Claims
-@using OpenIddict.Abstractions
-@using Uploadify.Client.Domain.Routing.Constants
-@using System.Globalization
+﻿@inject IStringLocalizer<TranslationDictionary> Localizer
 
-@inject NavigationManager Navigation
-@inject IJSRuntime JavaScriptRuntime
-@inject IStringLocalizer<TranslationDictionary> Localizer
+<MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged"/>
 
 <PermissionView>
     <Authorized Context="AuthenticationState">
-        <MudLayout>
-            <MudAppBar Elevation="0" Color="Color.Dark">
-                <MudButton OnClick="@(() => _isSideBarVisible = !_isSideBarVisible)" Variant="Variant.Text">
-                    <MudStack Row="true" Spacing="4" AlignItems="AlignItems.Center">
-                        <MudImage Alt="application logo" ObjectFit="ObjectFit.ScaleDown" ObjectPosition="ObjectPosition.Center" Src="icons/brand-logo.svg" Width="34"></MudImage>
-                        <MudText Typo="Typo.h2" Inline="true">@Localizer[Translations.Common.AppName]</MudText>
+        <MudContainer Class="pa-0"
+                      MaxWidth="MaxWidth.Large"
+                      Style="height: 100%; width: 100%;">
+            <MudLayout Style="height: 100%; width: 100%;">
+                <MudAppBar Class="pt-4"
+                           Elevation="0"
+                           Fixed="false">
+                    <MudStack AlignItems="AlignItems.Center"
+                              Row="true"
+                              Spacing="4">
+                        <MudImage Alt="brand logo"
+                                  ObjectFit="ObjectFit.ScaleDown"
+                                  ObjectPosition="ObjectPosition.Center"
+                                  Src="icons/brand-logo.svg"
+                                  Width="34">
+                        </MudImage>
+                        <MudText Inline="true"
+                                 Typo="Typo.h2">
+                            @Localizer[Translations.Common.AppName]
+                        </MudText>
                     </MudStack>
-                </MudButton>
-                <MudSpacer/>
-                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Rounded.Search"/>
-                <MudMenu Variant="Variant.Text" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.BottomLeft">
-                    <ActivatorContent>
-                        <MudIconButton Icon="@Icons.Material.Rounded.AccountCircle" Size="Size.Medium" Color="Color.Primary"/>
-                    </ActivatorContent>
-                    <ChildContent>
-                        <MudMenuItem Disabled="true" Icon="@Icons.Material.Rounded.Person3" IconColor="Color.Primary">
-                            @AuthenticationState.User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.GivenName)?.Value @AuthenticationState.User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.FamilyName)?.Value
-                        </MudMenuItem>
-                        <MudMenuItem Disabled="true" Icon="@Icons.Material.Rounded.Email" IconColor="Color.Primary">
-                            @AuthenticationState.User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.Email)?.Value
-                        </MudMenuItem>
-                        <MudMenuItem Icon="@Icons.Material.Rounded.AccountBox" IconColor="Color.Primary" Href="@PageRoutes.Profile">
-                            <MudText>@Localizer[Translations.Components.AuthenticatedLayout.ProfileLink]</MudText>
-                        </MudMenuItem>
-                        <form method="post" action="@ApiRoutes.LogOut">
-                            <AntiForgeryTokenInput/>
-                            <button type="submit">
-                                <MudMenuItem Icon="@Icons.Material.Rounded.Logout" IconColor="Color.Primary" AutoClose="false">@Localizer[Translations.Components.AuthenticatedLayout.LogOutButton]</MudMenuItem>
-                            </button>
-                        </form>
-                    </ChildContent>
-                </MudMenu>
-                <MudMenu Variant="Variant.Text" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.BottomLeft">
-                    <ActivatorContent>
-                        <MudIconButton Icon="@Icons.Material.Rounded.Language" Size="Size.Medium" Color="Color.Primary"/>
-                    </ActivatorContent>
-                    <ChildContent>
-                        <MudMenuItem OnClick="@(() => OnCultureChange(Locales.Czech))" Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.Czech)"><MudText>Czech</MudText></MudMenuItem>
-                        <MudMenuItem  OnClick="@(() => OnCultureChange(Locales.English))" Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.English)"><MudText>English</MudText></MudMenuItem>
-                    </ChildContent>
-                </MudMenu>
-            </MudAppBar>
-            <MudMainContent>
-                <MudLayout>
-                    <MudDrawer @bind-Open="@_isSideBarVisible" Elevation="0" Variant="DrawerVariant.Responsive" Color="Color.Dark" Class="py-8" DisableOverlay="true">
-                        <MudNavMenu Color="Color.Primary" Margin="Margin.Normal" Rounded="true">
-                            <MudNavLink Href="@PageRoutes.Homepage" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Folder" Class="ps-8">@Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]</MudNavLink>
-                            <MudNavLink Href="@PageRoutes.Shared" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Link" Class="ps-8">@Localizer[Translations.Components.AuthenticatedLayout.SharedLink]</MudNavLink>
-                            <MudNavLink Href="@PageRoutes.About" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Info" Class="mt-4 ps-8">@Localizer[Translations.Components.AuthenticatedLayout.AboutLink]</MudNavLink>
-                            <MudNavLink Href="@PageRoutes.Privacy" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PrivacyTip" Class="ps-8">@Localizer[Translations.Components.AuthenticatedLayout.PrivacyLink]</MudNavLink>
-                            <MudNavLink Href="@PageRoutes.Management" Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.Settings" Class="ps-8">@Localizer[Translations.Components.AuthenticatedLayout.ManagementLink]</MudNavLink>
-                        </MudNavMenu>
-                    </MudDrawer>
-                    <MudMainContent Class="pa-8">
-                        <MudContainer MaxWidth="MaxWidth.Medium">
-                            @Body
-                        </MudContainer>
-                    </MudMainContent>
-                </MudLayout>
-            </MudMainContent>
-        </MudLayout>
+                    <MudSpacer/>
+                    <MudIconButton Icon="@Icons.Material.Rounded.Search"/>
+                    <Avatar User="AuthenticationState.User"/>
+                    <LocaleSelector/>
+                </MudAppBar>
+                @if (_isDesktop)
+                {
+                    <DesktopNavigation/>
+                }
+                else
+                {
+                    <MobileNavigation/>
+                }
+                <MudMainContent Class="@_contentClass"
+                                Style="height:fit-content; width: 100%;">
+                    <MudContainer MaxWidth="@_contentWidth"
+                                  Style="@_contentStyle">
+                        @Body
+                    </MudContainer>
+                </MudMainContent>
+            </MudLayout>
+        </MudContainer>
     </Authorized>
 </PermissionView>
 
 @code {
+    private bool _isDesktop;
     private bool _isAuthenticated;
-    private bool _isSideBarVisible = true;
-
-    private void OnCultureChange(string culture)
-    {
-        var cultureInfo = new CultureInfo(culture);
-        if (CultureInfo.CurrentCulture.Equals(cultureInfo) || JavaScriptRuntime is not IJSInProcessRuntime javascriptProcessRuntime)
-        {
-            return;
-        }
-
-        javascriptProcessRuntime.InvokeVoid("culture.set", culture);
-        Navigation.NavigateTo(Navigation.Uri, true);
-    }
+    private string _contentStyle => _isDesktop ? "padding-left: 300px;" : "padding-bottom: 120px;";
+    private string _contentClass => _isDesktop ? "pa-8" : "px-4 py-8";
+    private MaxWidth _contentWidth => _isDesktop ? MaxWidth.Medium : MaxWidth.False;
 
     [Parameter] public RenderFragment? Body { get; set; }
+
+    private void OnBreakpointChanged(Breakpoint breakpoint)
+    {
+        switch (breakpoint)
+        {
+            case Breakpoint.Xs or Breakpoint.Sm or Breakpoint.Md:
+            case Breakpoint.SmAndDown or Breakpoint.MdAndDown or Breakpoint.LgAndDown:
+            case Breakpoint.SmAndUp:
+                _isDesktop = false;
+                return;
+
+            default:
+                _isDesktop = true;
+                return;
+        }
+    }
+
 }
