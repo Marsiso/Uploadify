@@ -1,0 +1,38 @@
+﻿@using System.Globalization
+@inject NavigationManager Navigation
+@inject IJSRuntime JavaScriptRuntime
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<MudMenu AnchorOrigin="Origin.BottomLeft"
+         TransformOrigin="Origin.BottomLeft"
+         Variant="Variant.Text">
+    <ActivatorContent>
+        <MudIconButton Icon="@Icons.Material.Rounded.Language"
+                       Size="Size.Medium"/>
+    </ActivatorContent>
+    <ChildContent>
+        <MudMenuItem Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.Czech)"
+                     OnClick="@(() => OnCultureChange(Locales.Czech))">
+            <MudText>Czech</MudText>
+        </MudMenuItem>
+        <MudMenuItem Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.English)"
+                     OnClick="@(() => OnCultureChange(Locales.English))">
+            <MudText>English</MudText>
+        </MudMenuItem>
+    </ChildContent>
+</MudMenu>
+
+@code {
+
+    private void OnCultureChange(string culture)
+    {
+        var cultureInfo = new CultureInfo(culture);
+        if (CultureInfo.CurrentCulture.Equals(cultureInfo) || JavaScriptRuntime is not IJSInProcessRuntime javascriptProcessRuntime)
+        {
+            return;
+        }
+
+        javascriptProcessRuntime.InvokeVoid("culture.set", culture);
+        Navigation.NavigateTo(Navigation.Uri, true);
+    }
+}

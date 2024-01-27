@@ -4,6 +4,6 @@ public static class ApiRoutes
 {
     public const string Base = "api";
     public const string UserInfo = $"{Base}/userinfo";
-    public const string LogIn = "/login";
-    public const string LogOut = "/logout";
+    public const string Login = "/login";
+    public const string Logout = "/logout";
 }

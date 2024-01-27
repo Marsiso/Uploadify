@@ -101,7 +101,7 @@ public static class IServiceCollectionExtensions
         {
             options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthorizationPipelineBehaviour<,>));
             options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
-            options.RegisterServicesFromAssembly(typeof(CreateUserCommand).Assembly);
+            options.RegisterServicesFromAssembly(typeof(SignUpCommand).Assembly);
             options.RegisterServicesFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
         });
 

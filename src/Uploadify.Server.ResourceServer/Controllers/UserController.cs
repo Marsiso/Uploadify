@@ -45,10 +45,10 @@ public class UserController : BaseApiController<UserController>
     ///
     /// </remarks>
     [HttpGet("~/api/user/{userID}/detail")]
-    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
-    public async Task<IActionResult> GetUser(string? userID, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new GetUserDetailQuery(userID), cancellationToken));
+    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
+    public async Task<IActionResult> GetUser(string? userID, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new UserDetailQuery(userID), cancellationToken));
 }

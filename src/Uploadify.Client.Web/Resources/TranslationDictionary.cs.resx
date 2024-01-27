@@ -43,7 +43,7 @@
         <value>Odhlásit se</value>
     </data>
     <data name="components.authenticated_layout.management_link" xml:space="preserve">
-        <value>Správa aplikace</value>
+        <value>Spravovat</value>
     </data>
     <data name="components.authenticated_layout.profile_link" xml:space="preserve">
         <value>Profil</value>
@@ -103,7 +103,7 @@
         <value>Definujte různé úrovně přístupu a přiřaďte oprávnění podle potřeby vaší aplikace.</value>
     </data>
     <data name="pages.shared.title" xml:space="preserve">
-        <value>Sdíleno se mnou</value>
+        <value>Sdílené</value>
     </data>
     <data name="pages.profile.username_label" xml:space="preserve">
         <value>Přihlašovací jméno</value>
@@ -119,5 +119,14 @@
     </data>
     <data name="pages.profile.phone_label" xml:space="preserve">
         <value>Telefon</value>
+    </data>
+    <data name="pages.profile.personal_information_label" xml:space="preserve">
+        <value>Osobní údaje</value>
+    </data>
+    <data name="pages.profile.contact_information_label" xml:space="preserve">
+        <value>Kontaktní údaje</value>
+    </data>
+    <data name="components.authenticated_layout.more_link" xml:space="preserve">
+        <value>Více</value>
     </data>
 </root>

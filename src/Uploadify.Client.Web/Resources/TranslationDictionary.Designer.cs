@@ -114,11 +114,20 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage application.
+        ///   Looks up a localized string similar to Management.
         /// </summary>
         internal static string components_authenticated_layout_management_link {
             get {
                 return ResourceManager.GetString("components.authenticated_layout.management_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More.
+        /// </summary>
+        internal static string components_authenticated_layout_more_link {
+            get {
+                return ResourceManager.GetString("components.authenticated_layout.more_link", resourceCulture);
             }
         }
         
@@ -294,6 +303,15 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact information.
+        /// </summary>
+        internal static string pages_profile_contact_information_label {
+            get {
+                return ResourceManager.GetString("pages.profile.contact_information_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Here you can find and edit your personal information. Keep your contact information up to date to ensure efficient and seamless communication..
         /// </summary>
         internal static string pages_profile_description {
@@ -326,6 +344,15 @@ namespace Uploadify.Client.Web.Resources {
         internal static string pages_profile_given_name_label {
             get {
                 return ResourceManager.GetString("pages.profile.given_name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal information.
+        /// </summary>
+        internal static string pages_profile_personal_information_label {
+            get {
+                return ResourceManager.GetString("pages.profile.personal_information_label", resourceCulture);
             }
         }
         

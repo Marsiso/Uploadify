@@ -114,11 +114,20 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Správa aplikace.
+        ///   Looks up a localized string similar to Spravovat.
         /// </summary>
         internal static string components_authenticated_layout_management_link {
             get {
                 return ResourceManager.GetString("components.authenticated_layout.management_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Více.
+        /// </summary>
+        internal static string components_authenticated_layout_more_link {
+            get {
+                return ResourceManager.GetString("components.authenticated_layout.more_link", resourceCulture);
             }
         }
         
@@ -294,6 +303,15 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kontaktní údaje.
+        /// </summary>
+        internal static string pages_profile_contact_information_label {
+            get {
+                return ResourceManager.GetString("pages.profile.contact_information_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zde naleznete a můžete upravit své osobní informace. Udržujte své kontaktní údaje aktuální, aby byla komunikace hladká a efektivní..
         /// </summary>
         internal static string pages_profile_description {
@@ -330,6 +348,15 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Osobní údaje.
+        /// </summary>
+        internal static string pages_profile_personal_information_label {
+            get {
+                return ResourceManager.GetString("pages.profile.personal_information_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telefon.
         /// </summary>
         internal static string pages_profile_phone_label {
@@ -357,7 +384,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sdíleno se mnou.
+        ///   Looks up a localized string similar to Sdílené.
         /// </summary>
         internal static string pages_shared_title {
             get {

@@ -35,7 +35,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
     {
         var returnUrl = customReturnUrl != null ? _navigation.ToAbsoluteUri(customReturnUrl).ToString() : null;
         var encodedReturnUrl = Uri.EscapeDataString(returnUrl ?? _navigation.Uri);
-        var logInUrl = _navigation.ToAbsoluteUri($"{ApiRoutes.LogIn}?returnUrl={encodedReturnUrl}");
+        var logInUrl = _navigation.ToAbsoluteUri($"{ApiRoutes.Login}?returnUrl={encodedReturnUrl}");
         _navigation.NavigateTo(logInUrl.ToString(), true);
     }
 
