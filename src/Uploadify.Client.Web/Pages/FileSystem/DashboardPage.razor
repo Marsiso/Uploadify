@@ -1,8 +1,7 @@
-﻿@using Uploadify.Client.Domain.Routing.Constants
-
-@attribute [Permission]
+﻿@attribute [Permission]
 @attribute [Route(PageRoutes.Homepage)]
 
-<PageTitle>Mé soubory</PageTitle>
+@inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudText Typo="Typo.h1">Mé soubory</MudText>
+<PageTitle>@Localizer[Translations.Pages.Dashboard.Title]</PageTitle>
+<MudText Typo="Typo.h1">@Localizer[Translations.Pages.Dashboard.Title]</MudText>

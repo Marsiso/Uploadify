@@ -18,11 +18,11 @@ public class ApiCallWrapper
         _logger = logger;
     }
 
-    public async Task<TResponse?> Call<TResponse>(Func<ResourceServerClient, Task<ApiCallResponse<TResponse>>> client) where TResponse : BaseResponse
+    public async Task<TResponse?> Call<TResponse>(Func<UploadifyClient, Task<ApiCallResponse<TResponse>>> client) where TResponse : BaseResponse
     {
         try
         {
-            return (await client.Invoke(new ResourceServerClient(_httpClient))).Result;
+            return (await client.Invoke(new UploadifyClient(_httpClient))).Result;
         }
         catch (ApiCallException<TResponse> exception)
         {

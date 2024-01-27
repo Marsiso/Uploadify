@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -13,7 +14,9 @@ using Uploadify.Authorization.Extensions;
 using Uploadify.Client.Application.Authentication.Services;
 using Uploadify.Client.Application.Authorization.Services;
 using Uploadify.Client.Core.Infrastructure.Services;
+using Uploadify.Client.Domain.Localization.Constants;
 using Uploadify.Client.Web;
+using static System.String;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 var services = builder.Services;
@@ -22,7 +25,8 @@ services.AddSingleton(builder.HostEnvironment)
     .AddOptions()
     .AddMudServices()
     .AddTransient<AuthorizedHandler>()
-    .AddPermissions();
+    .AddPermissions()
+    .AddLocalization();
 
 services.TryAddSingleton<AuthenticationStateProvider, HostAuthenticationStateProvider>();
 services.TryAddSingleton(provider => (HostAuthenticationStateProvider) provider.GetRequiredService<AuthenticationStateProvider>());
@@ -66,6 +70,23 @@ services.AddSingleton(serviceProvider =>
 services.AddTransient(provider => provider.GetRequiredService<IHttpClientFactory>().CreateClient("default"));
 
 var host = builder.Build();
+
+CultureInfo culture;
+var javascriptRuntime = host.Services.GetRequiredService<IJSRuntime>();
+var cultureString = await javascriptRuntime.InvokeAsync<string>("culture.get");
+
+if (IsNullOrWhiteSpace(cultureString))
+{
+    culture = new CultureInfo(Locales.Default);
+    await javascriptRuntime.InvokeVoidAsync("culture.set", Locales.Default);
+}
+else
+{
+    culture = new CultureInfo(cultureString);
+}
+
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 await host.RunAsync();
 return;

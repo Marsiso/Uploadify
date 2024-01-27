@@ -1,7 +1,8 @@
-﻿@using Uploadify.Client.Domain.Routing.Constants
-
+﻿
 @attribute [Permission]
 @attribute [Route(PageRoutes.Shared)]
 
-<PageTitle>Sdíleno se mnou</PageTitle>
-<MudText Typo="Typo.h1">Sdíleno se mnou</MudText>
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<PageTitle>@Localizer[Translations.Pages.Shared.Title]</PageTitle>
+<MudText Typo="Typo.h1">@Localizer[Translations.Pages.Shared.Title]</MudText>

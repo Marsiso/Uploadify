@@ -41,7 +41,7 @@ public class SignInPreProcessorCommandHandler : ICommandHandler<SignInPreProcess
 
     public async Task<SignInPreProcessorCommandResponse> Handle(SignInPreProcessorCommand request, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new FindUserQuery(request.UserName), cancellationToken);
+        var response = await _mediator.Send(new UserQuery(request.UserName), cancellationToken);
         if (response.Status != Status.Ok)
         {
             return new SignInPreProcessorCommandResponse(response.Status, new RequestFailure

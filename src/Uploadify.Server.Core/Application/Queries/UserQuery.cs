@@ -8,12 +8,13 @@ using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
 using static System.String;
+using static Uploadify.Server.Domain.Requests.Models.Status;
 
 namespace Uploadify.Server.Core.Application.Queries;
 
-public class FindUserQuery : BaseRequest<FindUserQueryResponse>, IQuery<FindUserQueryResponse>
+public class UserQuery : BaseRequest<UserQueryResponse>, IQuery<UserQueryResponse>
 {
-    public FindUserQuery(string? userName)
+    public UserQuery(string? userName)
     {
         UserName = userName;
     }
@@ -21,7 +22,7 @@ public class FindUserQuery : BaseRequest<FindUserQueryResponse>, IQuery<FindUser
     public string? UserName { get; set; }
 }
 
-public class FindUserQueryHandler : IQueryHandler<FindUserQuery, FindUserQueryResponse>
+public class UserQueryHandler : IQueryHandler<UserQuery, UserQueryResponse>
 {
     private static readonly Func<DataContext, string, Task<User?>> Query = EF.CompileAsyncQuery((DataContext context, string username) =>
         context.Users.Where(user => user.NormalizedUserName == username)
@@ -32,19 +33,19 @@ public class FindUserQueryHandler : IQueryHandler<FindUserQuery, FindUserQueryRe
     private readonly DataContext _context;
     private readonly ILookupNormalizer _normalizer;
 
-    public FindUserQueryHandler(DataContext context, ILookupNormalizer normalizer)
+    public UserQueryHandler(DataContext context, ILookupNormalizer normalizer)
     {
         _context = context;
         _normalizer = normalizer;
     }
 
-    public async Task<FindUserQueryResponse> Handle(FindUserQuery request, CancellationToken cancellationToken)
+    public async Task<UserQueryResponse> Handle(UserQuery request, CancellationToken cancellationToken)
     {
         if (IsNullOrWhiteSpace(request.UserName))
         {
-            return new FindUserQueryResponse
+            return new UserQueryResponse
             {
-                Status = Status.BadRequest,
+                Status = BadRequest,
                 Failure = new RequestFailure
                 {
                     UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
@@ -56,30 +57,30 @@ public class FindUserQueryHandler : IQueryHandler<FindUserQuery, FindUserQueryRe
         var user = await Query(_context, _normalizer.NormalizeName(request.UserName));
         if (user == null)
         {
-            return new FindUserQueryResponse(Status.NotFound, new RequestFailure
+            return new UserQueryResponse(NotFound, new RequestFailure
             {
                 UserFriendlyMessage = Translations.RequestStatuses.NotFound,
                 Exception = new EntityNotFoundException(request.UserName, nameof(User))
             });
         }
 
-        return new FindUserQueryResponse(user);
+        return new UserQueryResponse(user);
     }
 }
 
-public class FindUserQueryResponse : BaseResponse
+public class UserQueryResponse : BaseResponse
 {
-    public FindUserQueryResponse()
+    public UserQueryResponse()
     {
     }
 
-    public FindUserQueryResponse(Status status, RequestFailure failure) : base(status, failure)
+    public UserQueryResponse(Status status, RequestFailure failure) : base(status, failure)
     {
     }
 
-    public FindUserQueryResponse(User user)
+    public UserQueryResponse(User user)
     {
-        Status = Status.Ok;
+        Status = Ok;
         User = user;
     }
 

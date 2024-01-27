@@ -1,0 +1,41 @@
+﻿@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<MudDrawer Anchor="Anchor.Left"
+           Class="pa-8"
+           ClipMode="DrawerClipMode.Docked"
+           DisableOverlay="true"
+           Elevation="0"
+           Fixed="false"
+           Open="true"
+           Style="height: fit-content !important;"
+           Variant="DrawerVariant.Persistent">
+    <MudNavMenu Margin="Margin.Normal"
+                Rounded="true">
+        <MudNavLink Href="@PageRoutes.Homepage"
+                    Icon="@Icons.Material.Rounded.Folder"
+                    Match="NavLinkMatch.All">
+            @Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]
+        </MudNavLink>
+        <MudNavLink Href="@PageRoutes.Shared"
+                    Icon="@Icons.Material.Rounded.Link"
+                    Match="NavLinkMatch.All">
+            @Localizer[Translations.Components.AuthenticatedLayout.SharedLink]
+        </MudNavLink>
+        <MudNavLink Class="mt-4"
+                    Href="@PageRoutes.About"
+                    Icon="@Icons.Material.Rounded.Info"
+                    Match="NavLinkMatch.All">
+            @Localizer[Translations.Components.AuthenticatedLayout.AboutLink]
+        </MudNavLink>
+        <MudNavLink Href="@PageRoutes.Privacy"
+                    Icon="@Icons.Material.Rounded.PrivacyTip"
+                    Match="NavLinkMatch.All">
+            @Localizer[Translations.Components.AuthenticatedLayout.PrivacyLink]
+        </MudNavLink>
+        <MudNavLink Href="@PageRoutes.Management"
+                    Icon="@Icons.Material.Rounded.Settings"
+                    Match="NavLinkMatch.All">
+            @Localizer[Translations.Components.AuthenticatedLayout.ManagementLink]
+        </MudNavLink>
+    </MudNavMenu>
+</MudDrawer>

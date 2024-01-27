@@ -2,7 +2,6 @@
 using Uploadify.Server.Application.Application.DataTransferObjects;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Localization;
 using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;
@@ -12,9 +11,9 @@ using static Uploadify.Server.Domain.Requests.Models.Status;
 
 namespace Uploadify.Server.Application.Application.Queries;
 
-public class GetUserDetailQuery : BaseRequest<GetUserDetailQueryResponse>, IQuery<GetUserDetailQueryResponse>
+public class UserDetailQuery : BaseRequest<UserDetailQueryResponse>, IQuery<UserDetailQueryResponse>
 {
-    public GetUserDetailQuery(string? userId)
+    public UserDetailQuery(string? userId)
     {
         UserID = userId;
     }
@@ -22,7 +21,7 @@ public class GetUserDetailQuery : BaseRequest<GetUserDetailQueryResponse>, IQuer
     public string? UserID { get; set; }
 }
 
-public class GetUserDetailQueryHandler : IQueryHandler<GetUserDetailQuery, GetUserDetailQueryResponse>
+public class UserDetailQueryHandler : IQueryHandler<UserDetailQuery, UserDetailQueryResponse>
 {
     private static readonly Func<DataContext, string, Task<UserDetail?>> Query = EF.CompileAsyncQuery((DataContext context, string id) =>
         context.Users.Where(user => user.Id == id)
@@ -42,16 +41,16 @@ public class GetUserDetailQueryHandler : IQueryHandler<GetUserDetailQuery, GetUs
 
     private readonly DataContext _context;
 
-    public GetUserDetailQueryHandler(DataContext context)
+    public UserDetailQueryHandler(DataContext context)
     {
         _context = context;
     }
 
-    public async Task<GetUserDetailQueryResponse> Handle(GetUserDetailQuery request, CancellationToken cancellationToken)
+    public async Task<UserDetailQueryResponse> Handle(UserDetailQuery request, CancellationToken cancellationToken)
     {
         if (IsNullOrWhiteSpace(request.UserID))
         {
-            return new GetUserDetailQueryResponse
+            return new UserDetailQueryResponse
             {
                 Status = BadRequest,
                 Failure = new RequestFailure
@@ -65,28 +64,28 @@ public class GetUserDetailQueryHandler : IQueryHandler<GetUserDetailQuery, GetUs
         var userDetail = await Query(_context, request.UserID);
         if (userDetail == null)
         {
-            return new GetUserDetailQueryResponse(NotFound, new RequestFailure
+            return new UserDetailQueryResponse(NotFound, new RequestFailure
             {
                 UserFriendlyMessage = Translations.RequestStatuses.NotFound,
                 Exception = new EntityNotFoundException(request.UserID, nameof(User))
             });
         }
 
-        return new GetUserDetailQueryResponse(userDetail);
+        return new UserDetailQueryResponse(userDetail);
     }
 }
 
-public class GetUserDetailQueryResponse : BaseResponse
+public class UserDetailQueryResponse : BaseResponse
 {
-    public GetUserDetailQueryResponse()
+    public UserDetailQueryResponse()
     {
     }
 
-    public GetUserDetailQueryResponse(Status status, RequestFailure failure) : base(status, failure)
+    public UserDetailQueryResponse(Status status, RequestFailure failure) : base(status, failure)
     {
     }
 
-    public GetUserDetailQueryResponse(UserDetail user)
+    public UserDetailQueryResponse(UserDetail user)
     {
         Status = Ok;
         User = user;

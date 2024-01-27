@@ -77,7 +77,7 @@ public class AccountController : Controller
             return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = new RegisterForm() });
         }
 
-        var response = await _mediator.Send(form.Adapt<CreateUserCommand>(), cancellationToken);
+        var response = await _mediator.Send(form.Adapt<SignUpCommand>(), cancellationToken);
         if (response.Status != Status.Created)
         {
             return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = new RegisterForm(), Errors = response.Failure?.Errors });

@@ -1,33 +1,17 @@
-﻿@using Uploadify.Client.Domain.Routing.Constants
-
-@attribute [Permission]
+﻿@attribute [Permission]
 @attribute [Route(PageRoutes.About)]
 
-<PageTitle>About</PageTitle>
-<MudText Typo="Typo.h1">O aplikaci</MudText>
-<MudStack Spacing="4" Class="mt-4">
-    <MudText Typo="Typo.body1">
-        V dnešním proměnlivém světě informačních technologií je často pozornost soustředěna na rozsáhlé projekty vyvíjené velkými týmy.
-        Avšak tato bakalářská práce se vydává směrem, zdůrazňujícím význam individuálního přínosu a inovace.
-        Cílem je vytvořit projekt, který se neomezí konvenčními licenčními restrikcemi, a nabídnout místo toho řešení pod licencí typu MIT nebo lesser GNU, podporujíc tak svobodný přístup a širší aplikaci v akademické a vývojářské komunitě.
-    </MudText>
-    <MudText Typo="Typo.body1">
-        Záměrem je rovněž prohloubit odborné znalosti a dovednosti v technologii .NET, přičemž se klade důraz na vytváření robustní struktury projektu.
-        V rámci toho se práce zaměří na vrstvenou architekturu, zahrnující domény, data, jádro, aplikaci, RESTful API a další klíčové komponenty.
-        Zásadní význam je přikládán bezpečnostním aspektům, včetně pokročilých metod zabezpečení jako implementace standardů OAuth2 a OpenID Connect, hashování a ověřování hesel, a obrana proti běžným bezpečnostním hrozbám, jako jsou SQL injection, XSS a CSRF.
-    </MudText>
-    <MudText Typo="Typo.body1">
-        Inovace návrhových vzorů je dalším zásadním bodem, přičemž se práce neomezí na tradiční metodologie, ale začlení pokročilé vzory jako CQRS a zásady jako dependency injection, což představuje významný posun od konvenčních přístupů.
-        V oblasti RESTful API se práce nejen zaměří na základní implementace, ale také představí OpenAPI specifikaci a zkoumá možnosti cachování dat a omezení rychlosti požadavků.
-    </MudText>
-    <MudText Typo="Typo.body1">
-        Zvláštní pozornost je věnována také WASM, jako jednomu ze čtyř nativně podporovaných jazyků v prohlížeči, přičemž se zkoumá jeho potenciál a integrace v .NET, zejména prostřednictvím nástrojů jako Blazor.
-        Práce dále podtrhuje význam pečlivého unit testování v .NET, což zdůrazňuje nezbytnost spolehlivosti a odolnosti softwaru.
-    </MudText>
-    <MudText Typo="Typo.body1">
-        Konečně, tato disertace přezkoumá strategie pro efektivní nasazení aplikací, včetně použití moderních nástrojů a platforem jako Docker.
-        Tímto způsobem tato bakalářská práce demonstruje, že i v rámci individuálního akademického výzkumu lze dosáhnout významného pokroku a inovace, často opomíjených ve větších, komerčně řízených projektech.
-        Práce tak nabízí svěží a komplexní pohled na informační technologie, zdůrazňující potenciál pro hluboké odborné pochopení a praktické uplatnění teoretických znalostí.
-    </MudText>
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<PageTitle>@Localizer[Translations.Pages.About.Title]</PageTitle>
+<MudText Typo="Typo.h1">@Localizer[Translations.Pages.About.Title]</MudText>
+
+<MudStack Class="mt-4"
+          Spacing="4">
+    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.FirstSection]</MudText>
+    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.SecondSection]</MudText>
+    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.ThirdSection]</MudText>
+    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.FourthSection]</MudText>
+    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.FifthSection]</MudText>
     <MudText Typo="Typo.body1"></MudText>
 </MudStack>
