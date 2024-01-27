@@ -12,7 +12,7 @@ html, body {
 }
 
 body > div {
-    min-height: 100vh;
+    height: 100vh;
 }
 
 div:has(> h1) {
@@ -26,6 +26,7 @@ h1 {
 
 form {
     width: 24rem;
+    padding: 1rem;
 }
 
 .brand-logo {
