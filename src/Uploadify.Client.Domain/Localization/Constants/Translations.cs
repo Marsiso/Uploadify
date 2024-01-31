@@ -26,6 +26,21 @@ public static class Translations
             public const string ManagementLink = $"{BaseAuthenticatedLayout}.management_link";
             public const string MoreLink = $"{BaseAuthenticatedLayout}.more_link";
         }
+
+        public static class PermissionDashboard
+        {
+            public const string BasePermissionDashboard = $"{BaseComponents}.permission_dashboard";
+            public const string RoleNameLabel = $"{BasePermissionDashboard}.role_name_label";
+            public const string DateUpdatedLabel = $"{BasePermissionDashboard}.date_updated_label";
+            public const string EditLabel = $"{BasePermissionDashboard}.edit_label";
+            public const string RoleDetailTitle = $"{BasePermissionDashboard}.role_detail_title";
+
+            public static class UserUpdatedBy
+            {
+                public const string BaseUserUpdatedBy = $"{BasePermissionDashboard}.user_updated_by";
+                public const string UserNameLabel = $"{BaseUserUpdatedBy}.username_label";
+            }
+        }
     }
 
     public static class Pages
@@ -96,6 +111,26 @@ public static class Translations
             public const string BaseShared = $"{BasePages}.shared";
             public const string Title = $"{BaseShared}.title";
             public const string Description = $"{BaseShared}.description";
+        }
+    }
+
+    public static class Authorization
+    {
+        public const string BaseAuthorization = "authorization";
+
+        public static class Permissions
+        {
+            public const string BasePermissions = $"{BaseAuthorization}.permissions";
+            public const string None = $"{BasePermissions}.none";
+            public const string ViewRoles = $"{BasePermissions}.view_roles";
+            public const string EditRoles = $"{BasePermissions}.edit_roles";
+            public const string ViewPermissions = $"{BasePermissions}.view_permissions";
+            public const string EditPermissions = $"{BasePermissions}.edit_permissions";
+            public const string ViewUsers = $"{BasePermissions}.view_users";
+            public const string EditUsers = $"{BasePermissions}.edit_users";
+            public const string ViewFiles = $"{BasePermissions}.view_files";
+            public const string EditFiles = $"{BasePermissions}.edit_files";
+            public const string All = $"{BasePermissions}.all";
         }
     }
 }

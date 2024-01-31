@@ -4,7 +4,6 @@ using CommunityToolkit.Diagnostics;
 using OpenIddict.Abstractions;
 using Uploadify.Authorization.Constants;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Authorization.Constants;
 
 namespace Uploadify.Server.Application.Authentication.Helpers;
 

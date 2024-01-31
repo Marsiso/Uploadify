@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using OpenIddict.Abstractions;
-using Uploadify.Server.Application.Application.Commands;
+using Uploadify.Server.Application.Authentication.Commands;
 using Uploadify.Server.Application.Authentication.Validators;
 using Uploadify.Server.Application.Requests.Services;
 using Uploadify.Server.Application.Security.Services;

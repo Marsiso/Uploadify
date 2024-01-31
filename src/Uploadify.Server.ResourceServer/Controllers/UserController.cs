@@ -16,12 +16,10 @@ public class UserController : BaseApiController<UserController>
     }
 
     /// <summary>
-    ///     Retrieves user details. This endpoint requires the user to be authorized and uses the token from the request header to identify the user.
+    ///     Retrieves the details of a specific user.
     /// </summary>
-    /// <param name="cancellationToken">A token to observe while waiting for the task to complete, to enable the operation to be canceled.</param>
-    /// <returns>Returns a GetUserQueryResponse object which includes the status of the GET request. The response varies based on the request status</returns>
     /// <remarks>
-    ///     This endpoint is used for user the data retrieval and responds with appropriate HTTP status codes and JSON payloads based on the outcome of the user the data retrieval.
+    ///     This endpoint returns detailed information about a specific user identified by the userID.
     ///
     ///     Sample request:
     ///
@@ -44,6 +42,16 @@ public class UserController : BaseApiController<UserController>
     ///         }
     ///
     /// </remarks>
+    /// <param name="userID">The unique identifier of the user.</param>
+    /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result contains the action result of the user detail query.
+    /// </returns>
+    /// <response code="200">If the user details are successfully retrieved.</response>
+    /// <response code="400">If the request is malformed or invalid.</response>
+    /// <response code="401">If the user is unauthorized to perform this action.</response>
+    /// <response code="404">If the specified user is not found.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("~/api/user/{userID}/detail")]
     [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]

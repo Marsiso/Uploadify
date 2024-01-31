@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Uploadify.Server.Application.Application.Commands;
+using Uploadify.Server.Application.Authentication.Commands;
 using Uploadify.Server.Application.Authentication.DataTransferObjects;
 using Uploadify.Server.Application.Authentication.ViewModels;
 using Uploadify.Server.Core.Application.Commands;

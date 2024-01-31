@@ -1,10 +1,138 @@
-﻿<MudExpansionPanels>
-    @foreach (var overview in Summary)
-    {
-        <PermissionCard Overview="overview"/>
-    }
-</MudExpansionPanels>
+﻿@using Mapster
+@using Uploadify.Client.Integration.Resources
+@using Uploadify.Authorization.Models
+@using Uploadify.Client.Core.Authorization.Constants
+@using Uploadify.Client.Core.Infrastructure.Services
+@using System.Globalization
+@inject ApiCallWrapper ApiCallWrapper
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<MudDataGrid Culture="CultureInfo.CurrentCulture"
+             Groupable="true"
+             GroupStyle="color: var(--mud-palette-dark); background-color: var(--mud-palette-white);"
+             Items="@ProjectByPermission(_summary?.Roles ?? Enumerable.Empty<RoleOverview>())"
+             Loading="_isLoading || _summary is not { Roles: not null }"
+             LoadingProgressColor="Color.Dark"
+             T="Element">
+    <Columns>
+        <PropertyColumn Filterable="false"
+                        Groupable="false"
+                        Property="element => element.Role.Name"
+                        Sortable="false"
+                        Title="@Localizer[Translations.Components.PermissionDashboard.RoleNameLabel]"/>
+
+        <TemplateColumn CellClass="d-flex justify-end"
+                        Filterable="false"
+                        Groupable="false"
+                        Resizable="false"
+                        Sortable="false"
+                        StickyRight="false">
+            <CellTemplate>
+                <MudToolBar Class="px-0"
+                            Dense="true">
+                    <MudIconButton Icon="@Icons.Material.Rounded.GroupRemove"
+                                   @OnClick="() => OnRevokePermission(context.Item)"/>
+                    <MudIconButton Icon="@Icons.Material.Rounded.Edit"/>
+                    <MudIconButton Icon="@Icons.Material.Rounded.Delete"/>
+                </MudToolBar>
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn Filterable="false"
+                        Groupable="true"
+                        GroupBy="element => GroupByPermission(element.Role)"
+                        Grouping="true"
+                        Hidden="true"
+                        Property="element => element.Permission"
+                        Sortable="false">
+            <GroupTemplate>
+                <MudText Class="ps-2"
+                         Inline="true"
+                         Style="font-weight: 700; width: 100%;">
+                    @if (context.Grouping.Key is Permission permission)
+                    {
+                        @Localizer[PermissionTranslationKeys.Values[permission]]
+                    }
+                    <MudChip Color="Color.Primary"
+                             Size="Size.Small"
+                             Variant="Variant.Text">
+                        @context.Grouping.Count()
+                    </MudChip>
+                </MudText>
+                <MudIconButton Icon="@Icons.Material.Rounded.GroupAdd"/>
+            </GroupTemplate>
+        </PropertyColumn>
+    </Columns>
+</MudDataGrid>
 
 @code {
-    [Parameter, EditorRequired] public required IEnumerable<PermissionCard.PermissionOverview> Summary { get; set; }
+    private bool _isLoading = true;
+
+    private RolesSummary? _summary;
+    private IEnumerable<Permission> _permissions = Enum.GetValues(typeof(Permission)).OfType<Permission>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ApiCallWrapper.Call(client => client.ApiRolesSummaryAsync(1, 1000));
+        if (response is not { Status: Status.Ok, Summary: not null })
+        {
+            return;
+        }
+
+        _summary = response.Summary;
+        _isLoading = false;
+    }
+
+    private IEnumerable<Element> ProjectByPermission(IEnumerable<RoleOverview> roles)
+    {
+        var elements = new List<Element>();
+        foreach (var projectedRoles in roles.Select(ProjectByPermission))
+        {
+            elements.AddRange(projectedRoles.Select(role => new Element(role.Permission ?? Permission.None, role)));
+        }
+
+        return elements.DistinctBy(element => new { element.Permission, element.Role.Name });
+    }
+
+    private IEnumerable<RoleOverview> ProjectByPermission(RoleOverview role)
+    {
+        var permissions = _permissions.Where(permission => role.Permission.HasValue && role.Permission.Value.HasFlag(permission));
+        var roles = permissions.Select(permission =>
+        {
+            var projectedRole = role.Adapt<RoleOverview>();
+
+            projectedRole.Permission = permission;
+
+            return projectedRole;
+        });
+
+        return roles;
+    }
+
+    private object GroupByPermission(RoleOverview role)
+    {
+        return role.Permission ?? Permission.None;
+    }
+
+    private record Element(Permission Permission, RoleOverview Role);
+
+    private async Task OnRevokePermission(Element element)
+    {
+        var response = await ApiCallWrapper.Call(client => client.ApiPermissionRevokeAsync(new RevokePermissionCommand
+        {
+            Name = element.Role.Name,
+            Permission = element.Permission
+        }));
+
+        if (response is not { Status: Status.Ok })
+        {
+            return;
+        }
+
+        var role = _summary?.Roles.SingleOrDefault(role => role.Name == element.Role.Name);
+        if (role != null)
+        {
+            role.Permission &= ~element.Permission;
+        }
+    }
+
 }

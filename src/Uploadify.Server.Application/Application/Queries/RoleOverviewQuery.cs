@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Uploadify.Server.Application.Application.DataTransferObjects;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;

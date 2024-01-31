@@ -13,6 +13,7 @@ using Polly.Extensions.Http;
 using Uploadify.Authorization.Extensions;
 using Uploadify.Client.Application.Authentication.Services;
 using Uploadify.Client.Application.Authorization.Services;
+using Uploadify.Client.Application.Utilities.Services;
 using Uploadify.Client.Core.Infrastructure.Services;
 using Uploadify.Client.Domain.Localization.Constants;
 using Uploadify.Client.Web;
@@ -24,6 +25,7 @@ var services = builder.Services;
 services.AddSingleton(builder.HostEnvironment)
     .AddOptions()
     .AddMudServices()
+    .AddSingleton<MobileViewManager>()
     .AddTransient<AuthorizedHandler>()
     .AddPermissions()
     .AddLocalization();

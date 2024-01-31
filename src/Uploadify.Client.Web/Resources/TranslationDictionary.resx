@@ -132,4 +132,49 @@
     <data name="components.authenticated_layout.more_link" xml:space="preserve">
         <value>More</value>
     </data>
+    <data name="authorization.permissions.none" xml:space="preserve">
+        <value>None</value>
+    </data>
+    <data name="authorization.permissions.view_permissions" xml:space="preserve">
+        <value>View permissions</value>
+    </data>
+    <data name="authorization.permissions.edit_permissions" xml:space="preserve">
+        <value>Manage permissions</value>
+    </data>
+    <data name="authorization.permissions.view_roles" xml:space="preserve">
+        <value>View roles</value>
+    </data>
+    <data name="authorization.permissions.edit_roles" xml:space="preserve">
+        <value>Manage roles</value>
+    </data>
+    <data name="authorization.permissions.view_users" xml:space="preserve">
+        <value>View users</value>
+    </data>
+    <data name="authorization.permissions.edit_users" xml:space="preserve">
+        <value>Manage users</value>
+    </data>
+    <data name="authorization.permissions.view_files" xml:space="preserve">
+        <value>View files</value>
+    </data>
+    <data name="authorization.permissions.edit_files" xml:space="preserve">
+        <value>Manage files</value>
+    </data>
+    <data name="authorization.permissions.all" xml:space="preserve">
+        <value>All</value>
+    </data>
+    <data name="components.permission_dashboard.role_name_label" xml:space="preserve">
+        <value>Role name</value>
+    </data>
+    <data name="components.permission_dashboard.date_updated_label" xml:space="preserve">
+        <value>Last updated</value>
+    </data>
+    <data name="components.permission_dashboard.user_updated_by.username_label" xml:space="preserve">
+        <value>Updated by</value>
+    </data>
+    <data name="components.permission_dashboard.edit_label" xml:space="preserve">
+        <value>Options</value>
+    </data>
+    <data name="components.permission_dashboard.role_detail_title" xml:space="preserve">
+        <value>Detail</value>
+    </data>
 </root>

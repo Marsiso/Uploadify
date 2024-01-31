@@ -2,14 +2,14 @@
 
 public class UnauthorizedException : Exception
 {
-    public UnauthorizedException(string login, string resourceID, string resourceName)
+    public UnauthorizedException(string userName, string resourceID, string resourceName)
     {
-        Login = login;
+        UserName = userName;
         ResourceID = resourceID;
         ResourceName = resourceName;
     }
 
-    public string Login { get; set; }
+    public string UserName { get; set; }
     public string ResourceID { get; set; }
     public string ResourceName { get; set; }
 }

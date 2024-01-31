@@ -129,4 +129,49 @@
     <data name="components.authenticated_layout.more_link" xml:space="preserve">
         <value>Více</value>
     </data>
+    <data name="authorization.permissions.none" xml:space="preserve">
+        <value>Žádné</value>
+    </data>
+    <data name="authorization.permissions.view_files" xml:space="preserve">
+        <value>Zobrazit soubory</value>
+    </data>
+    <data name="authorization.permissions.view_permissions" xml:space="preserve">
+        <value>Zobrazit oprávnění</value>
+    </data>
+    <data name="authorization.permissions.view_roles" xml:space="preserve">
+        <value>Zobrazit role</value>
+    </data>
+    <data name="authorization.permissions.view_users" xml:space="preserve">
+        <value>Zobrazit uživatele</value>
+    </data>
+    <data name="authorization.permissions.edit_users" xml:space="preserve">
+        <value>Spravovat uživatele</value>
+    </data>
+    <data name="authorization.permissions.edit_roles" xml:space="preserve">
+        <value>Spravovat role</value>
+    </data>
+    <data name="authorization.permissions.edit_permissions" xml:space="preserve">
+        <value>Spravovat oprávnění</value>
+    </data>
+    <data name="authorization.permissions.edit_files" xml:space="preserve">
+        <value>Spravovat soubory</value>
+    </data>
+    <data name="authorization.permissions.all" xml:space="preserve">
+        <value>Všechny</value>
+    </data>
+    <data name="components.permission_dashboard.role_name_label" xml:space="preserve">
+        <value>Název</value>
+    </data>
+    <data name="components.permission_dashboard.date_updated_label" xml:space="preserve">
+        <value>Poslední změna</value>
+    </data>
+    <data name="components.permission_dashboard.user_updated_by.username_label" xml:space="preserve">
+        <value>Změnil</value>
+    </data>
+    <data name="components.permission_dashboard.edit_label" xml:space="preserve">
+        <value>Možnosti</value>
+    </data>
+    <data name="components.permission_dashboard.role_detail_title" xml:space="preserve">
+        <value>Podrobnosti</value>
+    </data>
 </root>

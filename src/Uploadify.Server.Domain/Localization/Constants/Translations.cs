@@ -44,6 +44,13 @@ public static class Translations
 
         public const string UserLockedOut = BaseValidations + ".signin.locked_out";
         public const string InvalidLoginForm = BaseValidations + ".signin.invalid_user_name_or_password";
+
+        public const string PermissionRequired = $"{BaseValidations}.permission.required";
+        public const string PermissionIsNotInEnum = $"{BaseValidations}.permission.out_of_range";
+        public const string Unauthorized= $"{BaseValidations}.permission.unauthorized";
+
+        public const string RoleNameRequired = $"{BaseValidations}.role_name.required";
+        public const string RoleNameMaxLength = $"{BaseValidations}.role_name.max_length";
     }
 
     public static class RequestStatuses

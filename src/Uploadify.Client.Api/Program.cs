@@ -2,15 +2,12 @@ using System.Net.Http.Headers;
 using System.Security.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Npgsql;
 using OpenIddict.Abstractions;
 using OpenIddict.Client;
 using OpenIddict.Client.AspNetCore;
 using Quartz;
 using Uploadify.Server.Application.Infrastructure.Extensions;
 using Uploadify.Server.Data.Infrastructure.EF;
-using Uploadify.Server.Data.Infrastructure.EF.Services;
 using Uploadify.Server.Domain.Authorization.Constants;
 using Uploadify.Server.Domain.Infrastructure.Services;
 using Yarp.ReverseProxy.Configuration;
@@ -114,6 +111,33 @@ var routes = new[]
         Match = new RouteMatch
         {
             Path = "api/user/{**catch-all}"
+        }
+    },
+    new RouteConfig
+    {
+        RouteId = "route2",
+        ClusterId = "cluster1",
+        Match = new RouteMatch
+        {
+            Path = "api/role/{**catch-all}"
+        }
+    },
+    new RouteConfig
+    {
+        RouteId = "route3",
+        ClusterId = "cluster1",
+        Match = new RouteMatch
+        {
+            Path = "api/roles/{**catch-all}"
+        }
+    },
+    new RouteConfig
+    {
+        RouteId = "route4",
+        ClusterId = "cluster1",
+        Match = new RouteMatch
+        {
+            Path = "api/permission/{**catch-all}"
         }
     }
 };

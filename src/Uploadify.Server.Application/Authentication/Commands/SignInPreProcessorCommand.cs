@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Uploadify.Server.Core.Application.Queries;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Localization;
 using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Models;
 using Uploadify.Server.Domain.Requests.Services;
 
-namespace Uploadify.Server.Application.Application.Commands;
+namespace Uploadify.Server.Application.Authentication.Commands;
 
 public class SignInPreProcessorCommand : BaseRequest<SignInPreProcessorCommandResponse>, ICommand<SignInPreProcessorCommandResponse>
 {
