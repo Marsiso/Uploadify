@@ -41,6 +41,16 @@ public static class Translations
                 public const string UserNameLabel = $"{BaseUserUpdatedBy}.username_label";
             }
         }
+
+        public static class PermissionSelector
+        {
+            public const string BasePermissionSelector = $"{BaseComponents}.permission_selector";
+        }
+
+        public static class RoleSelector
+        {
+            public const string BaseRoleSelector = $"{BaseComponents}.role_selector";
+        }
     }
 
     public static class Pages

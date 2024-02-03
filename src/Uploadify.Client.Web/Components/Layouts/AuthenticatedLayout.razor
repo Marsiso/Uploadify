@@ -8,9 +8,9 @@
     <Authorized Context="AuthenticationState">
         <MudContainer Class="pa-0"
                       MaxWidth="MaxWidth.Large"
-                      Style="height: 100%; width: 100%;">
-            <MudLayout Style="height: 100%; width: 100%;">
-                <MudAppBar Class="pt-4"
+                      Style="height: 100vh; width: 100%;">
+            <MudLayout Style="height: 100vh; width: 100%;">
+                <MudAppBar Class="pt-8 px-4"
                            Elevation="0"
                            Fixed="false">
                     <MudStack AlignItems="AlignItems.Center"
@@ -40,10 +40,10 @@
                 {
                     <MobileNavigation/>
                 }
+
                 <MudMainContent Class="@_contentClass"
                                 Style="height:fit-content; width: 100%;">
-                    <MudContainer MaxWidth="@_contentWidth"
-                                  Style="@_contentStyle">
+                    <MudContainer MaxWidth="MaxWidth.Small" >
                         @Body
                     </MudContainer>
                 </MudMainContent>
@@ -54,7 +54,6 @@
 
 @code {
     private bool _isAuthenticated;
-    private string _contentStyle => MobileViewManager.IsDesktop ? "padding-left: 300px;" : "padding-bottom: 45px;";
     private string _contentClass => MobileViewManager.IsDesktop ? "pa-8" : "px-4 py-8";
     private MaxWidth _contentWidth => MobileViewManager.IsDesktop ? MaxWidth.Medium : MaxWidth.False;
 

@@ -1,0 +1,69 @@
+﻿@using Uploadify.Client.Integration.Resources
+@using Uploadify.Client.Core.Infrastructure.Services
+@inject ApiCallWrapper ApiCallWrapper
+
+@if (_isLoading)
+{
+    <MudSkeleton Width="100%" Height="60px;"/>
+}
+else
+{
+    <MudSelect AnchorOrigin="Origin.BottomCenter"
+               @bind-Value="SelectedValue"
+               Label="Role"
+               T="RoleOverview"
+               Variant="Variant.Outlined">
+        @foreach (var role in _summary.Roles)
+        {
+            <MudSelectItem Value="role">
+                @role.Name
+            </MudSelectItem>
+        }
+    </MudSelect>
+}
+
+@code {
+    private bool _isLoading = true;
+    private RolesSummary _summary;
+    private RoleOverview _selectedValue;
+
+    [Parameter] public RoleOverview? DefaultSelectedValue { get; set; }
+
+    [Parameter]
+    public RoleOverview SelectedValue
+    {
+        get => _selectedValue;
+        set
+        {
+            _selectedValue = value;
+            OnSelectedValueChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter] public EventCallback<RoleOverview> OnSelectedValueChanged { get; set; }
+
+    [Parameter] public CancellationToken CancellationToken { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ApiCallWrapper.Call(client => client.ApiRolesSummaryAsync(cancellationToken: CancellationToken));
+        if (response is not { Status: Status.Ok, Summary.Roles.Count: > 0 })
+        {
+            return;
+        }
+
+        _summary = response.Summary;
+
+        if (DefaultSelectedValue == null)
+        {
+            SelectedValue = response.Summary.Roles.First();
+        }
+        else
+        {
+            SelectedValue = DefaultSelectedValue;
+        }
+
+        _isLoading = false;
+    }
+
+}

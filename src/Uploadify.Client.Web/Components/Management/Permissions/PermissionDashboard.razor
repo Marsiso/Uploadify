@@ -1,74 +1,76 @@
 ﻿@using Mapster
-@using Uploadify.Client.Integration.Resources
 @using Uploadify.Authorization.Models
 @using Uploadify.Client.Core.Authorization.Constants
 @using Uploadify.Client.Core.Infrastructure.Services
+@using Uploadify.Client.Integration.Resources
 @using System.Globalization
 @inject ApiCallWrapper ApiCallWrapper
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudDataGrid Culture="CultureInfo.CurrentCulture"
-             Groupable="true"
-             GroupStyle="color: var(--mud-palette-dark); background-color: var(--mud-palette-white);"
-             Items="@ProjectByPermission(_summary?.Roles ?? Enumerable.Empty<RoleOverview>())"
-             Loading="_isLoading || _summary is not { Roles: not null }"
-             LoadingProgressColor="Color.Dark"
-             T="Element">
-    <Columns>
-        <PropertyColumn Filterable="false"
-                        Groupable="false"
-                        Property="element => element.Role.Name"
-                        Sortable="false"
-                        Title="@Localizer[Translations.Components.PermissionDashboard.RoleNameLabel]"/>
+<MudStack>
+    <MudToolBar Class="px-0">
+        <MudText Typo="Typo.h3">Přehled oprávnění</MudText>
+        <MudSpacer/>
+        <MudIconButton Href="@PageRoutes.PermissionAssign"
+                       Icon="@Icons.Material.Rounded.GroupAdd"/>
+        <MudIconButton Icon="@Icons.Material.Rounded.GroupRemove"/>
+    </MudToolBar>
 
-        <TemplateColumn CellClass="d-flex justify-end"
-                        Filterable="false"
-                        Groupable="false"
-                        Resizable="false"
-                        Sortable="false"
-                        StickyRight="false">
-            <CellTemplate>
-                <MudToolBar Class="px-0"
-                            Dense="true">
-                    <MudIconButton Icon="@Icons.Material.Rounded.GroupRemove"
-                                   @OnClick="() => OnRevokePermission(context.Item)"/>
-                    <MudIconButton Icon="@Icons.Material.Rounded.Edit"/>
-                    <MudIconButton Icon="@Icons.Material.Rounded.Delete"/>
-                </MudToolBar>
-            </CellTemplate>
-        </TemplateColumn>
-        <PropertyColumn Filterable="false"
-                        Groupable="true"
-                        GroupBy="element => GroupByPermission(element.Role)"
-                        Grouping="true"
-                        Hidden="true"
-                        Property="element => element.Permission"
-                        Sortable="false">
-            <GroupTemplate>
-                <MudText Class="ps-2"
-                         Inline="true"
-                         Style="font-weight: 700; width: 100%;">
-                    @if (context.Grouping.Key is Permission permission)
-                    {
-                        @Localizer[PermissionTranslationKeys.Values[permission]]
-                    }
-                    <MudChip Color="Color.Primary"
-                             Size="Size.Small"
-                             Variant="Variant.Text">
-                        @context.Grouping.Count()
-                    </MudChip>
-                </MudText>
-                <MudIconButton Icon="@Icons.Material.Rounded.GroupAdd"/>
-            </GroupTemplate>
-        </PropertyColumn>
-    </Columns>
-</MudDataGrid>
+    <MudDataGrid Culture="CultureInfo.CurrentCulture"
+                 Filterable="false"
+                 Groupable="true"
+                 GroupStyle="color: var(--mud-palette-dark); background-color: var(--mud-palette-white);"
+                 Items="@ProjectByPermission(_summary?.Roles ?? Enumerable.Empty<RoleOverview>())"
+                 Loading="_isLoading || _summary is not { Roles: not null }"
+                 LoadingProgressColor="Color.Dark"
+                 SortMode="SortMode.None"
+                 T="Element">
+        <Columns>
+            <PropertyColumn Groupable="false"
+                            Property="element => element.Role.Name"
+                            Title="@Localizer[Translations.Components.PermissionDashboard.RoleNameLabel]"/>
+
+            <TemplateColumn CellClass="d-flex justify-end"
+                            Groupable="false">
+                <CellTemplate>
+                    <MudToolBar Class="px-0"
+                                Dense="true">
+                        <MudIconButton Icon="@Icons.Material.Rounded.GroupRemove"
+                                       OnClick="@(() => OnRevokePermission(context.Item))"/>
+                        <MudIconButton Icon="@Icons.Material.Rounded.Delete"/>
+                    </MudToolBar>
+                </CellTemplate>
+            </TemplateColumn>
+            <PropertyColumn Groupable="true"
+                            GroupBy="element => GroupByPermission(element.Role)"
+                            Grouping="true"
+                            Hidden="true"
+                            Property="element => element.Permission">
+                <GroupTemplate>
+                    <MudText Class="ps-2"
+                             Inline="true"
+                             Style="font-weight: 700; width: 100%;">
+                        @if (context.Grouping.Key is Permission permission)
+                        {
+                            @Localizer[PermissionTranslationKeys.Values[permission]]
+                        }
+                        <MudChip Color="Color.Primary"
+                                 Size="Size.Small"
+                                 Variant="Variant.Text">
+                            @context.Grouping.Count()
+                        </MudChip>
+                    </MudText>
+                </GroupTemplate>
+            </PropertyColumn>
+        </Columns>
+    </MudDataGrid>
+</MudStack>
 
 @code {
-    private bool _isLoading = true;
+    private readonly IEnumerable<Permission> _permissions = Enum.GetValues(typeof(Permission)).OfType<Permission>();
 
+    private bool _isLoading = true;
     private RolesSummary? _summary;
-    private IEnumerable<Permission> _permissions = Enum.GetValues(typeof(Permission)).OfType<Permission>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -115,6 +117,11 @@
 
     private record Element(Permission Permission, RoleOverview Role);
 
+    private Task OnAssignPermission(Element element)
+    {
+        return Task.CompletedTask;
+    }
+
     private async Task OnRevokePermission(Element element)
     {
         var response = await ApiCallWrapper.Call(client => client.ApiPermissionRevokeAsync(new RevokePermissionCommand
@@ -133,6 +140,11 @@
         {
             role.Permission &= ~element.Permission;
         }
+    }
+
+    private Task ReloadSummary()
+    {
+        return Task.CompletedTask;
     }
 
 }

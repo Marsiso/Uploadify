@@ -1,0 +1,81 @@
+﻿@using Uploadify.Authorization.Models
+@using Uploadify.Client.Core.Authorization.Constants
+@using Uploadify.Authorization.Helpers
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<MudSelect AnchorOrigin="Origin.BottomCenter"
+           @bind-Value="SelectedValue"
+           Label="Oprávnění"
+           T="Permission"
+           Variant="Variant.Outlined">
+    @foreach (var permission in _values)
+    {
+        <MudSelectItem Value="permission">
+            <MudText Typo="Typo.body1">
+                @Localizer[PermissionTranslationKeys.Values[permission]]
+            </MudText>
+        </MudSelectItem>
+    }
+</MudSelect>
+
+@code {
+    private Permission _selectedValue;
+    private IEnumerable<Permission> _values;
+    private IEnumerable<Permission>? _defaultValues;
+
+    [Parameter] public Permission? DefaultSelectedValue { get; set; }
+
+    [Parameter]
+    public IEnumerable<Permission>? DefaultValues
+    {
+        get => _defaultValues;
+        set
+        {
+            _defaultValues = value;
+
+            if (_defaultValues?.Any() ?? false)
+            {
+                _values = value;
+            }
+            else
+            {
+                _values = PermissionHelpers.GetValues();
+            }
+
+            if (_values.All(permission => permission != _selectedValue))
+            {
+                _selectedValue = _values.First();
+            }
+            else
+            {
+                _selectedValue = _values.First();
+            }
+        }
+    }
+
+    [Parameter]
+    public Permission SelectedValue
+    {
+        get => _selectedValue;
+        set
+        {
+            _selectedValue = value;
+            OnSelectedValueChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter] public EventCallback<Permission> OnSelectedValueChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (DefaultSelectedValue.HasValue)
+        {
+            SelectedValue = DefaultSelectedValue.Value;
+        }
+        else
+        {
+            SelectedValue = _values.First();
+        }
+    }
+
+}

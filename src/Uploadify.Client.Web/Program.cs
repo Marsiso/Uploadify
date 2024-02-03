@@ -25,6 +25,7 @@ var services = builder.Services;
 services.AddSingleton(builder.HostEnvironment)
     .AddOptions()
     .AddMudServices()
+    .AddMudBlazorDialog()
     .AddSingleton<MobileViewManager>()
     .AddTransient<AuthorizedHandler>()
     .AddPermissions()
