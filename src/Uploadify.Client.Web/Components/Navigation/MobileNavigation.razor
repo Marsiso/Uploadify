@@ -1,9 +1,8 @@
 ﻿@inject IStringLocalizer<TranslationDictionary> Localizer
 
 <MudAppBar Bottom="true"
-           Class="pb-4"
-           Elevation="24"
-           Fixed="true">
+           Class="mx-0 pb-4"
+           Elevation="24">
     <MudSpacer/>
     <MudStack Row="true"
               Spacing="8">
@@ -11,7 +10,7 @@
                        Icon="@Icons.Material.Rounded.Folder"
                        Title="@Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]"
                        Variant="Variant.Text"/>
-        <MudIconButton Href="@PageRoutes.Shared"
+        <MudIconButton Href="@PageRoutes.SharedFiles"
                        Icon="@Icons.Material.Rounded.Link"
                        Title="@Localizer[Translations.Components.AuthenticatedLayout.SharedLink]"
                        Variant="Variant.Text"/>

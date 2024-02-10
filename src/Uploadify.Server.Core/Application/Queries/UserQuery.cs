@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Localization;
 using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Models;

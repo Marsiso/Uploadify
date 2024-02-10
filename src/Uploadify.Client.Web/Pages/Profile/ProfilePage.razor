@@ -91,7 +91,6 @@
         var response = await ApiCallWrapper.Call(client => client.ApiUserDetailAsync(subject));
         if (response is not { Status: Status.Ok, User: not null })
         {
-            User = null;
             return;
         }
 

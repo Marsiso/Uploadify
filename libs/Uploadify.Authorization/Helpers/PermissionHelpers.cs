@@ -4,5 +4,14 @@ namespace Uploadify.Authorization.Helpers;
 
 public static class PermissionHelpers
 {
-    public static List<Permission> GetValues() => Enum.GetValues(typeof(Permission)).OfType<Permission>().ToList();
+    public static IEnumerable<Permission> GetValues() => Enum.GetValues(typeof(Permission)).OfType<Permission>();
+    public static IEnumerable<Permission> GetDistinctValues(Permission? permission)
+    {
+        if (!permission.HasValue)
+        {
+            return GetValues();
+        }
+
+        return GetValues().Where(value => !permission.Value.HasFlag(value));
+    }
 }

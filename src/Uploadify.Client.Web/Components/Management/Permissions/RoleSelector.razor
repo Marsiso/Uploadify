@@ -1,0 +1,56 @@
+﻿@using Uploadify.Client.Application.Application.Services
+@inject RoleService RoleService
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+@if (_isLoading || _selectedValue == null || _summary is not { Roles.Count: > 0 })
+{
+    <MudSkeleton Height="60px;"
+                 Width="100%"/>
+}
+else
+{
+    <MudSelect AnchorOrigin="Origin.BottomCenter"
+               @bind-Value="SelectedValue"
+               Label="@Localizer[Translations.Components.RoleSelector.Label]"
+               T="RoleOverview"
+               Variant="Variant.Outlined">
+        @foreach (var role in _summary.Roles)
+        {
+            <MudSelectItem Value="role">
+                @role.Name
+            </MudSelectItem>
+        }
+    </MudSelect>
+}
+
+@code {
+    private bool _isLoading = true;
+
+    private RolesSummary? _summary;
+    private RoleOverview? _selectedValue;
+
+    public RoleOverview? SelectedValue
+    {
+        get => _selectedValue;
+        set
+        {
+            _selectedValue = value;
+            OnSelectedValueChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter] public required CancellationToken CancellationToken { get; set; }
+    [Parameter] public required EventCallback<RoleOverview?> OnSelectedValueChanged { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var resourceResponse = await RoleService.GetSummary(cancellationToken: CancellationToken);
+
+        _summary = resourceResponse.Resource;
+
+        SelectedValue = resourceResponse.Resource?.Roles?.FirstOrDefault();
+
+        _isLoading = false;
+    }
+
+}

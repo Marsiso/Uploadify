@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Uploadify.Server.Domain.Localization;
 using Uploadify.Server.Domain.Localization.Constants;
 using Uploadify.Server.Domain.Requests.Models;
 
@@ -19,7 +18,7 @@ public class BaseApiController<TController> : ControllerBase where TController :
         Logger = logger;
     }
 
-    protected IActionResult ConvertToActionResult(BaseResponse response, [CallerMemberName] string? action = null)
+    protected IActionResult ConvertToActionResult<TResponse>(TResponse response, [CallerMemberName] string? action = null) where TResponse : BaseResponse
     {
         try
         {
@@ -34,14 +33,14 @@ public class BaseApiController<TController> : ControllerBase where TController :
         }
         catch (Exception exception)
         {
-            Logger.LogError($"Controller: `{nameof(TController)}` Action: `{action}` Message: `{response.Failure?.UserFriendlyMessage}` Exception: `{exception}`.");
+            Logger.LogError($"Controller: '{nameof(TController)}' Action: '{action}' Message: '{response.Failure?.UserFriendlyMessage}' Exception: '{exception}'.");
             return StatusCode((int)Status.InternalServerError, new BaseResponse(Status.InternalServerError, new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError }));
         }
     }
 
-    protected IActionResult HandleError(BaseResponse response, string? action)
+    protected IActionResult HandleError<TResponse>(TResponse response, string? action) where TResponse : BaseResponse
     {
-        Logger.LogError($"Controller: `{nameof(TController)}` Action: `{action}` Message: `{response.Failure?.UserFriendlyMessage}` Exception: `{response.Failure?.Exception}`.");
+        Logger.LogError($"Controller: '{nameof(TController)}' Action: '{action}' Message: '{response.Failure?.UserFriendlyMessage}' Exception: '{response.Failure?.Exception}'.");
         return StatusCode((int)response.Status, response);
     }
 }

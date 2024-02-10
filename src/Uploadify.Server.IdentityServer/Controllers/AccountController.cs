@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Uploadify.Server.Application.Application.Commands;
+using Uploadify.Server.Application.Authentication.Commands;
 using Uploadify.Server.Application.Authentication.DataTransferObjects;
 using Uploadify.Server.Application.Authentication.ViewModels;
 using Uploadify.Server.Core.Application.Commands;
@@ -80,7 +80,7 @@ public class AccountController : Controller
         var response = await _mediator.Send(form.Adapt<SignUpCommand>(), cancellationToken);
         if (response.Status != Status.Created)
         {
-            return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = new RegisterForm(), Errors = response.Failure?.Errors });
+            return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = form, Errors = response.Failure?.Errors });
         }
 
         return View("Login", new LoginViewModel

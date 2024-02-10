@@ -60,6 +60,96 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string authorization_permissions_all {
+            get {
+                return ResourceManager.GetString("authorization.permissions.all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage files.
+        /// </summary>
+        internal static string authorization_permissions_edit_files {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage permissions.
+        /// </summary>
+        internal static string authorization_permissions_edit_permissions {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage roles.
+        /// </summary>
+        internal static string authorization_permissions_edit_roles {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage users.
+        /// </summary>
+        internal static string authorization_permissions_edit_users {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string authorization_permissions_none {
+            get {
+                return ResourceManager.GetString("authorization.permissions.none", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View files.
+        /// </summary>
+        internal static string authorization_permissions_view_files {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View permissions.
+        /// </summary>
+        internal static string authorization_permissions_view_permissions {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View roles.
+        /// </summary>
+        internal static string authorization_permissions_view_roles {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View users.
+        /// </summary>
+        internal static string authorization_permissions_view_users {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uploadify.
         /// </summary>
         internal static string common_app_name {
@@ -155,6 +245,105 @@ namespace Uploadify.Client.Web.Resources {
         internal static string components_authenticated_layout_shared_link {
             get {
                 return ResourceManager.GetString("components.authenticated_layout.shared_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign permissions to the role to ensure the proper functioning and security of your system. Each role can have a different set of permissions that define what users can do with that role. Select only those permissions that correspond to the responsibilities and requirements of the role..
+        /// </summary>
+        internal static string components_permission_assignment_description {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign permission.
+        /// </summary>
+        internal static string components_permission_assignment_submit_button {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign permission.
+        /// </summary>
+        internal static string components_permission_assignment_title {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        internal static string components_permission_dashboard_date_updated_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.date_updated_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string components_permission_dashboard_edit_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.edit_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detail.
+        /// </summary>
+        internal static string components_permission_dashboard_role_detail_title {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.role_detail_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string components_permission_dashboard_role_name_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.role_name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permission overview.
+        /// </summary>
+        internal static string components_permission_dashboard_title {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        internal static string components_permission_dashboard_user_updated_by_username_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.user_updated_by.username_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permission.
+        /// </summary>
+        internal static string components_permission_selector_label {
+            get {
+                return ResourceManager.GetString("components.permission_selector.label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        internal static string components_role_selector_label {
+            get {
+                return ResourceManager.GetString("components.role_selector.label", resourceCulture);
             }
         }
         
@@ -398,6 +587,78 @@ namespace Uploadify.Client.Web.Resources {
         internal static string pages_shared_title {
             get {
                 return ResourceManager.GetString("pages.shared.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string request_statuses_bad_request {
+            get {
+                return ResourceManager.GetString("request_statuses.bad_request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string request_statuses_client_canceled_operation {
+            get {
+                return ResourceManager.GetString("request_statuses.client_canceled_operation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string request_statuses_forbidden {
+            get {
+                return ResourceManager.GetString("request_statuses.forbidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string request_statuses_internal_server_error {
+            get {
+                return ResourceManager.GetString("request_statuses.internal_server_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string request_statuses_not_found {
+            get {
+                return ResourceManager.GetString("request_statuses.not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string request_statuses_unauthorized {
+            get {
+                return ResourceManager.GetString("request_statuses.unauthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string validations_permission_required {
+            get {
+                return ResourceManager.GetString("validations.permission.required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string validations_role_name_required {
+            get {
+                return ResourceManager.GetString("validations.role_name.required", resourceCulture);
             }
         }
     }

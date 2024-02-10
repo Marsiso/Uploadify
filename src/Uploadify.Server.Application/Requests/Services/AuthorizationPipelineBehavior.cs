@@ -2,14 +2,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using OpenIddict.Abstractions;
-using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Requests.Exceptions;
 using Uploadify.Server.Domain.Requests.Services;
 
 namespace Uploadify.Server.Application.Requests.Services;
 
-public class AuthorizationPipelineBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : BaseRequest<TResponse>
-    where TResponse : BaseResponse
+public class AuthorizationPipelineBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -24,12 +22,12 @@ public class AuthorizationPipelineBehaviour<TRequest, TResponse> : IPipelineBeha
 
         if (request is IRequestWithEmail requestWithEmail)
         {
-            requestWithEmail.Email = principal?.FindFirst(OpenIddictConstants.Claims.Email)?.Value;
+            requestWithEmail.Email = principal?.FindFirst(OpenIddictConstants.Claims.Email)?.Value ?? throw new UnauthorizedException(string.Empty, string.Empty, string.Empty);
         }
 
-        if (request is IRequestWithLogin requestWithLogin)
+        if (request is IRequestWithUserName requestWithUserName)
         {
-            requestWithLogin.Login = principal?.FindFirst(OpenIddictConstants.Claims.Subject)?.Value;
+            requestWithUserName.UserName = principal?.FindFirst(OpenIddictConstants.Claims.Name)?.Value ?? throw new UnauthorizedException(string.Empty, string.Empty, string.Empty);
         }
 
         return await next();

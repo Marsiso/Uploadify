@@ -25,7 +25,7 @@ h1 {
 }
 
 form {
-    width: 24rem;
+    width: 22rem;
     padding: 1rem;
 }
 
@@ -41,6 +41,7 @@ form {
 
 .card {
     border-color: var(--light-gray) !important;
+    border-radius: 1rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
@@ -73,4 +74,16 @@ label.validation-error:has(> input.validation-error) {
 
 input.validation-error {
     border-color: var(--text-error) !important;
+}
+
+.button {
+    border-radius: 1.5rem !important;
+}
+
+fieldset {
+    border-radius: 1rem !important;
+}
+
+input {
+    border-radius: .5rem !important;
 }

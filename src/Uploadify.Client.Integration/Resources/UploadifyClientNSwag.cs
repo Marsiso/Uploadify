@@ -4,6 +4,8 @@
 // </auto-generated>
 //----------------------
 
+using Uploadify.Authorization.Models;
+
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -33,7 +35,7 @@ namespace Uploadify.Client.Integration.Resources
 
         private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
         {
-            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            var settings = new Newtonsoft.Json.JsonSerializerSettings { PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All };
             UpdateJsonSerializerSettings(settings);
             return settings;
         }
@@ -47,6 +49,278 @@ namespace Uploadify.Client.Integration.Resources
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Grants specified permissions to a user.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint allows granting of permissions to users if the caller has the necessary rights.
+        /// <br/>Requires 'EditPermissions' permission to access this endpoint.
+        /// <br/>
+        /// <br/>Sample request:
+        /// <br/>
+        /// <br/>    POST: /api/permission/grant
+        /// <br/>    {
+        /// <br/>        name: "user_admin",
+        /// <br/>        permission: 128
+        /// <br/>    }
+        /// </remarks>
+        /// <param name="command">The command object containing the details of the permission grant request.</param>
+        /// <returns>If the permission is successfully granted.</returns>
+        /// <exception cref="ApiCallException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<ApiCallResponse<GrantPermissionCommandResponse>> ApiPermissionGrantAsync(GrantPermissionCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (command == null)
+                throw new System.ArgumentNullException("command");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(command, _settings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+
+                    // Operation Path: "api/permission/grant"
+                    urlBuilder_.Append("api/permission/grant");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GrantPermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return new ApiCallResponse<GrantPermissionCommandResponse>(status_, headers_, objectResponse_.Object);
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GrantPermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiCallException<GrantPermissionCommandResponse>("If the request is malformed or invalid.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GrantPermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiCallException<GrantPermissionCommandResponse>("If the user is unauthorized to perform this action.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GrantPermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiCallException<GrantPermissionCommandResponse>("If an internal server error occurs.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiCallException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Revokes specified permissions from a user.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint allows revoking of permissions from users if the caller has the necessary rights.
+        /// <br/>Requires 'EditPermissions' permission to access this endpoint.
+        /// <br/>
+        /// <br/>Sample request:
+        /// <br/>
+        /// <br/>    POST: /api/permission/revoke
+        /// <br/>    {
+        /// <br/>        name: "user_admin",
+        /// <br/>        permission: 128
+        /// <br/>    }
+        /// </remarks>
+        /// <param name="command">The command object containing the details of the permission revoke request.</param>
+        /// <returns>If the permission is successfully revoked.</returns>
+        /// <exception cref="ApiCallException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<ApiCallResponse<RevokePermissionCommandResponse>> ApiPermissionRevokeAsync(RevokePermissionCommand command, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (command == null)
+                throw new System.ArgumentNullException("command");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(command, _settings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+
+                    // Operation Path: "api/permission/revoke"
+                    urlBuilder_.Append("api/permission/revoke");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RevokePermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return new ApiCallResponse<RevokePermissionCommandResponse>(status_, headers_, objectResponse_.Object);
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RevokePermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiCallException<RevokePermissionCommandResponse>("If the request is malformed or invalid.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RevokePermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiCallException<RevokePermissionCommandResponse>("If the user is unauthorized to perform this action.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RevokePermissionCommandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiCallException<RevokePermissionCommandResponse>("If an internal server error occurs.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiCallException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves the details of a specific role.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint returns detailed information about a specific role identified by the roleID.
+        /// <br/>Requires 'ViewRoles' permission to access this endpoint.
+        /// <br/>
+        /// <br/>Sample request:
+        /// <br/>
+        /// <br/>    GET: /api/role/3/overview
+        /// <br/>
+        /// <br/>Sample response:
+        /// <br/>
+        /// <br/>    {
+        /// <br/>        "name": "system_admin",
+        /// <br/>        "permission": -2,
+        /// <br/>        "userCreatedBy": null,
+        /// <br/>        "dateCreated": "2024-01-17T21:06:45.447448Z",
+        /// <br/>        "userUpdatedBy": null,
+        /// <br/>        "dateUpdated": "2024-01-28T19:09:32.250184Z"
+        /// <br/>    }
+        /// </remarks>
+        /// <param name="roleID">The unique identifier of the role.</param>
+        /// <returns>If the role details are successfully retrieved.</returns>
         /// <exception cref="ApiCallException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiCallResponse<RoleOverviewQueryResponse>> ApiRoleOverviewAsync(string roleID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
@@ -109,7 +383,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<RoleOverviewQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<RoleOverviewQueryResponse>("If the request is malformed or invalid.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 401)
@@ -119,7 +393,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<RoleOverviewQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<RoleOverviewQueryResponse>("If the user is unauthorized to perform this action.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -129,7 +403,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<RoleOverviewQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<RoleOverviewQueryResponse>("If the specified role is not found.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 500)
@@ -139,7 +413,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<RoleOverviewQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<RoleOverviewQueryResponse>("If an internal server error occurs.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -162,6 +436,70 @@ namespace Uploadify.Client.Integration.Resources
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Retrieves a summary of all roles, supporting pagination.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint provides a summary of all roles with pagination support.
+        /// <br/>Requires 'ViewRoles' permission to access this endpoint.
+        /// <br/>
+        /// <br/>Sample request:
+        /// <br/>
+        /// <br/>    GET: /api/roles/summary
+        /// <br/>
+        /// <br/>Sample response:
+        /// <br/>
+        /// <br/>    {
+        /// <br/>        "summary": {
+        /// <br/>            "roles": [
+        /// <br/>                {
+        /// <br/>                    "name": "user",
+        /// <br/>                    "permission": 1,
+        /// <br/>                    "userCreatedBy": null,
+        /// <br/>                    "dateCreated": "2024-01-17T21:06:45.617462Z",
+        /// <br/>                    "userUpdatedBy": null,
+        /// <br/>                    "dateUpdated": "2024-01-28T19:09:32.417203Z"
+        /// <br/>                },
+        /// <br/>                {
+        /// <br/>                    "name": "role_admin",
+        /// <br/>                    "permission": 24,
+        /// <br/>                    "userCreatedBy": null,
+        /// <br/>                    "dateCreated": "2024-01-17T21:06:45.586189Z",
+        /// <br/>                    "userUpdatedBy": null,
+        /// <br/>                    "dateUpdated": "2024-01-28T19:09:32.39646Z"
+        /// <br/>                },
+        /// <br/>                {
+        /// <br/>                    "name": "user_admin",
+        /// <br/>                    "permission": 480,
+        /// <br/>                    "userCreatedBy": null,
+        /// <br/>                    "dateCreated": "2024-01-17T21:06:45.557188Z",
+        /// <br/>                    "userUpdatedBy": null,
+        /// <br/>                    "dateUpdated": "2024-01-28T19:09:32.375629Z"
+        /// <br/>                },
+        /// <br/>                {
+        /// <br/>                    "name": "system_admin",
+        /// <br/>                    "permission": -2,
+        /// <br/>                    "userCreatedBy": null,
+        /// <br/>                    "dateCreated": "2024-01-17T21:06:45.447448Z",
+        /// <br/>                    "userUpdatedBy": null,
+        /// <br/>                    "dateUpdated": "2024-01-28T19:09:32.250184Z"
+        /// <br/>                }
+        /// <br/>            ],
+        /// <br/>            "pageSize": 100,
+        /// <br/>            "pageNumber": 1,
+        /// <br/>            "totalPages": 1,
+        /// <br/>            "totalItems": 4,
+        /// <br/>            "hasPrevious": false,
+        /// <br/>            "hasNext": false
+        /// <br/>        },
+        /// <br/>        "status": 200,
+        /// <br/>        "failure": {
+        /// <br/>            "errors": null,
+        /// <br/>            "userFriendlyMessage": null
+        /// <br/>        }
+        /// <br/>    }
+        /// </remarks>
+        /// <returns>If the summary of roles is successfully retrieved.</returns>
         /// <exception cref="ApiCallException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiCallResponse<RolesSummaryQueryResponse>> ApiRolesSummaryAsync(int? pageNumber = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
@@ -229,7 +567,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<RolesSummaryQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<RolesSummaryQueryResponse>("If the user is unauthorized to perform this action.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 500)
@@ -239,7 +577,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<RolesSummaryQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<RolesSummaryQueryResponse>("If an internal server error occurs.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -263,10 +601,10 @@ namespace Uploadify.Client.Integration.Resources
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Retrieves user details. This endpoint requires the user to be authorized and uses the token from the request header to identify the user.
+        /// Retrieves the details of a specific user.
         /// </summary>
         /// <remarks>
-        /// This endpoint is used for user the data retrieval and responds with appropriate HTTP status codes and JSON payloads based on the outcome of the user the data retrieval.
+        /// This endpoint returns detailed information about a specific user identified by the userID.
         /// <br/>
         /// <br/>Sample request:
         /// <br/>
@@ -288,7 +626,8 @@ namespace Uploadify.Client.Integration.Resources
         /// <br/>        "updatedBy": "f20abe98-f716-4578-90b2-67f8233e8a25"
         /// <br/>    }
         /// </remarks>
-        /// <returns>Returns a GetUserQueryResponse object which includes the status of the GET request. The response varies based on the request status</returns>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>If the user details are successfully retrieved.</returns>
         /// <exception cref="ApiCallException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<ApiCallResponse<UserDetailQueryResponse>> ApiUserDetailAsync(string userID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
@@ -351,7 +690,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<UserDetailQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<UserDetailQueryResponse>("If the request is malformed or invalid.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 401)
@@ -361,7 +700,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<UserDetailQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<UserDetailQueryResponse>("If the user is unauthorized to perform this action.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -371,7 +710,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<UserDetailQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<UserDetailQueryResponse>("If the specified user is not found.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 500)
@@ -381,7 +720,7 @@ namespace Uploadify.Client.Integration.Resources
                             {
                                 throw new ApiCallException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiCallException<UserDetailQueryResponse>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiCallException<UserDetailQueryResponse>("If an internal server error occurs.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -516,83 +855,8 @@ namespace Uploadify.Client.Integration.Resources
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RoleOverviewQueryResponse : BaseResponse
+    public partial class GrantPermissionCommandResponse : BaseResponse
     {
-        [Newtonsoft.Json.JsonProperty("overview", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public RoleOverview Overview { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RoleOverview
-    {
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("permission", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Permission? Permission { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("userCreatedBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public UserOverview UserCreatedBy { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("dateCreated", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? DateCreated { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("userUpdatedBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public UserOverview UserUpdatedBy { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("dateUpdated", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? DateUpdated { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    [System.Flags]
-    public enum Permission
-    {
-
-        None = 1,
-
-        ViewPermissions = 2,
-
-        EditPermissions = 4,
-
-        ViewRoles = 8,
-
-        EditRoles = 16,
-
-        ViewUsers = 32,
-
-        EditUsers = 64,
-
-        ViewFiles = 128,
-
-        EditFiles = 256,
-
-        All = -2,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserOverview
-    {
-        [Newtonsoft.Json.JsonProperty("userName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string UserName { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("givenName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string GivenName { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("familyName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FamilyName { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Email { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("phoneNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PhoneNumber { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("picture", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Picture { get; set; }
 
     }
 
@@ -663,6 +927,94 @@ namespace Uploadify.Client.Integration.Resources
 
         [Newtonsoft.Json.JsonProperty("userFriendlyMessage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string UserFriendlyMessage { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GrantPermissionCommand : BaseRequestOfGrantPermissionCommandResponse
+    {
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("permission", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Permission? Permission { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class BaseRequestOfGrantPermissionCommandResponse
+    {
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RevokePermissionCommandResponse : BaseResponse
+    {
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RevokePermissionCommand : BaseRequestOfGrantPermissionCommandResponse
+    {
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("permission", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Permission? Permission { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RoleOverviewQueryResponse : BaseResponse
+    {
+        [Newtonsoft.Json.JsonProperty("overview", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public RoleOverview Overview { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RoleOverview
+    {
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("permission", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Permission? Permission { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("userCreatedBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public UserOverview UserCreatedBy { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("dateCreated", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? DateCreated { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("userUpdatedBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public UserOverview UserUpdatedBy { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("dateUpdated", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? DateUpdated { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UserOverview
+    {
+        [Newtonsoft.Json.JsonProperty("userName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UserName { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("givenName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string GivenName { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("familyName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string FamilyName { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Email { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("phoneNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PhoneNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("picture", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Picture { get; set; }
 
     }
 

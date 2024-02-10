@@ -1,5 +1,6 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using System.Globalization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -10,13 +11,17 @@
 @using MudBlazor
 @using Uploadify.Authorization.Components
 @using Uploadify.Authorization.Attributes
+@using Uploadify.Authorization.Helpers
+@using Uploadify.Authorization.Models
 @using Uploadify.Client.Web
 @using Uploadify.Client.Web.Components.Layouts
 @using Uploadify.Client.Web.Components.Security
 @using Uploadify.Client.Web.Components.Management.Permissions
 @using Uploadify.Client.Web.Components.Authentication
 @using Uploadify.Client.Web.Components.Navigation
-@using Uploadify.Client.Domain.Routing.Constants
-@using Microsoft.Extensions.Localization
-@using Uploadify.Client.Domain.Localization.Constants
 @using Uploadify.Client.Web.Resources
+@using Uploadify.Client.Core.Infrastructure.Services
+@using Uploadify.Client.Domain.Routing.Constants
+@using Uploadify.Client.Domain.Localization.Constants
+@using Uploadify.Client.Integration.Resources
+@using Microsoft.Extensions.Localization

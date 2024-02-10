@@ -1,4 +1,6 @@
-﻿@inject IStringLocalizer<TranslationDictionary> Localizer
+﻿@using Uploadify.Client.Application.Utilities.Services
+@inject MobileViewManager MobileViewManager
+@inject IStringLocalizer<TranslationDictionary> Localizer
 
 <MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged"/>
 
@@ -6,9 +8,9 @@
     <Authorized Context="AuthenticationState">
         <MudContainer Class="pa-0"
                       MaxWidth="MaxWidth.Large"
-                      Style="height: 100%; width: 100%;">
-            <MudLayout Style="height: 100%; width: 100%;">
-                <MudAppBar Class="pt-4"
+                      Style="height: 100vh; width: 100%;">
+            <MudLayout Style="height: 100vh; width: 100%;">
+                <MudAppBar Class="pt-8 px-4"
                            Elevation="0"
                            Fixed="false">
                     <MudStack AlignItems="AlignItems.Center"
@@ -30,7 +32,7 @@
                     <Avatar User="AuthenticationState.User"/>
                     <LocaleSelector/>
                 </MudAppBar>
-                @if (_isDesktop)
+                @if (MobileViewManager.IsDesktop)
                 {
                     <DesktopNavigation/>
                 }
@@ -38,10 +40,10 @@
                 {
                     <MobileNavigation/>
                 }
+
                 <MudMainContent Class="@_contentClass"
                                 Style="height:fit-content; width: 100%;">
-                    <MudContainer MaxWidth="@_contentWidth"
-                                  Style="@_contentStyle">
+                    <MudContainer MaxWidth="MaxWidth.Small" >
                         @Body
                     </MudContainer>
                 </MudMainContent>
@@ -51,11 +53,9 @@
 </PermissionView>
 
 @code {
-    private bool _isDesktop;
     private bool _isAuthenticated;
-    private string _contentStyle => _isDesktop ? "padding-left: 300px;" : "padding-bottom: 45px;";
-    private string _contentClass => _isDesktop ? "pa-8" : "px-4 py-8";
-    private MaxWidth _contentWidth => _isDesktop ? MaxWidth.Medium : MaxWidth.False;
+    private string _contentClass => MobileViewManager.IsDesktop ? "pa-8" : "px-4 py-8";
+    private MaxWidth _contentWidth => MobileViewManager.IsDesktop ? MaxWidth.Medium : MaxWidth.False;
 
     [Parameter] public RenderFragment? Body { get; set; }
 
@@ -66,13 +66,12 @@
             case Breakpoint.Xs or Breakpoint.Sm or Breakpoint.Md:
             case Breakpoint.SmAndDown or Breakpoint.MdAndDown or Breakpoint.LgAndDown:
             case Breakpoint.SmAndUp:
-                _isDesktop = false;
+                MobileViewManager.IsDesktop = false;
                 return;
 
             default:
-                _isDesktop = true;
+                MobileViewManager.IsDesktop = true;
                 return;
         }
     }
-
 }

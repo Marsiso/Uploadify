@@ -60,6 +60,96 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Všechny.
+        /// </summary>
+        internal static string authorization_permissions_all {
+            get {
+                return ResourceManager.GetString("authorization.permissions.all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spravovat soubory.
+        /// </summary>
+        internal static string authorization_permissions_edit_files {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spravovat oprávnění.
+        /// </summary>
+        internal static string authorization_permissions_edit_permissions {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spravovat role.
+        /// </summary>
+        internal static string authorization_permissions_edit_roles {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spravovat uživatele.
+        /// </summary>
+        internal static string authorization_permissions_edit_users {
+            get {
+                return ResourceManager.GetString("authorization.permissions.edit_users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Žádné.
+        /// </summary>
+        internal static string authorization_permissions_none {
+            get {
+                return ResourceManager.GetString("authorization.permissions.none", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zobrazit soubory.
+        /// </summary>
+        internal static string authorization_permissions_view_files {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zobrazit oprávnění.
+        /// </summary>
+        internal static string authorization_permissions_view_permissions {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zobrazit role.
+        /// </summary>
+        internal static string authorization_permissions_view_roles {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zobrazit uživatele.
+        /// </summary>
+        internal static string authorization_permissions_view_users {
+            get {
+                return ResourceManager.GetString("authorization.permissions.view_users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uploadify.
         /// </summary>
         internal static string common_app_name {
@@ -155,6 +245,105 @@ namespace Uploadify.Client.Web.Resources {
         internal static string components_authenticated_layout_shared_link {
             get {
                 return ResourceManager.GetString("components.authenticated_layout.shared_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přidělte specifická oprávnění roli, aby jste zajistili správné fungování a bezpečnost vašeho systému. Každá role může mít různou sadu oprávnění, která definují, co mohou uživatelé s touto rolí dělat. Vyberte pouze ta oprávnění, která odpovídají odpovědnosti a potřebám dané role..
+        /// </summary>
+        internal static string components_permission_assignment_description {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přidělit oprávnění.
+        /// </summary>
+        internal static string components_permission_assignment_submit_button {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přidělit oprávnění.
+        /// </summary>
+        internal static string components_permission_assignment_title {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poslední změna.
+        /// </summary>
+        internal static string components_permission_dashboard_date_updated_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.date_updated_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Možnosti.
+        /// </summary>
+        internal static string components_permission_dashboard_edit_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.edit_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podrobnosti.
+        /// </summary>
+        internal static string components_permission_dashboard_role_detail_title {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.role_detail_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Název.
+        /// </summary>
+        internal static string components_permission_dashboard_role_name_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.role_name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přehled oprávnění.
+        /// </summary>
+        internal static string components_permission_dashboard_title {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Změnil.
+        /// </summary>
+        internal static string components_permission_dashboard_user_updated_by_username_label {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.user_updated_by.username_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oprávnění.
+        /// </summary>
+        internal static string components_permission_selector_label {
+            get {
+                return ResourceManager.GetString("components.permission_selector.label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        internal static string components_role_selector_label {
+            get {
+                return ResourceManager.GetString("components.role_selector.label", resourceCulture);
             }
         }
         

@@ -1,5 +1,4 @@
-﻿@using Uploadify.Authorization.Models
-@attribute [Permission]
+﻿@attribute [Permission(Permission.ViewUsers | Permission.ViewRoles | Permission.ViewPermissions)]
 @attribute [Route(PageRoutes.Management)]
 
 @inject IStringLocalizer<TranslationDictionary> Localizer
@@ -30,7 +29,7 @@
                          Text="@Localizer[Translations.Pages.Management.UsersLabel]"/>
         </NotAuthorized>
     </PermissionView>
-    <PermissionView Permission="Permission.ViewRoles">
+    <PermissionView Permission="Permission.ViewPermissions">
         <Authorized>
             <MudTabPanel Icon="@Icons.Material.Rounded.AdminPanelSettings"
                          Text="@Localizer[Translations.Pages.Management.PermissionsLabel]">
@@ -39,7 +38,7 @@
                              Typo="Typo.body1">
                         @Localizer[Translations.Pages.Management.PermissionsDescription]
                     </MudText>
-                    <PermissionDashboard Summary="Enumerable.Empty<PermissionCard.PermissionOverview>()"/>
+                    <PermissionDashboard/>
                 </ChildContent>
             </MudTabPanel>
         </Authorized>

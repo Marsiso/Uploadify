@@ -3,7 +3,6 @@ using MediatR;
 using Uploadify.Server.Application.Validations.Extensions;
 using Uploadify.Server.Core.Application.Commands;
 using Uploadify.Server.Core.Application.Queries;
-using Uploadify.Server.Domain.Localization;
 using Uploadify.Server.Domain.Localization.Constants;
 
 namespace Uploadify.Server.Application.Authentication.Validators;
