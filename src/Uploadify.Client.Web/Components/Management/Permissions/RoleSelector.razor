@@ -1,16 +1,17 @@
-﻿@using Uploadify.Client.Integration.Resources
-@using Uploadify.Client.Core.Infrastructure.Services
-@inject ApiCallWrapper ApiCallWrapper
+﻿@using Uploadify.Client.Application.Application.Services
+@inject RoleService RoleService
+@inject IStringLocalizer<TranslationDictionary> Localizer
 
-@if (_isLoading)
+@if (_isLoading || _selectedValue == null || _summary is not { Roles.Count: > 0 })
 {
-    <MudSkeleton Width="100%" Height="60px;"/>
+    <MudSkeleton Height="60px;"
+                 Width="100%"/>
 }
 else
 {
     <MudSelect AnchorOrigin="Origin.BottomCenter"
                @bind-Value="SelectedValue"
-               Label="Role"
+               Label="@Localizer[Translations.Components.RoleSelector.Label]"
                T="RoleOverview"
                Variant="Variant.Outlined">
         @foreach (var role in _summary.Roles)
@@ -24,13 +25,11 @@ else
 
 @code {
     private bool _isLoading = true;
-    private RolesSummary _summary;
-    private RoleOverview _selectedValue;
 
-    [Parameter] public RoleOverview? DefaultSelectedValue { get; set; }
+    private RolesSummary? _summary;
+    private RoleOverview? _selectedValue;
 
-    [Parameter]
-    public RoleOverview SelectedValue
+    public RoleOverview? SelectedValue
     {
         get => _selectedValue;
         set
@@ -40,28 +39,16 @@ else
         }
     }
 
-    [Parameter] public EventCallback<RoleOverview> OnSelectedValueChanged { get; set; }
-
-    [Parameter] public CancellationToken CancellationToken { get; set; }
+    [Parameter] public required CancellationToken CancellationToken { get; set; }
+    [Parameter] public required EventCallback<RoleOverview?> OnSelectedValueChanged { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await ApiCallWrapper.Call(client => client.ApiRolesSummaryAsync(cancellationToken: CancellationToken));
-        if (response is not { Status: Status.Ok, Summary.Roles.Count: > 0 })
-        {
-            return;
-        }
+        var resourceResponse = await RoleService.GetSummary(cancellationToken: CancellationToken);
 
-        _summary = response.Summary;
+        _summary = resourceResponse.Resource;
 
-        if (DefaultSelectedValue == null)
-        {
-            SelectedValue = response.Summary.Roles.First();
-        }
-        else
-        {
-            SelectedValue = DefaultSelectedValue;
-        }
+        SelectedValue = resourceResponse.Resource?.Roles?.FirstOrDefault();
 
         _isLoading = false;
     }

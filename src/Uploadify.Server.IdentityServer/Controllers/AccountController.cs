@@ -80,7 +80,7 @@ public class AccountController : Controller
         var response = await _mediator.Send(form.Adapt<SignUpCommand>(), cancellationToken);
         if (response.Status != Status.Created)
         {
-            return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = new RegisterForm(), Errors = response.Failure?.Errors });
+            return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = form, Errors = response.Failure?.Errors });
         }
 
         return View("Login", new LoginViewModel

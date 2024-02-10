@@ -9,7 +9,6 @@ public static class PageRoutes
     public const string More = "/more";
     public const string Profile = "/profile";
     public const string Dashboard = Homepage;
-    public const string Detail = "/files-detail/{fileID:int?}";
-    public const string Shared = "/shared";
-    public const string PermissionAssign = "/management-permissions-assign";
+    public const string SharedFiles = "/shared";
+    public const string PermissionAssignment = "/management-permissions-assignment";
 }

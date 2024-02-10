@@ -163,7 +163,7 @@
         <value>All</value>
     </data>
     <data name="components.permission_dashboard.role_name_label" xml:space="preserve">
-        <value>Role name</value>
+        <value>Name</value>
     </data>
     <data name="components.permission_dashboard.date_updated_label" xml:space="preserve">
         <value>Last updated</value>
@@ -176,5 +176,47 @@
     </data>
     <data name="components.permission_dashboard.role_detail_title" xml:space="preserve">
         <value>Detail</value>
+    </data>
+    <data name="components.permission_assignment.title" xml:space="preserve">
+        <value>Assign permission</value>
+    </data>
+    <data name="components.permission_assignment.description" xml:space="preserve">
+        <value>Assign permissions to the role to ensure the proper functioning and security of your system. Each role can have a different set of permissions that define what users can do with that role. Select only those permissions that correspond to the responsibilities and requirements of the role.</value>
+    </data>
+    <data name="components.permission_assignment.submit_button" xml:space="preserve">
+        <value>Assign permission</value>
+    </data>
+    <data name="components.role_selector.label" xml:space="preserve">
+        <value>Role</value>
+    </data>
+    <data name="components.permission_selector.label" xml:space="preserve">
+        <value>Permission</value>
+    </data>
+    <data name="request_statuses.internal_server_error" xml:space="preserve">
+        <value />
+    </data>
+    <data name="request_statuses.client_canceled_operation" xml:space="preserve">
+        <value />
+    </data>
+    <data name="request_statuses.unauthorized" xml:space="preserve">
+        <value />
+    </data>
+    <data name="request_statuses.not_found" xml:space="preserve">
+        <value />
+    </data>
+    <data name="request_statuses.forbidden" xml:space="preserve">
+        <value />
+    </data>
+    <data name="request_statuses.bad_request" xml:space="preserve">
+        <value />
+    </data>
+    <data name="validations.role_name.required" xml:space="preserve">
+        <value />
+    </data>
+    <data name="validations.permission.required" xml:space="preserve">
+        <value />
+    </data>
+    <data name="components.permission_dashboard.title" xml:space="preserve">
+        <value>Permission overview</value>
     </data>
 </root>

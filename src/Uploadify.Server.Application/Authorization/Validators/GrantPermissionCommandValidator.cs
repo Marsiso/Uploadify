@@ -25,28 +25,49 @@ public class GrantPermissionCommandValidator : AbstractValidator<GrantPermission
             .WithMessage(Translations.Validations.PermissionRequired)
             .IsInEnum()
             .WithMessage(Translations.Validations.PermissionIsNotInEnum)
-            .MustAsync((command, _, cancellationToken) => IsAuthorized(command.UserName, command.Permission, cancellationToken))
+            .Must(PermissionRequired)
+            .WithMessage(Translations.Validations.PermissionRequired)
+            .MustAsync((command, _, cancellationToken) => IsAuthorized(command.UserName, command.Name, command.Permission, cancellationToken))
             .WithMessage(Translations.Validations.Unauthorized);
     }
 
-    private async Task<bool> IsAuthorized(string? userName, Permission? permission, CancellationToken cancellationToken)
+    private static bool PermissionRequired(Permission? permission)
+    {
+        return permission.HasValue && !permission.Value.HasFlag(Permission.None);
+    }
+
+    private async Task<bool> IsAuthorized(string? userName, string? roleName, Permission? permission, CancellationToken cancellationToken)
     {
         if (!permission.HasValue || permission.Value.HasFlag(Permission.All))
         {
             return false;
         }
 
-        var response = await _mediator.Send(new UserQuery(userName), cancellationToken);
-        if (response is not { Status: Status.Ok, User: not null })
+        var roleResponse = await _mediator.Send(new RoleQuery(roleName), cancellationToken);
+        if (roleResponse is not { Status: Status.Ok, Role: not null })
         {
             return false;
         }
 
-        if (permission is Permission.ViewRoles or Permission.EditRoles or Permission.ViewPermissions or Permission.EditPermissions)
+        if (roleResponse.Role.Permission.HasFlag(Permission.All))
         {
-            return response.User.Roles?.Any(role => role.Role != null && role.Role.Permission.HasFlag(Permission.All)) ?? false;
+            return false;
         }
 
-        return response.User.Roles?.Any(role => role.Role != null && (role.Role.Permission.HasFlag(Permission.EditPermissions) || role.Role.Permission.HasFlag(Permission.All))) ?? false;
+        var userResponse = await _mediator.Send(new UserQuery(userName), cancellationToken);
+        if (userResponse is not { Status: Status.Ok, User.Roles.Count: > 0 })
+        {
+            return false;
+        }
+
+        if (permission.Value.HasFlag(Permission.ViewRoles) ||
+            permission.Value.HasFlag(Permission.EditRoles) ||
+            permission.Value.HasFlag(Permission.ViewPermissions) ||
+            permission.Value.HasFlag(Permission.EditPermissions))
+        {
+            return userResponse.User.Roles.Any(role => role.Role != null && role.Role.Permission.HasFlag(Permission.All));
+        }
+
+        return userResponse.User.Roles.Any(role => role.Role != null && role.Role.Permission.HasFlag(Permission.EditPermissions));
     }
 }

@@ -2,21 +2,26 @@ using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Mime;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using MudBlazor.Services;
 using Polly;
 using Polly.Extensions.Http;
 using Uploadify.Authorization.Extensions;
+using Uploadify.Client.Application.Application.Services;
 using Uploadify.Client.Application.Authentication.Services;
 using Uploadify.Client.Application.Authorization.Services;
 using Uploadify.Client.Application.Utilities.Services;
+using Uploadify.Client.Core.Caching.Services;
 using Uploadify.Client.Core.Infrastructure.Services;
 using Uploadify.Client.Domain.Localization.Constants;
 using Uploadify.Client.Web;
+using Uploadify.Client.Web.Resources;
 using static System.String;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -29,7 +34,12 @@ services.AddSingleton(builder.HostEnvironment)
     .AddSingleton<MobileViewManager>()
     .AddTransient<AuthorizedHandler>()
     .AddPermissions()
-    .AddLocalization();
+    .AddLocalization()
+    .AddTransient<IStringLocalizer>(serviceProvider => serviceProvider.GetRequiredService<IStringLocalizer<TranslationDictionary>>())
+    .AddBlazoredLocalStorageAsSingleton()
+    .AddTransient<RoleService>()
+    .AddTransient<PermissionService>()
+    .AddSingleton<CacheService>();
 
 services.TryAddSingleton<AuthenticationStateProvider, HostAuthenticationStateProvider>();
 services.TryAddSingleton(provider => (HostAuthenticationStateProvider) provider.GetRequiredService<AuthenticationStateProvider>());

@@ -249,6 +249,33 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Přidělte specifická oprávnění roli, aby jste zajistili správné fungování a bezpečnost vašeho systému. Každá role může mít různou sadu oprávnění, která definují, co mohou uživatelé s touto rolí dělat. Vyberte pouze ta oprávnění, která odpovídají odpovědnosti a potřebám dané role..
+        /// </summary>
+        internal static string components_permission_assignment_description {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přidělit oprávnění.
+        /// </summary>
+        internal static string components_permission_assignment_submit_button {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přidělit oprávnění.
+        /// </summary>
+        internal static string components_permission_assignment_title {
+            get {
+                return ResourceManager.GetString("components.permission_assignment.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Poslední změna.
         /// </summary>
         internal static string components_permission_dashboard_date_updated_label {
@@ -285,11 +312,38 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Přehled oprávnění.
+        /// </summary>
+        internal static string components_permission_dashboard_title {
+            get {
+                return ResourceManager.GetString("components.permission_dashboard.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Změnil.
         /// </summary>
         internal static string components_permission_dashboard_user_updated_by_username_label {
             get {
                 return ResourceManager.GetString("components.permission_dashboard.user_updated_by.username_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oprávnění.
+        /// </summary>
+        internal static string components_permission_selector_label {
+            get {
+                return ResourceManager.GetString("components.permission_selector.label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        internal static string components_role_selector_label {
+            get {
+                return ResourceManager.GetString("components.role_selector.label", resourceCulture);
             }
         }
         

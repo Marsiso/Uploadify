@@ -12,6 +12,8 @@ public static class Themes
             PrimaryContrastText = Colors.Shades.White,
             Secondary = Colors.Grey.Lighten1,
             SecondaryContrastText = Colors.Shades.White,
+            Tertiary = Colors.Pink.Darken4,
+            TertiaryContrastText = Colors.Shades.White,
 
             Error = Colors.Red.Accent4,
             ErrorContrastText = Colors.Shades.White,

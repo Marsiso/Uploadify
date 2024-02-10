@@ -16,7 +16,7 @@
                     Match="NavLinkMatch.All">
             @Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]
         </MudNavLink>
-        <MudNavLink Href="@PageRoutes.Shared"
+        <MudNavLink Href="@PageRoutes.SharedFiles"
                     Icon="@Icons.Material.Rounded.Link"
                     Match="NavLinkMatch.All">
             @Localizer[Translations.Components.AuthenticatedLayout.SharedLink]
@@ -32,10 +32,14 @@
                     Match="NavLinkMatch.All">
             @Localizer[Translations.Components.AuthenticatedLayout.PrivacyLink]
         </MudNavLink>
-        <MudNavLink Href="@PageRoutes.Management"
-                    Icon="@Icons.Material.Rounded.Settings"
-                    Match="NavLinkMatch.All">
-            @Localizer[Translations.Components.AuthenticatedLayout.ManagementLink]
-        </MudNavLink>
+        <PermissionView Permission="Permission.ViewUsers | Permission.ViewRoles | Permission.ViewPermissions">
+            <Authorized>
+                <MudNavLink Href="@PageRoutes.Management"
+                            Icon="@Icons.Material.Rounded.Settings"
+                            Match="NavLinkMatch.All">
+                    @Localizer[Translations.Components.AuthenticatedLayout.ManagementLink]
+                </MudNavLink>
+            </Authorized>
+        </PermissionView>
     </MudNavMenu>
 </MudDrawer>

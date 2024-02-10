@@ -1,11 +1,9 @@
-﻿@using Uploadify.Authorization.Models
-@using Uploadify.Client.Core.Authorization.Constants
-@using Uploadify.Authorization.Helpers
+﻿@using Uploadify.Client.Core.Authorization.Constants
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
 <MudSelect AnchorOrigin="Origin.BottomCenter"
            @bind-Value="SelectedValue"
-           Label="Oprávnění"
+           Label="@Localizer[Translations.Components.PermissionSelector.Label]"
            T="Permission"
            Variant="Variant.Outlined">
     @foreach (var permission in _values)
@@ -19,42 +17,11 @@
 </MudSelect>
 
 @code {
-    private Permission _selectedValue;
-    private IEnumerable<Permission> _values;
-    private IEnumerable<Permission>? _defaultValues;
+    private RoleOverview? _role;
+    private Permission _selectedValue = Permission.None;
+    private IEnumerable<Permission> _values = PermissionHelpers.GetValues();
 
-    [Parameter] public Permission? DefaultSelectedValue { get; set; }
-
-    [Parameter]
-    public IEnumerable<Permission>? DefaultValues
-    {
-        get => _defaultValues;
-        set
-        {
-            _defaultValues = value;
-
-            if (_defaultValues?.Any() ?? false)
-            {
-                _values = value;
-            }
-            else
-            {
-                _values = PermissionHelpers.GetValues();
-            }
-
-            if (_values.All(permission => permission != _selectedValue))
-            {
-                _selectedValue = _values.First();
-            }
-            else
-            {
-                _selectedValue = _values.First();
-            }
-        }
-    }
-
-    [Parameter]
-    public Permission SelectedValue
+    protected Permission SelectedValue
     {
         get => _selectedValue;
         set
@@ -64,18 +31,28 @@
         }
     }
 
-    [Parameter] public EventCallback<Permission> OnSelectedValueChanged { get; set; }
+    [Parameter]
+    public RoleOverview? Role
+    {
+        get => _role;
+        set
+        {
+            _role = value;
+            _values = PermissionHelpers.GetDistinctValues(value?.Permission);
+
+            if (!_values.Any(permission => permission.HasFlag(_selectedValue)))
+            {
+                SelectedValue = _values.First();
+            }
+        }
+    }
+
+    [Parameter] public required EventCallback<Permission> OnSelectedValueChanged { get; set; }
 
     protected override void OnInitialized()
     {
-        if (DefaultSelectedValue.HasValue)
-        {
-            SelectedValue = DefaultSelectedValue.Value;
-        }
-        else
-        {
-            SelectedValue = _values.First();
-        }
+        _values = PermissionHelpers.GetDistinctValues(Role?.Permission);
+        SelectedValue = _values.First();
     }
 
 }
