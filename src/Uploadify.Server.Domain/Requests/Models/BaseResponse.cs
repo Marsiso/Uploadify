@@ -1,17 +1,24 @@
-﻿namespace Uploadify.Server.Domain.Requests.Models;
+﻿using Uploadify.Server.Domain.Localization.Constants;
+using Uploadify.Server.Domain.Requests.Exceptions;
+
+namespace Uploadify.Server.Domain.Requests.Models;
 
 public class BaseResponse
 {
-    public BaseResponse()
-    {
-        Status = Status.BadRequest;
-        Failure = new RequestFailure();
-    }
-
-    public BaseResponse(Status status, RequestFailure? failure)
+    public BaseResponse(Status status = Status.BadRequest, RequestFailure? failure = null)
     {
         Status = status;
         Failure = failure;
+    }
+
+    public BaseResponse(BaseResponse? response)
+    {
+        Status = response?.Status ?? Status.InternalServerError;
+        Failure = response?.Failure ?? new RequestFailure
+        {
+            UserFriendlyMessage = Translations.RequestStatuses.InternalServerError,
+            Exception = new InternalServerException()
+        };
     }
 
     public Status Status { get; set; }

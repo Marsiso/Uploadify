@@ -25,7 +25,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
             var result = await next();
 
             result.Status = Status.InternalServerError;
-            result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError };
+            result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError };
 
             return result;
         }
@@ -37,7 +37,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
             {
                 case EntityNotFoundException entityNotFoundException:
                     result.Status = Status.NotFound;
-                    result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.NotFound, Exception = entityNotFoundException };
+                    result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.NotFound, Exception = entityNotFoundException };
 
                     _logger.LogInformation(Format("Service: '{0}' Entity: '{1}' Entity ID: '{2}' Message: 'Bad request.' Exception: '{3}'.",
                         typeof(TRequest).Name,
@@ -49,7 +49,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
 
                 case BadRequestException badRequestException:
                     result.Status = Status.BadRequest;
-                    result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.BadRequest, Exception = badRequestException };
+                    result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.BadRequest, Exception = badRequestException };
 
                     _logger.LogInformation($"Service: '{typeof(TRequest).Name}' Model: '{badRequestException.ObjectName}' Message: 'Bad request.' Exception: '{badRequestException.Message}'.");
 
@@ -57,7 +57,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
 
                 case UnauthorizedException unauthorizedException:
                     result.Status = Status.Unauthorized;
-                    result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.Unauthorized, Exception = unauthorizedException };
+                    result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.Unauthorized, Exception = unauthorizedException };
 
                     _logger.LogInformation(Format("Service: '{0}' UserName: '{1}' Resource: '{2}' Resource ID: '{3}' Message: 'Unauthorized access to resources.' Exception: '{4}'.",
                         typeof(TRequest).Name,
@@ -70,7 +70,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
 
                 case InternalServerException internalServerException:
                     result.Status = Status.InternalServerError;
-                    result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.Unauthorized, Exception = internalServerException };
+                    result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.Unauthorized, Exception = internalServerException };
 
                     _logger.LogInformation($"Service: '{typeof(TRequest).Name}' Message: 'Internal server error.' Exception: '{internalServerException.Message}'.");
 
@@ -78,7 +78,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
 
                 case ValidationException validationException:
                     result.Status = Status.BadRequest;
-                    result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.Unauthorized, Exception = validationException };
+                    result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.Unauthorized, Exception = validationException };
 
                     _logger.LogInformation($"Service: '{typeof(TRequest).Name}' Model: '{validationException.ObjectName}' Message: 'Model validation failure.' Exception: '{validationException.Message}'.");
 
@@ -86,7 +86,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
 
                 case OperationCanceledException operationCanceledException:
                     result.Status = Status.ClientClosedRequest;
-                    result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.ClientCancelledOperation, Exception = operationCanceledException };
+                    result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.ClientCancelledOperation, Exception = operationCanceledException };
 
                     _logger.LogInformation($"Service: '{typeof(TRequest).Name}' Message: 'Client closed request.' Exception: '{operationCanceledException.Message}'.");
 
@@ -94,7 +94,7 @@ public class GlobalExceptionPipelineBehaviour<TRequest, TResponse> : IPipelineBe
 
                 default:
                     result.Status = Status.InternalServerError;
-                    result.Failure = new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError, Exception = exception };
+                    result.Failure = new() { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError, Exception = exception };
 
                     _logger.LogInformation($"Service: '{typeof(TRequest).Name}' Message: 'Internal server error.' Exception: '{exception.Message}'.");
 

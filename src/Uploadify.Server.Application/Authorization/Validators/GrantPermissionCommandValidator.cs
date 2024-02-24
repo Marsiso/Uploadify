@@ -43,7 +43,7 @@ public class GrantPermissionCommandValidator : AbstractValidator<GrantPermission
             return false;
         }
 
-        var roleResponse = await _mediator.Send(new RoleQuery(roleName), cancellationToken);
+        var roleResponse = await _mediator.Send(new GetRoleQuery(roleName), cancellationToken);
         if (roleResponse is not { Status: Status.Ok, Role: not null })
         {
             return false;
@@ -54,7 +54,7 @@ public class GrantPermissionCommandValidator : AbstractValidator<GrantPermission
             return false;
         }
 
-        var userResponse = await _mediator.Send(new UserQuery(userName), cancellationToken);
+        var userResponse = await _mediator.Send(new GetUserQuery(userName), cancellationToken);
         if (userResponse is not { Status: Status.Ok, User.Roles.Count: > 0 })
         {
             return false;

@@ -37,21 +37,21 @@ public static class Themes
 
             ActionDefault = Colors.Shades.Black,
         },
-        Typography = new Typography
+        Typography = new()
         {
-            H1 = new H1 { FontSize = "22px", FontWeight = 700 },
-            H2 = new H2 { FontSize = "20px", FontWeight = 700 },
-            H3 = new H3 { FontSize = "18px", FontWeight = 500 },
-            H4 = new H4 { FontSize = "16px", FontWeight = 500 },
-            H5 = new H5 { FontSize = "14px", FontWeight = 400 },
-            H6 = new H6 { FontSize = "14px", FontWeight = 300 },
-            Body1 = new Body1 { FontSize = "14px" },
-            Body2 = new Body2 { FontSize = "14px" },
-            Button = new Button { FontSize = "14px", FontWeight = 700 },
-            Caption = new Caption { FontSize = "12px" },
-            Subtitle1 = new Subtitle1 { FontSize = "16px", FontWeight = 700 },
-            Subtitle2 = new Subtitle2 { FontSize = "16px", FontWeight = 700 },
-            Default = new Default { FontSize = "14px" }
+            H1 = new() { FontSize = "22px", FontWeight = 700 },
+            H2 = new() { FontSize = "20px", FontWeight = 700 },
+            H3 = new() { FontSize = "18px", FontWeight = 500 },
+            H4 = new() { FontSize = "16px", FontWeight = 500 },
+            H5 = new() { FontSize = "14px", FontWeight = 400 },
+            H6 = new() { FontSize = "14px", FontWeight = 300 },
+            Body1 = new() { FontSize = "14px" },
+            Body2 = new() { FontSize = "14px" },
+            Button = new() { FontSize = "14px", FontWeight = 700 },
+            Caption = new() { FontSize = "12px" },
+            Subtitle1 = new() { FontSize = "16px", FontWeight = 700 },
+            Subtitle2 = new() { FontSize = "16px", FontWeight = 700 },
+            Default = new() { FontSize = "14px" }
         }
     };
 }

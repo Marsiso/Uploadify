@@ -24,4 +24,6 @@ public class User : IdentityUser, IChangeTrackingBaseEntity
     public ICollection<UserRole>? Roles { get; set; }
     public ICollection<Folder>? Folders { get; set; }
     public ICollection<SharedFile>? SharedFiles { get; set; }
+
+    public string FullName => $"{GivenName} {FamilyName}";
 }

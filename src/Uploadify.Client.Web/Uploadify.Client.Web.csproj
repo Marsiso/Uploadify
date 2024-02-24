@@ -43,4 +43,8 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Shared\Title.razor" />
+    </ItemGroup>
+
 </Project>

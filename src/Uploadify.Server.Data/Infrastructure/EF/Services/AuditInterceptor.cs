@@ -22,12 +22,12 @@ public class AuditInterceptor : SaveChangesInterceptor
     {
         if (eventData.Context is not DataContext context)
         {
-            return new ValueTask<InterceptionResult<int>>(result);
+            return new(result);
         }
 
         OnBeforeSavedChanges(context);
 
-        return new ValueTask<InterceptionResult<int>>(result);
+        return new(result);
     }
 
     private static void OnBeforeSavedChanges(DataContext context)

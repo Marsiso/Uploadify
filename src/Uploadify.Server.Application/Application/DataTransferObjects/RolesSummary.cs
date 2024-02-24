@@ -6,7 +6,7 @@ public class RolesSummary : PaginationMetadata
 {
     public RolesSummary(IEnumerable<RoleOverview> roles, int totalItems, int pageNumber, int pageSize) : base(totalItems, pageNumber, pageSize)
     {
-        Roles = new List<RoleOverview>(roles);
+        Roles = new(roles);
     }
 
     public List<RoleOverview> Roles { get; private set; }

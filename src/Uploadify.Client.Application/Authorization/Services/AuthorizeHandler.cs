@@ -21,7 +21,7 @@ public class AuthorizedHandler : DelegatingHandler
         HttpResponseMessage responseMessage;
         if (!authState.User.Identity.IsAuthenticated)
         {
-            responseMessage = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            responseMessage = new(HttpStatusCode.Unauthorized);
         }
         else
         {

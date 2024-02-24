@@ -38,7 +38,7 @@ public class GrantPermissionCommandHandler : ICommandHandler<GrantPermissionComm
         var role = await _manager.FindByNameAsync(request.Name);
         if (role == null)
         {
-            return new GrantPermissionCommandResponse(NotFound, new RequestFailure
+            return new(NotFound, new()
             {
                 Exception = new EntityNotFoundException(request.Name, nameof(Role)),
                 UserFriendlyMessage = Translations.RequestStatuses.NotFound
@@ -50,10 +50,10 @@ public class GrantPermissionCommandHandler : ICommandHandler<GrantPermissionComm
         var result = await _manager.UpdateAsync(role);
         if (result.Succeeded)
         {
-            return new GrantPermissionCommandResponse();
+            return new();
         }
 
-        return new GrantPermissionCommandResponse(InternalServerError, new RequestFailure
+        return new(InternalServerError, new()
         {
             Exception = new InternalServerException(),
             UserFriendlyMessage = Translations.RequestStatuses.InternalServerError
@@ -63,9 +63,8 @@ public class GrantPermissionCommandHandler : ICommandHandler<GrantPermissionComm
 
 public class GrantPermissionCommandResponse : BaseResponse
 {
-    public GrantPermissionCommandResponse()
+    public GrantPermissionCommandResponse() : base(Ok)
     {
-        Status = Ok;
     }
 
     public GrantPermissionCommandResponse(Status status, RequestFailure? failure) : base(status, failure)

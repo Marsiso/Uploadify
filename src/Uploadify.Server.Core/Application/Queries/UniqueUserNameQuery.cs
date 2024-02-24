@@ -38,14 +38,14 @@ public class UniqueUserNameQueryHandler : IQueryHandler<UniqueUserNameQuery, Uni
     {
         if (IsNullOrWhiteSpace(request.Username))
         {
-            return new UniqueUserNameQueryResponse(BadRequest, new RequestFailure
+            return new(BadRequest, new()
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new BadRequestException(nameof(request.Username))
             });
         }
 
-        return new UniqueUserNameQueryResponse(!await Query(_context, _normalizer.NormalizeName(request.Username)));
+        return new(!await Query(_context, _normalizer.NormalizeName(request.Username)));
     }
 }
 

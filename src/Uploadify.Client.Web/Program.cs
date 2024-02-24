@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Net.Mime;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,6 +15,7 @@ using Uploadify.Authorization.Extensions;
 using Uploadify.Client.Application.Application.Services;
 using Uploadify.Client.Application.Authentication.Services;
 using Uploadify.Client.Application.Authorization.Services;
+using Uploadify.Client.Application.FileSystem.Services;
 using Uploadify.Client.Application.Utilities.Services;
 using Uploadify.Client.Core.Caching.Services;
 using Uploadify.Client.Core.Infrastructure.Services;
@@ -39,6 +39,7 @@ services.AddSingleton(builder.HostEnvironment)
     .AddBlazoredLocalStorageAsSingleton()
     .AddTransient<RoleService>()
     .AddTransient<PermissionService>()
+    .AddTransient<FolderService>()
     .AddSingleton<CacheService>();
 
 services.TryAddSingleton<AuthenticationStateProvider, HostAuthenticationStateProvider>();
@@ -48,16 +49,16 @@ builder.RootComponents.Add<App>("#app");
 
 services.AddHttpClient("default", client =>
 {
-    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
-    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+    client.BaseAddress = new(builder.HostEnvironment.BaseAddress);
+    client.DefaultRequestHeaders.Accept.Add(new(MediaTypeNames.Application.Json));
 }).AddPolicyHandler(GetRetryPolicy())
     .AddPolicyHandler(GetCircuitBreakerPolicy())
     .SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
 services.AddHttpClient("authorizedClient", client =>
 {
-    client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
-    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+    client.BaseAddress = new(builder.HostEnvironment.BaseAddress);
+    client.DefaultRequestHeaders.Accept.Add(new(MediaTypeNames.Application.Json));
 }).AddHttpMessageHandler<AuthorizedHandler>()
     .AddPolicyHandler(GetRetryPolicy())
     .AddPolicyHandler(GetCircuitBreakerPolicy())
@@ -90,12 +91,12 @@ var cultureString = await javascriptRuntime.InvokeAsync<string>("culture.get");
 
 if (IsNullOrWhiteSpace(cultureString))
 {
-    culture = new CultureInfo(Locales.Default);
+    culture = new(Locales.Default);
     await javascriptRuntime.InvokeVoidAsync("culture.set", Locales.Default);
 }
 else
 {
-    culture = new CultureInfo(cultureString);
+    culture = new(cultureString);
 }
 
 CultureInfo.DefaultThreadCurrentCulture = culture;

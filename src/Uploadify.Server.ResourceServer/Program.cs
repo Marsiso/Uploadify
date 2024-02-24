@@ -1,4 +1,3 @@
-using NSwag;
 using OpenIddict.Validation.AspNetCore;
 using Uploadify.Authorization.Extensions;
 using Uploadify.Server.Application.Infrastructure.Extensions;
@@ -25,13 +24,13 @@ services.AddOpenApiDocument(options =>
 {
     options.PostProcess = document =>
     {
-        document.Info = new OpenApiInfo
+        document.Info = new()
         {
             Version = "v1",
             Title = "Uploadify Resource Server",
             Description = "An ASP.NET Core RESTful API.",
-            Contact = new OpenApiContact { Name = "LinkedIn", Url = "https://www.linkedin.com/in/marek-ol%C5%A1%C3%A1k-1715b724a/" },
-            License = new OpenApiLicense { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
+            Contact = new() { Name = "LinkedIn", Url = "https://www.linkedin.com/in/marek-ol%C5%A1%C3%A1k-1715b724a/" },
+            License = new() { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
         };
     };
 });

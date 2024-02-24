@@ -38,14 +38,14 @@ public class UniqueEmailQueryHandler : IQueryHandler<UniqueEmailQuery, UniqueEma
     {
         if (IsNullOrWhiteSpace(request.Email))
         {
-            return new UniqueEmailQueryResponse(BadRequest, new RequestFailure
+            return new(BadRequest, new()
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new BadRequestException(nameof(request.Email))
             });
         }
 
-        return new UniqueEmailQueryResponse(!await Query(_context, _normalizer.NormalizeEmail(request.Email)));
+        return new(!await Query(_context, _normalizer.NormalizeEmail(request.Email)));
     }
 }
 

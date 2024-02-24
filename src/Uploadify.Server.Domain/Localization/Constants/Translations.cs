@@ -51,6 +51,12 @@ public static class Translations
 
         public const string RoleNameRequired = $"{BaseValidations}.role_name.required";
         public const string RoleNameMaxLength = $"{BaseValidations}.role_name.max_length";
+
+        public const string FolderNameRequired = $"{BaseValidations}.folder_name.required";
+        public const string FolderNameMaxLength = $"{BaseValidations}.folder_name.max_length";
+
+        public const string FileNameRequired = $"{BaseValidations}.file_name.required";
+        public const string FileNameMaxLength = $"{BaseValidations}.file_name.max_length";
     }
 
     public static class RequestStatuses

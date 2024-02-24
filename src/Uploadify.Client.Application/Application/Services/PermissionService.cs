@@ -22,35 +22,35 @@ public class PermissionService : BaseResourceService<PermissionService>
         {
             if (!permission.HasValue)
             {
-                return new ResourceResponse([Localizer[Translations.Validations.PermissionRequired]]);
+                return new([Localizer[Translations.Validations.PermissionRequired]]);
             }
 
             if (IsNullOrWhiteSpace(role?.Name))
             {
-                return new ResourceResponse([Localizer[Translations.Validations.RoleNameRequired]]);
+                return new([Localizer[Translations.Validations.RoleNameRequired]]);
             }
 
-            var response = await ApiCallWrapper.Call(client => client.ApiPermissionGrantAsync(new GrantPermissionCommand { Name = role.Name, Permission = permission }, cancellationToken));
+            var response = await ApiCallWrapper.Call(client => client.ApiPermissionGrantAsync(new() { Name = role.Name, Permission = permission }, cancellationToken));
             if (response is not { Status: Status.Ok })
             {
-                return new ResourceResponse(GetErrorMessages(response?.Failure));
+                return new(GetErrorMessages(response?.Failure));
             }
 
-            return new ResourceResponse();
+            return new();
         }
         catch (Exception exception)
         {
             LogError(exception);
         }
 
-        return new ResourceResponse([Localizer[Translations.RequestStatuses.InternalServerError]]);
+        return new([Localizer[Translations.RequestStatuses.InternalServerError]]);
     }
 
     public async Task<ResourceResponse> RevokePermission(Permission? permission, RoleOverview? role, CancellationToken cancellationToken = default)
     {
         try
         {
-            var response = await ApiCallWrapper.Call(client => client.ApiPermissionRevokeAsync(new RevokePermissionCommand
+            var response = await ApiCallWrapper.Call(client => client.ApiPermissionRevokeAsync(new()
             {
                 Name = role.Name,
                 Permission = permission
@@ -58,16 +58,16 @@ public class PermissionService : BaseResourceService<PermissionService>
 
             if (response is not { Status: Status.Ok })
             {
-                return new ResourceResponse(GetErrorMessages(response?.Failure));
+                return new(GetErrorMessages(response?.Failure));
             }
 
-            return new ResourceResponse();
+            return new();
         }
         catch (Exception exception)
         {
             LogError(exception);
         }
 
-        return new ResourceResponse([Localizer[Translations.RequestStatuses.InternalServerError]]);
+        return new([Localizer[Translations.RequestStatuses.InternalServerError]]);
     }
 }

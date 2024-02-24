@@ -34,7 +34,7 @@ public class BaseApiController<TController> : ControllerBase where TController :
         catch (Exception exception)
         {
             Logger.LogError($"Controller: '{nameof(TController)}' Action: '{action}' Message: '{response.Failure?.UserFriendlyMessage}' Exception: '{exception}'.");
-            return StatusCode((int)Status.InternalServerError, new BaseResponse(Status.InternalServerError, new RequestFailure { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError }));
+            return StatusCode((int)Status.InternalServerError, new BaseResponse(Status.InternalServerError, new() { UserFriendlyMessage = Translations.RequestStatuses.InternalServerError }));
         }
     }
 

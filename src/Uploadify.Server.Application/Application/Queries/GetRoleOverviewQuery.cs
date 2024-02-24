@@ -11,9 +11,9 @@ using static Uploadify.Server.Domain.Requests.Models.Status;
 
 namespace Uploadify.Server.Application.Application.Queries;
 
-public class RoleOverviewQuery : BaseRequest<RoleOverviewQueryResponse>, IQuery<RoleOverviewQueryResponse>
+public class GetRoleOverviewQuery : BaseRequest<GetRoleOverviewQueryResponse>, IQuery<GetRoleOverviewQueryResponse>
 {
-    public RoleOverviewQuery(string roleID)
+    public GetRoleOverviewQuery(string roleID)
     {
         RoleID = roleID;
     }
@@ -21,7 +21,7 @@ public class RoleOverviewQuery : BaseRequest<RoleOverviewQueryResponse>, IQuery<
     public string? RoleID { get; set; }
 }
 
-public class RoleOverviewQueryHandler : IQueryHandler<RoleOverviewQuery, RoleOverviewQueryResponse>
+public class GetRoleOverviewQueryHandler : IQueryHandler<GetRoleOverviewQuery, GetRoleOverviewQueryResponse>
 {
     public static readonly Func<DataContext, string, Task<RoleOverview?>> Query = EF.CompileAsyncQuery((DataContext context, string id) =>
         context.Roles.Where(role => role.Id == id)
@@ -56,16 +56,16 @@ public class RoleOverviewQueryHandler : IQueryHandler<RoleOverviewQuery, RoleOve
 
     private readonly DataContext _context;
 
-    public RoleOverviewQueryHandler(DataContext context)
+    public GetRoleOverviewQueryHandler(DataContext context)
     {
         _context = context;
     }
 
-    public async Task<RoleOverviewQueryResponse> Handle(RoleOverviewQuery request, CancellationToken cancellationToken)
+    public async Task<GetRoleOverviewQueryResponse> Handle(GetRoleOverviewQuery request, CancellationToken cancellationToken)
     {
         if (IsNullOrWhiteSpace(request.RoleID))
         {
-            return new RoleOverviewQueryResponse(BadRequest, new RequestFailure
+            return new(BadRequest, new()
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new BadRequestException(nameof(request.RoleID))
@@ -75,24 +75,24 @@ public class RoleOverviewQueryHandler : IQueryHandler<RoleOverviewQuery, RoleOve
         var overview = await Query(_context, request.RoleID);
         if (overview == null)
         {
-            return new RoleOverviewQueryResponse(NotFound, new RequestFailure
+            return new(NotFound, new()
             {
                 UserFriendlyMessage = Translations.RequestStatuses.NotFound,
                 Exception = new EntityNotFoundException(request.RoleID, nameof(Role))
             });
         }
 
-        return new RoleOverviewQueryResponse(overview);
+        return new(overview);
     }
 }
 
-public class RoleOverviewQueryResponse : BaseResponse
+public class GetRoleOverviewQueryResponse : BaseResponse
 {
-    public RoleOverviewQueryResponse(Status status, RequestFailure failure) : base(status, failure)
+    public GetRoleOverviewQueryResponse(Status status, RequestFailure failure) : base(status, failure)
     {
     }
 
-    public RoleOverviewQueryResponse(RoleOverview? overview)
+    public GetRoleOverviewQueryResponse(RoleOverview? overview) : base(Ok)
     {
         Status = Ok;
         Overview = overview;

@@ -77,7 +77,7 @@ public class AuthenticationController : Controller
             _ => false
         }));
 
-        return SignIn(new ClaimsPrincipal(identity), properties);
+        return SignIn(new(identity), properties);
     }
 
     [HttpGet("~/callback/logout/{provider}")]

@@ -17,7 +17,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
     private readonly ILogger<HostAuthenticationStateProvider> _logger;
 
     private DateTimeOffset _lastCheck = DateTimeOffset.FromUnixTimeSeconds(0);
-    private ClaimsPrincipal _cachedPrincipal = new ClaimsPrincipal(new ClaimsIdentity());
+    private ClaimsPrincipal _cachedPrincipal = new(new ClaimsIdentity());
 
     public HostAuthenticationStateProvider(NavigationManager navigation, HttpClient client, ILogger<HostAuthenticationStateProvider> logger)
     {
@@ -28,7 +28,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        return new AuthenticationState(await GetUser(useCache: true));
+        return new(await GetUser(useCache: true));
     }
 
     public void SignIn(string customReturnUrl = null)
@@ -72,7 +72,7 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
 
         if (userInfo is not { IsAuthenticated: true })
         {
-            return new ClaimsPrincipal(new ClaimsIdentity());
+            return new(new ClaimsIdentity());
         }
 
         var identity = new ClaimsIdentity(
@@ -82,14 +82,14 @@ public class HostAuthenticationStateProvider : AuthenticationStateProvider
 
         if (userInfo.Claims == null)
         {
-            return new ClaimsPrincipal(identity);
+            return new(identity);
         }
 
         foreach (var claim in userInfo.Claims)
         {
-            identity.AddClaim(new Claim(claim.Type, claim.Value));
+            identity.AddClaim(new(claim.Type, claim.Value));
         }
 
-        return new ClaimsPrincipal(identity);
+        return new(identity);
     }
 }

@@ -4,7 +4,7 @@ using Uploadify.Server.Domain.Localization.Constants;
 
 namespace Uploadify.Server.Application.Authentication.Validators;
 
-public class SignInPreProcessorValidator : AbstractValidator<SignInPreProcessorCommand>
+public class SignInPreProcessorValidator : AbstractValidator<SignInCommand>
 {
     public SignInPreProcessorValidator()
     {

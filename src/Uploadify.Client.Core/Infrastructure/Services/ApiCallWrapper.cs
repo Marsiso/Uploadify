@@ -22,7 +22,7 @@ public class ApiCallWrapper
     {
         try
         {
-            return (await client.Invoke(new UploadifyClient(_httpClient))).Result;
+            return (await client.Invoke(new(_httpClient))).Result;
         }
         catch (ApiCallException<TResponse> exception)
         {

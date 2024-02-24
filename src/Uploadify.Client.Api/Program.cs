@@ -1,9 +1,7 @@
-using System.Net.Http.Headers;
 using System.Security.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using OpenIddict.Abstractions;
-using OpenIddict.Client;
 using OpenIddict.Client.AspNetCore;
 using Quartz;
 using Uploadify.Server.Application.Infrastructure.Extensions;
@@ -72,9 +70,9 @@ services.AddOpenIddict()
         options.UseSystemNetHttp()
             .SetProductInformation(typeof(Program).Assembly);
 
-        options.AddRegistration(new OpenIddictClientRegistration
+        options.AddRegistration(new()
         {
-            Issuer = new Uri(settings.IdentityProvider.Issuer, UriKind.Absolute),
+            Issuer = new(settings.IdentityProvider.Issuer, UriKind.Absolute),
 
             ClientId = settings.Client.ID,
             ClientSecret = settings.Client.Secret,
@@ -87,8 +85,8 @@ services.AddOpenIddict()
                 Scopes.Api
             },
 
-            RedirectUri = new Uri("callback/login/local", UriKind.Relative),
-            PostLogoutRedirectUri = new Uri("callback/logout/local", UriKind.Relative)
+            RedirectUri = new("callback/login/local", UriKind.Relative),
+            PostLogoutRedirectUri = new("callback/logout/local", UriKind.Relative)
         });
     });
 
@@ -102,65 +100,34 @@ services.AddAuthorizationBuilder()
         options.RequireAuthenticatedUser();
     });
 
-var routes = new[]
-{
-    new RouteConfig
-    {
-        RouteId = "route1",
-        ClusterId = "cluster1",
-        Match = new RouteMatch
-        {
-            Path = "api/user/{**catch-all}"
-        }
-    },
-    new RouteConfig
-    {
-        RouteId = "route2",
-        ClusterId = "cluster1",
-        Match = new RouteMatch
-        {
-            Path = "api/role/{**catch-all}"
-        }
-    },
-    new RouteConfig
-    {
-        RouteId = "route3",
-        ClusterId = "cluster1",
-        Match = new RouteMatch
-        {
-            Path = "api/roles/{**catch-all}"
-        }
-    },
-    new RouteConfig
-    {
-        RouteId = "route4",
-        ClusterId = "cluster1",
-        Match = new RouteMatch
-        {
-            Path = "api/permission/{**catch-all}"
-        }
-    }
-};
-
-var clusters = new[]
-{
-    new ClusterConfig()
-    {
-        ClusterId = "cluster1",
-        Destinations = new Dictionary<string, DestinationConfig>
-        {
-            { "destination1", new DestinationConfig { Address = settings.ReverseProxy.Uri } }
-        },
-        HttpClient = new HttpClientConfig { MaxConnectionsPerServer = 10, SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13 }
-    }
-};
-
 services.AddReverseProxy()
-    .LoadFromMemory(routes, clusters)
+    .LoadFromMemory(new[]
+    {
+        new RouteConfig
+        {
+            RouteId = "route1",
+            ClusterId = "cluster1",
+            Match = new()
+            {
+                Path = "api/{**catch-all}"
+            }
+        }
+    }, new[]
+    {
+        new ClusterConfig
+        {
+            ClusterId = "cluster1",
+            Destinations = new Dictionary<string, DestinationConfig>
+            {
+                { "destination1", new DestinationConfig { Address = settings.ReverseProxy.Uri } }
+            },
+            HttpClient = new() { MaxConnectionsPerServer = 10, SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13 }
+        }
+    })
     .AddTransforms(options => options.AddRequestTransform(async context =>
     {
         var token = await context.HttpContext.GetTokenAsync(scheme: CookieAuthenticationDefaults.AuthenticationScheme, tokenName: OpenIddictClientAspNetCoreConstants.Tokens.BackchannelAccessToken);
-        context.ProxyRequest.Headers.Authorization = new AuthenticationHeaderValue(OpenIddictConstants.Schemes.Bearer, token);
+        context.ProxyRequest.Headers.Authorization = new(OpenIddictConstants.Schemes.Bearer, token);
     }));
 
 var application = builder.Build();

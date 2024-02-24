@@ -49,7 +49,7 @@ public static class AuthenticationHelpers
                 case OpenIddictConstants.Claims.PhoneNumber:
                 case OpenIddictConstants.Claims.PhoneNumberVerified:
                 case Permissions.Claims.Permission:
-                    claims.Add(new ClaimValue(claim.Type, claim.Value));
+                    claims.Add(new(claim.Type, claim.Value));
                     continue;
             }
         }

@@ -38,7 +38,7 @@ public class RevokePermissionCommandHandler : ICommandHandler<RevokePermissionCo
         var role = await _manager.FindByNameAsync(request.Name);
         if (role == null)
         {
-            return new RevokePermissionCommandResponse(NotFound, new RequestFailure
+            return new(NotFound, new()
             {
                 Exception = new EntityNotFoundException(request.Name, nameof(Role)),
                 UserFriendlyMessage = Translations.RequestStatuses.NotFound
@@ -50,10 +50,10 @@ public class RevokePermissionCommandHandler : ICommandHandler<RevokePermissionCo
         var result = await _manager.UpdateAsync(role);
         if (result.Succeeded)
         {
-            return new RevokePermissionCommandResponse();
+            return new();
         }
 
-        return new RevokePermissionCommandResponse(InternalServerError, new RequestFailure
+        return new(InternalServerError, new()
         {
             Exception = new InternalServerException(),
             UserFriendlyMessage = Translations.RequestStatuses.InternalServerError
@@ -63,9 +63,8 @@ public class RevokePermissionCommandHandler : ICommandHandler<RevokePermissionCo
 
 public class RevokePermissionCommandResponse : BaseResponse
 {
-    public RevokePermissionCommandResponse()
+    public RevokePermissionCommandResponse() : base(Ok)
     {
-        Status = Ok;
     }
 
     public RevokePermissionCommandResponse(Status status, RequestFailure? failure) : base(status, failure)

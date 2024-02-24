@@ -23,7 +23,7 @@ public class UserController : BaseApiController<UserController>
     ///
     ///     Sample request:
     ///
-    ///         GET /api/user/cc0fe880-efc2-4c11-917e-fd9bd74557d0
+    ///         GET /api/users/cc0fe880-efc2-4c11-917e-fd9bd74557d0
     ///
     ///     Sample response:
     ///
@@ -53,10 +53,10 @@ public class UserController : BaseApiController<UserController>
     /// <response code="404">If the specified user is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("~/api/user/{userID}/detail")]
-    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(UserDetailQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
-    public async Task<IActionResult> GetUser(string? userID, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new UserDetailQuery(userID), cancellationToken));
+    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetUserDetailQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
+    public async Task<IActionResult> GetUser(string? userID, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new GetUserDetailQuery(userID), cancellationToken));
 }

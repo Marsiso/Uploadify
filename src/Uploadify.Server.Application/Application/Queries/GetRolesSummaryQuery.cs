@@ -8,9 +8,9 @@ using static Uploadify.Server.Domain.Requests.Models.Status;
 
 namespace Uploadify.Server.Application.Application.Queries;
 
-public class RolesSummaryQuery : BaseRequest<RolesSummaryQueryResponse>, IQuery<RolesSummaryQueryResponse>
+public class GetRolesSummaryQuery : BaseRequest<GetRolesSummaryQueryResponse>, IQuery<GetRolesSummaryQueryResponse>
 {
-    public RolesSummaryQuery(RoleQueryString queryString)
+    public GetRolesSummaryQuery(RoleQueryString queryString)
     {
         QueryString = queryString;
     }
@@ -18,7 +18,7 @@ public class RolesSummaryQuery : BaseRequest<RolesSummaryQueryResponse>, IQuery<
     public RoleQueryString QueryString { get; set; }
 }
 
-public class RolesSummaryQueryHandler : IQueryHandler<RolesSummaryQuery, RolesSummaryQueryResponse>
+public class GetRolesSummaryQueryHandler : IQueryHandler<GetRolesSummaryQuery, GetRolesSummaryQueryResponse>
 {
     public static readonly Func<DataContext, int, int, IAsyncEnumerable<RoleOverview>> GetQuery = EF.CompileAsyncQuery((DataContext context, int skip, int take) =>
         context.Roles.Include(role => role.UserCreatedBy)
@@ -53,12 +53,12 @@ public class RolesSummaryQueryHandler : IQueryHandler<RolesSummaryQuery, RolesSu
 
     private readonly DataContext _context;
 
-    public RolesSummaryQueryHandler(DataContext context)
+    public GetRolesSummaryQueryHandler(DataContext context)
     {
         _context = context;
     }
 
-    public async Task<RolesSummaryQueryResponse> Handle(RolesSummaryQuery request, CancellationToken cancellationToken)
+    public async Task<GetRolesSummaryQueryResponse> Handle(GetRolesSummaryQuery request, CancellationToken cancellationToken)
     {
         var roles = new List<RoleOverview>();
         await foreach (var overview in GetQuery(_context, request.QueryString.PageNumber - 1, request.QueryString.PageSize))
@@ -66,13 +66,13 @@ public class RolesSummaryQueryHandler : IQueryHandler<RolesSummaryQuery, RolesSu
             roles.Add(overview);
         }
 
-        return new RolesSummaryQueryResponse(new RolesSummary(roles, await CountQuery(_context), request.QueryString.PageNumber, request.QueryString.PageSize));
+        return new(new(roles, await CountQuery(_context), request.QueryString.PageNumber, request.QueryString.PageSize));
     }
 }
 
-public class RolesSummaryQueryResponse : BaseResponse
+public class GetRolesSummaryQueryResponse : BaseResponse
 {
-    public RolesSummaryQueryResponse(RolesSummary summary)
+    public GetRolesSummaryQueryResponse(RolesSummary summary)
     {
         Status = Ok;
         Summary = summary;

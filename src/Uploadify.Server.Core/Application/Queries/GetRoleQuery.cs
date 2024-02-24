@@ -10,9 +10,9 @@ using static Uploadify.Server.Domain.Requests.Models.Status;
 
 namespace Uploadify.Server.Core.Application.Queries;
 
-public class RoleQuery : BaseRequest<RoleQueryResponse>, IQuery<RoleQueryResponse>
+public class GetRoleQuery : BaseRequest<GetRoleQueryResponse>, IQuery<GetRoleQueryResponse>
 {
-    public RoleQuery(string? name)
+    public GetRoleQuery(string? name)
     {
         Name = name;
     }
@@ -20,23 +20,23 @@ public class RoleQuery : BaseRequest<RoleQueryResponse>, IQuery<RoleQueryRespons
     public string? Name { get; set; }
 }
 
-public class RoleQueryHandler : IQueryHandler<RoleQuery, RoleQueryResponse>
+public class GetRoleQueryHandler : IQueryHandler<GetRoleQuery, GetRoleQueryResponse>
 {
     private static readonly Func<DataContext, string, Task<Role?>> Query = EF.CompileAsyncQuery((DataContext context, string name) =>
         context.Roles.SingleOrDefault(role => role.Name == name));
 
     private readonly DataContext _context;
 
-    public RoleQueryHandler(DataContext context)
+    public GetRoleQueryHandler(DataContext context)
     {
         _context = context;
     }
 
-    public async Task<RoleQueryResponse> Handle(RoleQuery request, CancellationToken cancellationToken)
+    public async Task<GetRoleQueryResponse> Handle(GetRoleQuery request, CancellationToken cancellationToken)
     {
         if (IsNullOrWhiteSpace(request.Name))
         {
-            return new RoleQueryResponse(BadRequest, new RequestFailure
+            return new(BadRequest, new()
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new BadRequestException(nameof(request.Name))
@@ -46,26 +46,26 @@ public class RoleQueryHandler : IQueryHandler<RoleQuery, RoleQueryResponse>
         var role = await Query(_context, request.Name);
         if (role == null)
         {
-            return new RoleQueryResponse(NotFound, new RequestFailure
+            return new(NotFound, new()
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new EntityNotFoundException(request.Name, nameof(Role))
             });
         }
 
-        return new RoleQueryResponse(role);
+        return new(role);
     }
 }
 
-public class RoleQueryResponse : BaseResponse
+public class GetRoleQueryResponse : BaseResponse
 {
-    public RoleQueryResponse(Status status, RequestFailure failure) : base(status, failure)
+    public GetRoleQueryResponse(Status status, RequestFailure failure) : base(status, failure)
     {
         Status = status;
         Failure = failure;
     }
 
-    public RoleQueryResponse(Role role)
+    public GetRoleQueryResponse(Role role)
     {
         Status = Ok;
         Role = role;

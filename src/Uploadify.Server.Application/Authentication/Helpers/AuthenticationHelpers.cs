@@ -14,16 +14,16 @@ public static class AuthenticationHelpers
         Guard.IsNotNull(user);
         return new List<Claim>
         {
-            new Claim(OpenIddictConstants.Claims.Subject, user.Id),
-            new Claim(OpenIddictConstants.Claims.PhoneNumber, user.PhoneNumber),
-            new Claim(OpenIddictConstants.Claims.PhoneNumberVerified, user.PhoneNumberConfirmed.ToString()),
-            new Claim(OpenIddictConstants.Claims.Name, user.UserName),
-            new Claim(OpenIddictConstants.Claims.GivenName, user.GivenName),
-            new Claim(OpenIddictConstants.Claims.FamilyName, user.FamilyName),
-            new Claim(OpenIddictConstants.Claims.Email, user.Email),
-            new Claim(OpenIddictConstants.Claims.EmailVerified, user.EmailConfirmed.ToString()),
-            new Claim(OpenIddictConstants.Claims.UpdatedAt, user.DateUpdated.ToString(CultureInfo.InvariantCulture)),
-            new Claim(Permissions.Claims.Permission, roles.Select(role => (int)role.Permission).Aggregate(0, (l, r) => l | r).ToString())
+            new(OpenIddictConstants.Claims.Subject, user.Id),
+            new(OpenIddictConstants.Claims.PhoneNumber, user.PhoneNumber),
+            new(OpenIddictConstants.Claims.PhoneNumberVerified, user.PhoneNumberConfirmed.ToString()),
+            new(OpenIddictConstants.Claims.Name, user.UserName),
+            new(OpenIddictConstants.Claims.GivenName, user.GivenName),
+            new(OpenIddictConstants.Claims.FamilyName, user.FamilyName),
+            new(OpenIddictConstants.Claims.Email, user.Email),
+            new(OpenIddictConstants.Claims.EmailVerified, user.EmailConfirmed.ToString()),
+            new(OpenIddictConstants.Claims.UpdatedAt, user.DateUpdated.ToString(CultureInfo.InvariantCulture)),
+            new(Permissions.Claims.Permission, roles.Select(role => (int)role.Permission).Aggregate(0, (l, r) => l | r).ToString())
         };
     }
 }

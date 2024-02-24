@@ -36,13 +36,13 @@ public class RevokePermissionCommandValidator : AbstractValidator<RevokePermissi
             return false;
         }
 
-        var roleResponse = await _mediator.Send(new RoleQuery(roleName), cancellationToken);
+        var roleResponse = await _mediator.Send(new GetRoleQuery(roleName), cancellationToken);
         if (roleResponse is not { Status: Status.Ok, Role: not null } || roleResponse.Role.Permission.HasFlag(Permission.All))
         {
             return false;
         }
 
-        var userResponse = await _mediator.Send(new UserQuery(userName), cancellationToken);
+        var userResponse = await _mediator.Send(new GetUserQuery(userName), cancellationToken);
         if (userResponse is not { Status: Status.Ok, User: not null })
         {
             return false;
