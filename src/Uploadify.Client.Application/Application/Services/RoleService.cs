@@ -21,7 +21,7 @@ public class RoleService : BaseResourceService<RoleService>
             var response = await ApiCallWrapper.Call(client => client.ApiRolesSummaryAsync(pageNumber, 50, cancellationToken));
             if (response is not { Status: Status.Ok, Summary: not null })
             {
-                return new(GetErrorMessages(response?.Failure));
+                return new(HandleServerErrorMessages(response?.Failure));
             }
 
             return new(response.Summary);

@@ -1,0 +1,12 @@
+﻿<MudSkeleton Animation="@Animation.Pulse"
+             Height="@Height"
+             SkeletonType="@SkeletonType.Rectangle"
+             Width="@ActualWidth"/>
+
+@code {
+    [Parameter] public string? Width { get; set; }
+    [Parameter] public string? Height { get; set; }
+    [Parameter] public bool FullWidth { get; set; }
+
+    public string? ActualWidth => FullWidth ? "100%" : Width;
+}

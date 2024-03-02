@@ -3,21 +3,21 @@
 <MudDrawer Anchor="Anchor.Left"
            Class="pa-8"
            ClipMode="DrawerClipMode.Docked"
-           DisableOverlay="true"
+           DisableOverlay
            Elevation="0"
            Fixed="false"
-           Open="true"
+           Open
            Style="height: fit-content !important;"
            Variant="DrawerVariant.Persistent">
-    <MudNavMenu Margin="Margin.Normal"
-                Rounded="true">
+    <MudNavMenu Margin="@Margin.Normal"
+                Rounded>
         <MudNavLink Href="@PageRoutes.Homepage"
                     Icon="@Icons.Material.Rounded.Folder"
                     Match="NavLinkMatch.All">
             @Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]
         </MudNavLink>
-        <MudNavLink Href="@PageRoutes.SharedFiles"
-                    Icon="@Icons.Material.Rounded.Link"
+        <MudNavLink Href="@PageRoutes.Shared"
+                    Icon="@Icons.Material.Rounded.Share"
                     Match="NavLinkMatch.All">
             @Localizer[Translations.Components.AuthenticatedLayout.SharedLink]
         </MudNavLink>

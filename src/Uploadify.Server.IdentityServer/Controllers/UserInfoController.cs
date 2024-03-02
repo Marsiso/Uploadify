@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Authorization.Constants;
+using Uploadify.Server.Domain.Auth.Constants;
 
 namespace Uploadify.Server.IdentityServer.Controllers;
 

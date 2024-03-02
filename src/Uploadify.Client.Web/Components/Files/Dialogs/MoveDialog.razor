@@ -1,0 +1,131 @@
+﻿@using Uploadify.Client.Domain.Resources.Models
+@using Uploadify.Client.Web.Components.Shared
+@using Uploadify.Client.Web.Components.Shared.Dialogs
+@using Uploadify.Client.Application.Files.Services
+@using System.Diagnostics.CodeAnalysis
+@inject FileService FileService
+@inject FolderService FolderService
+@inject IStringLocalizer Localizer
+
+<Dialog IsVisible="@IsVisible"
+        OnClose="@OnClose"
+        Title="@Localizer[Translations.Components.Files.Dialogs.Move.Title]">
+    <Content>
+        <MudForm Errors="@(LocationChangedResourceResponse?.ErrorMessages ?? Array.Empty<string>())">
+            <MudStack Spacing="5">
+                <LoadingWrapper Errors="@LocationChangedResourceResponse?.ErrorMessages"
+                                IsLoading="@(IsLoading || FolderSummaryResponse == null)">
+                    <Children>
+                        <MudSelect AnchorOrigin="@Origin.BottomCenter"
+                                   @bind-Value="@Destination"
+                                   Label="@Localizer[Translations.Components.Files.Dialogs.Move.FolderSelectLabel]"
+                                   ListClass="py-0"
+                                   Error="@(LocationChangedResourceResponse is { ErrorMessages.Length: > 0 })"
+                                   ErrorText="@LocationChangedResourceResponse?.ErrorMessages.FirstOrDefault()"
+                                   T="FolderOverview"
+                                   Variant="@Variant.Outlined">
+                            @if (FolderSummaryResponse is { Resource.Parent: not null })
+                            {
+                                <MudSelectItem Value="@FolderSummaryResponse.Resource.Parent">
+                                    <MudText>@FolderSummaryResponse.Resource.Parent.Name</MudText>
+                                </MudSelectItem>
+                            }
+
+                            @if (FolderSummaryResponse is { Resource.Folders.Count: > 0 })
+                            {
+                                foreach (var item in FolderSummaryResponse.Resource.Folders)
+                                {
+                                    <MudSelectItem Value="@item">
+                                        <MudText>@item.Name</MudText>
+                                    </MudSelectItem>
+                                }
+                            }
+                        </MudSelect>
+                    </Children>
+                </LoadingWrapper>
+                <MudButton Color="@Color.Tertiary"
+                           Disabled="@(IsLoading || IsDisabled || Destination == null)"
+                           FullWidth
+                           OnClick="@HandleSubmit"
+                           Size="@Size.Large"
+                           Style="border-radius: 1.5rem;"
+                           Variant="@Variant.Filled">
+                    @Localizer[Translations.Components.Files.Dialogs.Move.SubmitButton]
+                </MudButton>
+            </MudStack>
+        </MudForm>
+    </Content>
+</Dialog>
+
+@code {
+    private FolderOverview? _destination;
+
+    [Parameter] [EditorRequired] public required bool IsVisible { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnSuccess { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnClose { get; set; }
+    [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    [MemberNotNullWhen(true, nameof(Folder))]
+    [MemberNotNullWhen(false, nameof(File))]
+    public required bool IsFolder { get; set; }
+
+    [Parameter] [EditorRequired] public FileOverview? File { get; set; }
+    [Parameter] [EditorRequired] public FolderOverview? Folder { get; set; }
+
+    public bool IsLoading { get; set; }
+    public bool IsDisabled { get; set; }
+
+    public ResourceResponse<FolderSummary>? FolderSummaryResponse { get; set; }
+
+    public FolderOverview? Destination
+    {
+        get => _destination;
+        set
+        {
+            _destination = value;
+            LocationChangedResourceResponse = null;
+        }
+    }
+
+    public ResourceResponse? LocationChangedResourceResponse { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsLoading = true;
+
+        if (IsFolder)
+        {
+            FolderSummaryResponse = await FolderService.GetSummary(Folder.ParentId, CancellationToken);
+            IsLoading = false;
+            return;
+        }
+
+        FolderSummaryResponse = await FolderService.GetSummary(File.FolderId, CancellationToken);
+        IsLoading = false;
+    }
+
+    private async Task HandleSubmit()
+    {
+        IsLoading = true;
+
+        if (IsFolder)
+        {
+            LocationChangedResourceResponse = await FolderService.Move(Folder.FolderId, Destination?.FolderId, CancellationToken);
+        }
+        else
+        {
+            LocationChangedResourceResponse = await FileService.Move(File.FileId, Destination?.FolderId, CancellationToken);
+        }
+
+        if (LocationChangedResourceResponse.IsSuccess)
+        {
+            await OnSuccess.InvokeAsync();
+            await OnClose.InvokeAsync();
+        }
+
+        IsLoading = false;
+    }
+
+}

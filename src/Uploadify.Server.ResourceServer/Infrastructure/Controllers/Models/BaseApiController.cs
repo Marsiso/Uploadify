@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Uploadify.Server.Domain.Localization.Constants;
-using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Infrastructure.Localization.Constants;
+using Uploadify.Server.Domain.Infrastructure.Requests.Models;
 
 namespace Uploadify.Server.ResourceServer.Infrastructure.Controllers.Models;
 

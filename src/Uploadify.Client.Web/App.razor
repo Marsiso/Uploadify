@@ -1,4 +1,6 @@
-﻿<CascadingAuthenticationState>
+﻿@using Uploadify.Client.Web.Components.Auth
+@using Uploadify.Client.Web.Components.Layouts
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">

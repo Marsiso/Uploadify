@@ -1,7 +1,8 @@
 using OpenIddict.Validation.AspNetCore;
 using Uploadify.Authorization.Extensions;
+using Uploadify.Server.Application.Files.Helpers;
 using Uploadify.Server.Application.Infrastructure.Extensions;
-using Uploadify.Server.Domain.Infrastructure.Services;
+using Uploadify.Server.Domain.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ services.AddSingleton(environment);
 
 services.AddDatabase(environment.IsDevelopment(), settings)
     .AddIdentity(settings)
-    .AddValidations(settings)
+    .AddValidators(settings)
     .AddRequests(settings)
     .AddControllers();
 
@@ -52,6 +53,12 @@ services.AddOpenIddict()
 services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
 services.AddPermissions();
 
+var path = Path.Combine(Directory.GetCurrentDirectory(), FileSystemHelpers.StaticFilesFolderName);
+if (!Directory.Exists(path))
+{
+    Directory.CreateDirectory(path);
+}
+
 var application = builder.Build();
 
 if (application.Environment.IsDevelopment())
@@ -74,6 +81,12 @@ application.UseCors(options =>
 
 application.UseHttpsRedirection();
 application.UseStaticFiles();
+// application.UseStaticFiles(new StaticFileOptions
+// {
+//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), FileSystemHelpers.StaticFilesFolderName)),
+//     RequestPath = new PathString("/cdn/files")
+// });
+
 application.UseRouting();
 application.UseAuthentication();
 application.UseAuthorization();

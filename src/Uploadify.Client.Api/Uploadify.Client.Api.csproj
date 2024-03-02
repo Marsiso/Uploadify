@@ -9,10 +9,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
-        <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.8.0" />
-        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />
-        <PackageReference Include="OpenIddict.Quartz" Version="5.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.2" />
+        <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.8.1" />
+        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.1" />
+        <PackageReference Include="OpenIddict.Quartz" Version="5.3.0" />
         <PackageReference Include="Yarp.ReverseProxy" Version="2.1.0" />
     </ItemGroup>
 

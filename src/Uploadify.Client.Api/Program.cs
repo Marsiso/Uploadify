@@ -6,8 +6,8 @@ using OpenIddict.Client.AspNetCore;
 using Quartz;
 using Uploadify.Server.Application.Infrastructure.Extensions;
 using Uploadify.Server.Data.Infrastructure.EF;
-using Uploadify.Server.Domain.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Services;
+using Uploadify.Server.Domain.Auth.Constants;
+using Uploadify.Server.Domain.Infrastructure.Models;
 using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Transforms;
 

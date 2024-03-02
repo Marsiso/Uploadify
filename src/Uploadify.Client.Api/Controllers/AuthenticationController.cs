@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Client.AspNetCore;
-using Uploadify.Client.Application.Authentication.Helpers;
+using Uploadify.Client.Application.Auth.Helpers;
 
 namespace Uploadify.Client.Api.Controllers;
 

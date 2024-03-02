@@ -1,17 +1,17 @@
-﻿@attribute [Permission]
+﻿@using Uploadify.Client.Web.Components.Shared
+@attribute [Permission]
 @attribute [Route(PageRoutes.About)]
 
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<PageTitle>@Localizer[Translations.Pages.About.Title]</PageTitle>
-<MudText Typo="Typo.h1">@Localizer[Translations.Pages.About.Title]</MudText>
+<Heading Title="@Localizer[Translations.Pages.About.Title]"/>
 
 <MudStack Class="mt-4"
           Spacing="4">
-    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.FirstSection]</MudText>
-    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.SecondSection]</MudText>
-    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.ThirdSection]</MudText>
-    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.FourthSection]</MudText>
-    <MudText Typo="Typo.body1">@Localizer[Translations.Pages.About.Sections.FifthSection]</MudText>
-    <MudText Typo="Typo.body1"></MudText>
+    <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.About.Sections.FirstSection]</MudText>
+    <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.About.Sections.SecondSection]</MudText>
+    <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.About.Sections.ThirdSection]</MudText>
+    <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.About.Sections.FourthSection]</MudText>
+    <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.About.Sections.FifthSection]</MudText>
+    <MudText Typo="@Typo.body1"></MudText>
 </MudStack>

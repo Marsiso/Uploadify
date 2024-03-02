@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Uploadify.Server.Application.Authentication.ViewModels;
+using Uploadify.Server.Application.Auth.ViewModels;
 
 namespace Uploadify.Server.IdentityServer.Controllers;
 

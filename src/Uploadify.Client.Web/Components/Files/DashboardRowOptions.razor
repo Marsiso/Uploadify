@@ -1,0 +1,81 @@
+﻿@using Uploadify.Client.Application.Files.Models
+@inject IStringLocalizer Localizer
+
+<MudMenu ActivationEvent="@ActivationEvent"
+         Disabled="@DashboardItem.IsParent"
+         IsOpenChanged="@HandleIsOpenChanged"
+         ListClass="py-0"
+         LockScroll="false"
+         PositionAtCursor
+         Style="@(FullWidth ? "width:100%;" : "")">
+    <ActivatorContent>
+        @if (Row == null)
+        {
+            <MudIconButton Color="@Color.Inherit"
+                           Icon="@Icons.Material.Rounded.MoreVert"/>
+        }
+
+        @if (Row != null)
+        {
+            @Row
+        }
+    </ActivatorContent>
+    <ChildContent>
+        <MudMenuItem Icon="@Icons.Material.Rounded.Info"
+                     OnClick="@OnDetail">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DetailLink]</MudText>
+        </MudMenuItem>
+        @if (DashboardItem.IsFolder)
+        {
+            <MudMenuItem Icon="@Icons.Material.Rounded.FolderOpen"
+                         OnClick="@OnNavigate">
+                <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.OpenLink]</MudText>
+            </MudMenuItem>
+        }
+        <MudMenuItem Icon="@Icons.Material.Rounded.PersonAdd">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.ShareLink]</MudText>
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Rounded.FileDownload"
+                     OnClick="@OnDownload">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DownloadLink]</MudText>
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Rounded.DriveFileMove"
+                     OnClick="@OnMove">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.MoveLink]</MudText>
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Rounded.DriveFileRenameOutline"
+                     OnClick="@OnRename">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.RenameLink]</MudText>
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Rounded.Delete"
+                     OnClick="@OnDelete">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DeleteLink]</MudText>
+        </MudMenuItem>
+    </ChildContent>
+</MudMenu>
+
+@code {
+    [Parameter] public bool FullWidth { get; set; }
+    [Parameter] public RenderFragment? Row { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnOpen { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnDetail { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnMove { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnNavigate { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnDelete { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnRename { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnDownload { get; set; }
+    [Parameter] [EditorRequired] public required MouseEvent ActivationEvent { get; set; }
+    [Parameter] [EditorRequired] public required DashboardItem DashboardItem { get; set; }
+    [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }
+
+    private Task HandleIsOpenChanged(bool isVisible)
+    {
+        if (isVisible)
+        {
+            return OnOpen.InvokeAsync();
+        }
+
+        return Task.CompletedTask;
+    }
+
+}

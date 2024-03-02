@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Uploadify.Server.Application.Application.DataTransferObjects;
+using Uploadify.Server.Application.Application.Models;
 using Uploadify.Server.Data.Infrastructure.EF;
-using Uploadify.Server.Domain.Pagination.Models;
-using Uploadify.Server.Domain.Requests.Models;
-using Uploadify.Server.Domain.Requests.Services;
-using static Uploadify.Server.Domain.Requests.Models.Status;
+using Uploadify.Server.Domain.Infrastructure.Pagination.Models.Application;
+using Uploadify.Server.Domain.Infrastructure.Requests.Contracts;
+using Uploadify.Server.Domain.Infrastructure.Requests.Models;
+using static Uploadify.Server.Domain.Infrastructure.Requests.Models.Status;
 
 namespace Uploadify.Server.Application.Application.Queries;
 
-public class GetRolesSummaryQuery : BaseRequest<GetRolesSummaryQueryResponse>, IQuery<GetRolesSummaryQueryResponse>
+public class GetRolesSummaryQuery : IBaseRequest<GetRolesSummaryQueryResponse>, IQuery<GetRolesSummaryQueryResponse>
 {
     public GetRolesSummaryQuery(RoleQueryString queryString)
     {

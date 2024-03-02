@@ -8,16 +8,16 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
+using MudBlazor;
 using MudBlazor.Services;
 using Polly;
 using Polly.Extensions.Http;
 using Uploadify.Authorization.Extensions;
 using Uploadify.Client.Application.Application.Services;
-using Uploadify.Client.Application.Authentication.Services;
-using Uploadify.Client.Application.Authorization.Services;
-using Uploadify.Client.Application.FileSystem.Services;
+using Uploadify.Client.Application.Auth.Services;
+using Uploadify.Client.Application.Files.Services;
 using Uploadify.Client.Application.Utilities.Services;
-using Uploadify.Client.Core.Caching.Services;
+using Uploadify.Client.Core.Infrastructure.Caching.Services;
 using Uploadify.Client.Core.Infrastructure.Services;
 using Uploadify.Client.Domain.Localization.Constants;
 using Uploadify.Client.Web;
@@ -31,6 +31,14 @@ services.AddSingleton(builder.HostEnvironment)
     .AddOptions()
     .AddMudServices()
     .AddMudBlazorDialog()
+    .AddMudBlazorSnackbar(options =>
+    {
+        options.MaxDisplayedSnackbars = 3;
+        options.NewestOnTop = true;
+        options.ShowCloseIcon = false;
+        options.SnackbarVariant = Variant.Text;
+        options.PositionClass = Defaults.Classes.Position.TopCenter;
+    })
     .AddSingleton<MobileViewManager>()
     .AddTransient<AuthorizedHandler>()
     .AddPermissions()
@@ -40,6 +48,7 @@ services.AddSingleton(builder.HostEnvironment)
     .AddTransient<RoleService>()
     .AddTransient<PermissionService>()
     .AddTransient<FolderService>()
+    .AddSingleton<FileService>()
     .AddSingleton<CacheService>();
 
 services.TryAddSingleton<AuthenticationStateProvider, HostAuthenticationStateProvider>();
@@ -109,7 +118,8 @@ static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 {
     return HttpPolicyExtensions
         .HandleTransientHttpError()
-        .OrResult(response => response.StatusCode == HttpStatusCode.InternalServerError)
+        .OrResult(response => response.StatusCode == HttpStatusCode.ServiceUnavailable)
+        .OrResult(response => response.StatusCode == HttpStatusCode.RequestTimeout)
         .WaitAndRetryAsync(6, retry => TimeSpan.FromSeconds(Math.Pow(2, retry)));
 }
 
@@ -117,6 +127,7 @@ static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
 {
     return HttpPolicyExtensions
         .HandleTransientHttpError()
-        .OrResult(response => response.StatusCode == HttpStatusCode.InternalServerError)
+        .OrResult(response => response.StatusCode == HttpStatusCode.ServiceUnavailable)
+        .OrResult(response => response.StatusCode == HttpStatusCode.RequestTimeout)
         .AdvancedCircuitBreakerAsync(0.25, TimeSpan.FromSeconds(60), 7, TimeSpan.FromSeconds(30));
 }

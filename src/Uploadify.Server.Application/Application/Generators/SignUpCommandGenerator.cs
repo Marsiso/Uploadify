@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using CommunityToolkit.Diagnostics;
-using Uploadify.Server.Application.Authentication.Commands;
+using Uploadify.Server.Application.Auth.Commands;
 
 namespace Uploadify.Server.Application.Application.Generators;
 

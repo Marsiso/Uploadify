@@ -1,0 +1,48 @@
+﻿<MudDialog ClassContent="px-8 pb-8"
+           IsVisible="@IsVisible"
+           IsVisibleChanged="@HandleIsVisibleChanged"
+           OnBackdropClick="@HandleBackdropClick">
+    <TitleContent>
+        <MudStack AlignItems="@AlignItems.Center"
+                  Row
+                  Spacing="2">
+            <MudIconButton Icon="@Icons.Material.Rounded.ArrowBackIosNew"
+                           OnClick="@(() => HandleIsVisibleChanged(false))"
+                           Title="Zavřít"/>
+            <MudText Color="@Color.Primary"
+                     Typo="@Typo.h3">
+                @Title
+            </MudText>
+        </MudStack>
+    </TitleContent>
+    <DialogContent>
+        <div>
+            @Content
+        </div>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter] [EditorRequired] public required string Title { get; set; }
+    [Parameter] [EditorRequired] public required RenderFragment Content { get; set; }
+    [Parameter] [EditorRequired] public required bool IsVisible { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnClose { get; set; }
+
+    private Task HandleBackdropClick(MouseEventArgs args)
+    {
+        return OnClose.InvokeAsync();
+    }
+
+    private Task HandleIsVisibleChanged(bool isVisible)
+    {
+        IsVisible = isVisible;
+
+        if (isVisible)
+        {
+            return Task.CompletedTask;
+        }
+
+        return OnClose.InvokeAsync();
+    }
+
+}

@@ -159,6 +159,15 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Překlad nebyl nalezen..
+        /// </summary>
+        internal static string common_translation_not_found {
+            get {
+                return ResourceManager.GetString("common.translation_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O aplikaci.
         /// </summary>
         internal static string components_authenticated_layout_about_link {
@@ -168,7 +177,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moje soubory.
+        ///   Looks up a localized string similar to Můj disk.
         /// </summary>
         internal static string components_authenticated_layout_dashboard_link {
             get {
@@ -245,6 +254,438 @@ namespace Uploadify.Client.Web.Resources {
         internal static string components_authenticated_layout_shared_link {
             get {
                 return ResourceManager.GetString("components.authenticated_layout.shared_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smazat.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_delete_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.delete_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podrobnosti.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_detail_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.detail_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stáhnout.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_download_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.download_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přesunout.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_move_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.move_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Otevřít.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_open_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.open_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přejmenovat.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_rename_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.rename_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sdílet.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_share_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.share_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to vy.
+        /// </summary>
+        internal static string components_files_detail_contact_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.contact_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vytvořeno uživatelem.
+        /// </summary>
+        internal static string components_files_detail_created_by_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.created_by_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vytvořeno.
+        /// </summary>
+        internal static string components_files_detail_date_created_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.date_created_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Naposledy změněno.
+        /// </summary>
+        internal static string components_files_detail_date_updated_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.date_updated_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smazat.
+        /// </summary>
+        internal static string components_files_detail_delete_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.delete_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stáhnout.
+        /// </summary>
+        internal static string components_files_detail_download_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.download_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staženo.
+        /// </summary>
+        internal static string components_files_detail_download_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.download_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Využití úložiště.
+        /// </summary>
+        internal static string components_files_detail_drive_size_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.drive_size_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přípona souboru.
+        /// </summary>
+        internal static string components_files_detail_extension_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.extension_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Název souboru.
+        /// </summary>
+        internal static string components_files_detail_file_name_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.file_name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to soubor.
+        /// </summary>
+        internal static string components_files_detail_file_type_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.file_type_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Počet souborů.
+        /// </summary>
+        internal static string components_files_detail_folder_items_count_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.folder_items_count_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Název složky.
+        /// </summary>
+        internal static string components_files_detail_folder_name_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.folder_name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to složka.
+        /// </summary>
+        internal static string components_files_detail_folder_type_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.folder_type_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Umístění.
+        /// </summary>
+        internal static string components_files_detail_location_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.location_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MIME.
+        /// </summary>
+        internal static string components_files_detail_mime_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.mime_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přesunout.
+        /// </summary>
+        internal static string components_files_detail_move_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.move_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Otevřít.
+        /// </summary>
+        internal static string components_files_detail_open_subfolder_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.open_subfolder_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přejmenovat.
+        /// </summary>
+        internal static string components_files_detail_rename_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.rename_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Typ.
+        /// </summary>
+        internal static string components_files_detail_resource_type_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.resource_type_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sdílet.
+        /// </summary>
+        internal static string components_files_detail_share_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.share_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sdíleno.
+        /// </summary>
+        internal static string components_files_detail_shared_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.shared_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velikost.
+        /// </summary>
+        internal static string components_files_detail_size_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.size_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vytvořil.
+        /// </summary>
+        internal static string components_files_detail_user_created_by_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.user_created_by_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provedl.
+        /// </summary>
+        internal static string components_files_detail_user_updated_by_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.user_updated_by_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Název.
+        /// </summary>
+        internal static string components_files_dialogs_create_name_label {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přidat.
+        /// </summary>
+        internal static string components_files_dialogs_create_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přidat složku.
+        /// </summary>
+        internal static string components_files_dialogs_create_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opravdu chcete přesunout soubor do koše? Soubor lze po dobu 7 dní od jeho smazání obnovit, později bude změna nenávratná..
+        /// </summary>
+        internal static string components_files_dialogs_delete_description {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.delete.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smazat.
+        /// </summary>
+        internal static string components_files_dialogs_delete_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.delete.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přesunout složku do koše.
+        /// </summary>
+        internal static string components_files_dialogs_delete_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.delete.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přemístit do.
+        /// </summary>
+        internal static string components_files_dialogs_move_folder_select_label {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.move.folder_select_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přesunout.
+        /// </summary>
+        internal static string components_files_dialogs_move_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.move.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Změnit umístnění.
+        /// </summary>
+        internal static string components_files_dialogs_move_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.move.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Název.
+        /// </summary>
+        internal static string components_files_dialogs_rename_name_label {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.rename.name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přejmenovat.
+        /// </summary>
+        internal static string components_files_dialogs_rename_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.rename.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Změnit název.
+        /// </summary>
+        internal static string components_files_dialogs_rename_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.rename.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velikost souboru je příliš veliká..
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_file_too_large {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.file_too_large", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nahrání souborů je omezeno na 50 ve stejný okamžik.
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_too_many_files {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.too_many_files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nahrání souboru {0} se nezdařilo.
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_uplaod_failure {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.uplaod_failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nahrání souboru {0} bylo dokončeno.
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_uplaod_success {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.uplaod_success", resourceCulture);
             }
         }
         
@@ -402,7 +843,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moje soubory.
+        ///   Looks up a localized string similar to Můj disk.
         /// </summary>
         internal static string pages_dashboard_title {
             get {
@@ -470,6 +911,105 @@ namespace Uploadify.Client.Web.Resources {
         internal static string pages_management_users_label {
             get {
                 return ResourceManager.GetString("pages.management.users.label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chcete se dozvědět více o aplikaci?.
+        /// </summary>
+        internal static string pages_more_about_description {
+            get {
+                return ResourceManager.GetString("pages.more.about_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O aplikaci.
+        /// </summary>
+        internal static string pages_more_about_link {
+            get {
+                return ResourceManager.GetString("pages.more.about_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Procházejte a spravujte vámi nahrané soubory..
+        /// </summary>
+        internal static string pages_more_dashboard_description {
+            get {
+                return ResourceManager.GetString("pages.more.dashboard_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Můj disk.
+        /// </summary>
+        internal static string pages_more_dashboard_link {
+            get {
+                return ResourceManager.GetString("pages.more.dashboard_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spravujte oprávnění a uživatelské účty..
+        /// </summary>
+        internal static string pages_more_management_description {
+            get {
+                return ResourceManager.GetString("pages.more.management_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spravovat.
+        /// </summary>
+        internal static string pages_more_management_link {
+            get {
+                return ResourceManager.GetString("pages.more.management_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přečtěte si o zásadách zpracování dat..
+        /// </summary>
+        internal static string pages_more_privacy_description {
+            get {
+                return ResourceManager.GetString("pages.more.privacy_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soukromí.
+        /// </summary>
+        internal static string pages_more_privacy_link {
+            get {
+                return ResourceManager.GetString("pages.more.privacy_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objevte další obsah, který vám byl zpřístupněn ostatními uživateli..
+        /// </summary>
+        internal static string pages_more_shared_description {
+            get {
+                return ResourceManager.GetString("pages.more.shared_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sdíleno se mnou.
+        /// </summary>
+        internal static string pages_more_shared_link {
+            get {
+                return ResourceManager.GetString("pages.more.shared_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Více.
+        /// </summary>
+        internal static string pages_more_title {
+            get {
+                return ResourceManager.GetString("pages.more.title", resourceCulture);
             }
         }
         
@@ -578,6 +1118,87 @@ namespace Uploadify.Client.Web.Resources {
         internal static string pages_shared_title {
             get {
                 return ResourceManager.GetString("pages.shared.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neplatný požadavek..
+        /// </summary>
+        internal static string request_statuses_bad_request {
+            get {
+                return ResourceManager.GetString("request_statuses.bad_request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Požadavek byl ukončen uživatelem..
+        /// </summary>
+        internal static string request_statuses_client_canceled_operation {
+            get {
+                return ResourceManager.GetString("request_statuses.client_canceled_operation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přístup k položce byl zabráněn..
+        /// </summary>
+        internal static string request_statuses_forbidden {
+            get {
+                return ResourceManager.GetString("request_statuses.forbidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nastala chyba, zkuste to prosím později..
+        /// </summary>
+        internal static string request_statuses_internal_server_error {
+            get {
+                return ResourceManager.GetString("request_statuses.internal_server_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Položka nebyla nalezena..
+        /// </summary>
+        internal static string request_statuses_not_found {
+            get {
+                return ResourceManager.GetString("request_statuses.not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to K provedení akce nebo zobrazení položky nemáte oprávnění..
+        /// </summary>
+        internal static string request_statuses_unauthorized {
+            get {
+                return ResourceManager.GetString("request_statuses.unauthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Složka se zvoleným jménem existuje..
+        /// </summary>
+        internal static string validations_folder_name_exists {
+            get {
+                return ResourceManager.GetString("validations.folder_name.exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vyžadováno oprávnění vlastníka položky..
+        /// </summary>
+        internal static string validations_permission_required {
+            get {
+                return ResourceManager.GetString("validations.permission.required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vyžadován název role..
+        /// </summary>
+        internal static string validations_role_name_required {
+            get {
+                return ResourceManager.GetString("validations.role_name.required", resourceCulture);
             }
         }
     }

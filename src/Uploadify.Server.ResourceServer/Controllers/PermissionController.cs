@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Validation.AspNetCore;
 using Uploadify.Authorization.Attributes;
 using Uploadify.Authorization.Models;
-using Uploadify.Server.Application.Authorization.Commands;
+using Uploadify.Server.Application.Auth.Commands;
 using Uploadify.Server.ResourceServer.Infrastructure.Controllers.Models;
 
 namespace Uploadify.Server.ResourceServer.Controllers;

@@ -159,6 +159,15 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Translation not found..
+        /// </summary>
+        internal static string common_translation_not_found {
+            get {
+                return ResourceManager.GetString("common.translation_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         internal static string components_authenticated_layout_about_link {
@@ -168,7 +177,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My files.
+        ///   Looks up a localized string similar to Personal.
         /// </summary>
         internal static string components_authenticated_layout_dashboard_link {
             get {
@@ -245,6 +254,438 @@ namespace Uploadify.Client.Web.Resources {
         internal static string components_authenticated_layout_shared_link {
             get {
                 return ResourceManager.GetString("components.authenticated_layout.shared_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_delete_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.delete_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detail.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_detail_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.detail_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_download_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.download_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_move_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.move_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_open_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.open_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_rename_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.rename_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_share_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.share_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to you.
+        /// </summary>
+        internal static string components_files_detail_contact_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.contact_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created by.
+        /// </summary>
+        internal static string components_files_detail_created_by_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.created_by_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created.
+        /// </summary>
+        internal static string components_files_detail_date_created_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.date_created_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        internal static string components_files_detail_date_updated_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.date_updated_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string components_files_detail_delete_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.delete_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        internal static string components_files_detail_download_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.download_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads.
+        /// </summary>
+        internal static string components_files_detail_download_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.download_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size on disk.
+        /// </summary>
+        internal static string components_files_detail_drive_size_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.drive_size_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extension.
+        /// </summary>
+        internal static string components_files_detail_extension_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.extension_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filename.
+        /// </summary>
+        internal static string components_files_detail_file_name_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.file_name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to file.
+        /// </summary>
+        internal static string components_files_detail_file_type_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.file_type_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total items.
+        /// </summary>
+        internal static string components_files_detail_folder_items_count_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.folder_items_count_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder name.
+        /// </summary>
+        internal static string components_files_detail_folder_name_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.folder_name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to folder.
+        /// </summary>
+        internal static string components_files_detail_folder_type_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.folder_type_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        internal static string components_files_detail_location_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.location_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MIME.
+        /// </summary>
+        internal static string components_files_detail_mime_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.mime_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        internal static string components_files_detail_move_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.move_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string components_files_detail_open_subfolder_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.open_subfolder_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        internal static string components_files_detail_rename_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.rename_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string components_files_detail_resource_type_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.resource_type_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        internal static string components_files_detail_share_button {
+            get {
+                return ResourceManager.GetString("components.files.detail.share_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shared.
+        /// </summary>
+        internal static string components_files_detail_shared_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.shared_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        internal static string components_files_detail_size_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.size_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created by.
+        /// </summary>
+        internal static string components_files_detail_user_created_by_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.user_created_by_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        internal static string components_files_detail_user_updated_by_label {
+            get {
+                return ResourceManager.GetString("components.files.detail.user_updated_by_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string components_files_dialogs_create_name_label {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string components_files_dialogs_create_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add folder.
+        /// </summary>
+        internal static string components_files_dialogs_create_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to move the file to the recycle bin? The file can be restored for 7 days after deletion, after that the change will be irreversible..
+        /// </summary>
+        internal static string components_files_dialogs_delete_description {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.delete.description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string components_files_dialogs_delete_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.delete.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move folder to recycle bin.
+        /// </summary>
+        internal static string components_files_dialogs_delete_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.delete.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to.
+        /// </summary>
+        internal static string components_files_dialogs_move_folder_select_label {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.move.folder_select_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        internal static string components_files_dialogs_move_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.move.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change location.
+        /// </summary>
+        internal static string components_files_dialogs_move_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.move.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string components_files_dialogs_rename_name_label {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.rename.name_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        internal static string components_files_dialogs_rename_submit_button {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.rename.submit_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        internal static string components_files_dialogs_rename_title {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.rename.title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File is too large.
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_file_too_large {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.file_too_large", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File upload is limited to 50 files at the same time.
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_too_many_files {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.too_many_files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File {0} upload failed.
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_uplaod_failure {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.uplaod_failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File {0} upload was successful.
+        /// </summary>
+        internal static string components_files_drag_and_drop_wrapper_uplaod_success {
+            get {
+                return ResourceManager.GetString("components.files.drag_and_drop_wrapper.uplaod_success", resourceCulture);
             }
         }
         
@@ -402,7 +843,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My files.
+        ///   Looks up a localized string similar to Personal.
         /// </summary>
         internal static string pages_dashboard_title {
             get {
@@ -470,6 +911,105 @@ namespace Uploadify.Client.Web.Resources {
         internal static string pages_management_users_label {
             get {
                 return ResourceManager.GetString("pages.management.users.label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to learn more about the application?.
+        /// </summary>
+        internal static string pages_more_about_description {
+            get {
+                return ResourceManager.GetString("pages.more.about_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string pages_more_about_link {
+            get {
+                return ResourceManager.GetString("pages.more.about_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse and manage your uploaded files..
+        /// </summary>
+        internal static string pages_more_dashboard_description {
+            get {
+                return ResourceManager.GetString("pages.more.dashboard_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal.
+        /// </summary>
+        internal static string pages_more_dashboard_link {
+            get {
+                return ResourceManager.GetString("pages.more.dashboard_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage permissions and user accounts..
+        /// </summary>
+        internal static string pages_more_management_description {
+            get {
+                return ResourceManager.GetString("pages.more.management_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Management.
+        /// </summary>
+        internal static string pages_more_management_link {
+            get {
+                return ResourceManager.GetString("pages.more.management_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn about our privacy policy..
+        /// </summary>
+        internal static string pages_more_privacy_description {
+            get {
+                return ResourceManager.GetString("pages.more.privacy_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        internal static string pages_more_privacy_link {
+            get {
+                return ResourceManager.GetString("pages.more.privacy_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Explore other content that has been shared with you by other users..
+        /// </summary>
+        internal static string pages_more_shared_description {
+            get {
+                return ResourceManager.GetString("pages.more.shared_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shared with me.
+        /// </summary>
+        internal static string pages_more_shared_link {
+            get {
+                return ResourceManager.GetString("pages.more.shared_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More.
+        /// </summary>
+        internal static string pages_more_title {
+            get {
+                return ResourceManager.GetString("pages.more.title", resourceCulture);
             }
         }
         
@@ -591,7 +1131,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Invalid request..
         /// </summary>
         internal static string request_statuses_bad_request {
             get {
@@ -600,7 +1140,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The request has been terminated by the user..
         /// </summary>
         internal static string request_statuses_client_canceled_operation {
             get {
@@ -609,7 +1149,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Access to the item has been denied..
         /// </summary>
         internal static string request_statuses_forbidden {
             get {
@@ -618,7 +1158,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to There&apos;s been an error, please try again later..
         /// </summary>
         internal static string request_statuses_internal_server_error {
             get {
@@ -627,7 +1167,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Item was not found..
         /// </summary>
         internal static string request_statuses_not_found {
             get {
@@ -636,7 +1176,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to You do not have permission to perform the action or view the item..
         /// </summary>
         internal static string request_statuses_unauthorized {
             get {
@@ -645,7 +1185,16 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Folder with the given name exists..
+        /// </summary>
+        internal static string validations_folder_name_exists {
+            get {
+                return ResourceManager.GetString("validations.folder_name.exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item owner permission required..
         /// </summary>
         internal static string validations_permission_required {
             get {
@@ -654,7 +1203,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Required role name..
         /// </summary>
         internal static string validations_role_name_required {
             get {

@@ -1,36 +1,37 @@
 ﻿@using Uploadify.Client.Application.Application.Services
+@using Uploadify.Client.Web.Components.Management.Roles
 @inject NavigationManager Navigation
 @inject PermissionService PermissionService
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudDialog @bind-IsVisible="IsVisible"
+<MudDialog @bind-IsVisible="@IsVisible"
            Class="pa-4"
            ClassActions="px-6">
     <TitleContent>
         <MudText Class="mb-4"
-                 Typo="Typo.h4">
+                 Typo="@Typo.h4">
             @Localizer[Translations.Components.PermissionAssignment.Title]
         </MudText>
-        <MudText Typo="Typo.body1">
+        <MudText Typo="@Typo.body1">
             @Localizer[Translations.Components.PermissionAssignment.Description]
         </MudText>
     </TitleContent>
     <DialogContent>
         <MudStack>
-            <RoleSelector CancellationToken="CancellationToken"
+            <RoleSelector CancellationToken="@CancellationToken"
                           OnSelectedValueChanged="@OnSelectedRoleChanged"/>
             <PermissionSelector OnSelectedValueChanged="@OnSelectedPermissionChanged"
-                                Role="_selectedRole"/>
+                                Role="@_selectedRole"/>
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Tertiary"
+        <MudButton Color="@Color.Tertiary"
                    Disabled="@(string.IsNullOrWhiteSpace(_selectedRole?.Name) || _isPermissionAssignmentInProgress || _selectedPermission == Permission.None)"
-                   FullWidth="true"
+                   FullWidth
                    OnClick="@OnSubmit"
-                   Size="Size.Large"
+                   Size="@Size.Large"
                    Style="border-radius: 1.5rem;"
-                   Variant="Variant.Filled">
+                   Variant="@Variant.Filled">
             @Localizer[Translations.Components.PermissionAssignment.SubmitButton]
         </MudButton>
     </DialogActions>

@@ -8,13 +8,13 @@ using Microsoft.Extensions.Hosting;
 using OpenIddict.Abstractions;
 using Uploadify.Authorization.Models;
 using Uploadify.Server.Application.Application.Generators;
-using Uploadify.Server.Application.FileSystem.Generators;
+using Uploadify.Server.Application.Files.Generators;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Constants;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Services;
-using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Auth.Constants;
+using Uploadify.Server.Domain.Infrastructure.Models;
+using Uploadify.Server.Domain.Infrastructure.Requests.Models;
 
 namespace Uploadify.Server.Application.Infrastructure.Services;
 

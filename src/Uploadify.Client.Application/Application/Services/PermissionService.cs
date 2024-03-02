@@ -33,7 +33,7 @@ public class PermissionService : BaseResourceService<PermissionService>
             var response = await ApiCallWrapper.Call(client => client.ApiPermissionGrantAsync(new() { Name = role.Name, Permission = permission }, cancellationToken));
             if (response is not { Status: Status.Ok })
             {
-                return new(GetErrorMessages(response?.Failure));
+                return new(HandleServerErrorMessages(response?.Failure));
             }
 
             return new();
@@ -58,7 +58,7 @@ public class PermissionService : BaseResourceService<PermissionService>
 
             if (response is not { Status: Status.Ok })
             {
-                return new(GetErrorMessages(response?.Failure));
+                return new(HandleServerErrorMessages(response?.Failure));
             }
 
             return new();

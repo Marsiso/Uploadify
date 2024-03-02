@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Uploadify.Server.Domain.Common.Contracts;
+using Uploadify.Server.Domain.Data.Contracts;
 
 namespace Uploadify.Server.Data.Infrastructure.EF.Services;
 
