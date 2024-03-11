@@ -21,16 +21,16 @@ public class RoleService : BaseResourceService<RoleService>
             var response = await ApiCallWrapper.Call(client => client.ApiRolesSummaryAsync(pageNumber, 50, cancellationToken));
             if (response is not { Status: Status.Ok, Summary: not null })
             {
-                return new ResourceResponse<RolesSummary>(GetErrorMessages(response?.Failure));
+                return new(HandleServerErrorMessages(response?.Failure));
             }
 
-            return new ResourceResponse<RolesSummary>(response.Summary);
+            return new(response.Summary);
         }
         catch (Exception exception)
         {
             LogError(exception);
         }
 
-        return new ResourceResponse<RolesSummary>([Localizer[Translations.RequestStatuses.InternalServerError]]);
+        return new([Localizer[Translations.RequestStatuses.InternalServerError]]);
     }
 }

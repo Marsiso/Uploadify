@@ -1,0 +1,8 @@
+﻿
+@attribute [Permission]
+@attribute [Route(PageRoutes.Shared)]
+
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<PageTitle>@Localizer[Translations.Pages.Shared.Title]</PageTitle>
+<MudText Typo="Typo.h1">@Localizer[Translations.Pages.Shared.Title]</MudText>

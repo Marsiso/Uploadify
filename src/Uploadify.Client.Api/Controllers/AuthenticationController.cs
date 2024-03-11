@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Client.AspNetCore;
-using Uploadify.Client.Application.Authentication.Helpers;
+using Uploadify.Client.Application.Auth.Helpers;
 
 namespace Uploadify.Client.Api.Controllers;
 
@@ -77,7 +77,7 @@ public class AuthenticationController : Controller
             _ => false
         }));
 
-        return SignIn(new ClaimsPrincipal(identity), properties);
+        return SignIn(new(identity), properties);
     }
 
     [HttpGet("~/callback/logout/{provider}")]

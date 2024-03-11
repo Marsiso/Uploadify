@@ -1,4 +1,5 @@
 ﻿@using Uploadify.Client.Application.Utilities.Services
+@using Uploadify.Client.Web.Components.Navigation
 @inject MobileViewManager MobileViewManager
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
@@ -7,7 +8,7 @@
 <PermissionView>
     <Authorized Context="AuthenticationState">
         <MudContainer Class="pa-0"
-                      MaxWidth="MaxWidth.Large"
+                      MaxWidth="@MaxWidth.Large"
                       Style="height: 100vh; width: 100%;">
             <MudLayout Style="height: 100vh; width: 100%;">
                 <MudAppBar Class="pt-8 px-4"
@@ -17,13 +18,13 @@
                               Row="true"
                               Spacing="4">
                         <MudImage Alt="brand logo"
-                                  ObjectFit="ObjectFit.ScaleDown"
-                                  ObjectPosition="ObjectPosition.Center"
+                                  ObjectFit="@ObjectFit.ScaleDown"
+                                  ObjectPosition="@ObjectPosition.Center"
                                   Src="icons/brand-logo.svg"
                                   Width="34">
                         </MudImage>
-                        <MudText Inline="true"
-                                 Typo="Typo.h2">
+                        <MudText Inline
+                                 Typo="@Typo.h2">
                             @Localizer[Translations.Common.AppName]
                         </MudText>
                     </MudStack>
@@ -41,9 +42,9 @@
                     <MobileNavigation/>
                 }
 
-                <MudMainContent Class="@_contentClass"
-                                Style="height:fit-content; width: 100%;">
-                    <MudContainer MaxWidth="MaxWidth.Small" >
+                <MudMainContent Class="@_mainContentClass">
+                    <MudContainer Class="mud-width-full mud-height-full"
+                                  MaxWidth="@MaxWidth.Small">
                         @Body
                     </MudContainer>
                 </MudMainContent>
@@ -54,7 +55,7 @@
 
 @code {
     private bool _isAuthenticated;
-    private string _contentClass => MobileViewManager.IsDesktop ? "pa-8" : "px-4 py-8";
+    private string _mainContentClass => MobileViewManager.IsDesktop ? "mud-width-full mud-height-full pa-8" : "mud-width-full mud-height-full px-4 py-8";
     private MaxWidth _contentWidth => MobileViewManager.IsDesktop ? MaxWidth.Medium : MaxWidth.False;
 
     [Parameter] public RenderFragment? Body { get; set; }
@@ -74,4 +75,5 @@
                 return;
         }
     }
+
 }

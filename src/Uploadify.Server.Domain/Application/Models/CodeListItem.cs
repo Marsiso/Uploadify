@@ -1,4 +1,4 @@
-using Uploadify.Server.Domain.Common.Models;
+using Uploadify.Server.Domain.Data.Models;
 
 namespace Uploadify.Server.Domain.Application.Models;
 

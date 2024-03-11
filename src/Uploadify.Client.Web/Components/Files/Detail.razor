@@ -1,0 +1,99 @@
+﻿@using Uploadify.Client.Application.Files.Models
+@using System.Diagnostics.CodeAnalysis
+@inject IStringLocalizer Localizer
+
+<MudForm ReadOnly>
+    <MudTextField DisableUnderLine
+                  Label="@NameLabel"
+                  Style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;"
+                  Value="@Name"/>
+
+    <MudTextField DisableUnderLine
+                  Label="@Localizer[Translations.Components.Files.Detail.DateCreatedLabel]"
+                  Value="@DateCreated"/>
+
+    <MudTextField DisableUnderLine
+                  Label="@Localizer[Translations.Components.Files.Detail.UserCreatedByLabel]"
+                  Value="@CreatedBy"/>
+
+    <MudTextField DisableUnderLine
+                  Label="@Localizer[Translations.Components.Files.Detail.DateUpdatedLabel]"
+                  Value="@DateUpdated"/>
+
+    <MudTextField DisableUnderLine
+                  Label="@Localizer[Translations.Components.Files.Detail.UserUpdatedByLabel]"
+                  Value="@UpdatedBy"/>
+
+    <MudTextField DisableUnderLine
+                  Label="@Localizer[Translations.Components.Files.Detail.SharedLabel]"
+                  Value="0"/>
+
+    <MudTextField DisableUnderLine
+                  Label="@Localizer[Translations.Components.Files.Detail.ResourceTypeLabel]"
+                  Value="@TypeLabel"/>
+
+    @if (ParentFolder != null)
+    {
+        <MudTextField Adornment="@Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Rounded.Folder"
+                      DisableUnderLine
+                      Label="@Localizer[Translations.Components.Files.Detail.LocationLabel]"
+                      Value="@Location"/>
+    }
+
+    @if (!IsFolder)
+    {
+        <MudTextField DisableUnderLine
+                      Label="@Localizer[Translations.Components.Files.Detail.ExtensionLabel]"
+                      Value="@File.Extension"/>
+
+        <MudTextField DisableUnderLine
+                      Label="@Localizer[Translations.Components.Files.Detail.MimeLabel]"
+                      Value="@File.MimeType"/>
+
+        <MudTextField DisableUnderLine
+                      Label="@Localizer[Translations.Components.Files.Detail.SizeLabel]"
+                      Value="@($"{File.Size.ToString()} B")"/>
+
+        <MudTextField DisableUnderLine
+                      Label="@Localizer[Translations.Components.Files.Detail.DriveSizeLabel]"
+                      Value="@($"{File.Size.ToString()} B")"/>
+    }
+</MudForm>
+
+@code {
+    [Parameter] [EditorRequired] public required DashboardItem DashboardItem { get; set; }
+    [Parameter] [EditorRequired] public required FolderOverview? ParentFolder { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnOpen { get; set; }
+
+    [MemberNotNullWhen(true, nameof(Folder))]
+    [MemberNotNullWhen(false, nameof(File))]
+    public bool IsFolder { get; set; }
+
+    public FolderOverview? Folder { get; set; }
+    public FileOverview? File { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        IsFolder = DashboardItem.IsFolder;
+
+        if (DashboardItem.IsFolder)
+        {
+            File = null;
+            Folder = DashboardItem.Folder;
+            return;
+        }
+
+        File = DashboardItem.File;
+        Folder = null;
+    }
+
+    public string Name => DashboardItem.IsFolder ? DashboardItem.Folder.Name : DashboardItem.File.Name;
+    public string NameLabel => DashboardItem.IsFolder ? Localizer[Translations.Components.Files.Detail.FolderNameLabel] : Localizer[Translations.Components.Files.Detail.FileNameLabel];
+    public string DateCreated => (DashboardItem.IsFolder ? DashboardItem.Folder.DateCreated?.ToShortDateString() : DashboardItem.File.DateCreated?.ToShortDateString()) ?? string.Empty;
+    public string DateUpdated => (DashboardItem.IsFolder ? DashboardItem.Folder.DateUpdated?.ToShortDateString() : DashboardItem.File.DateUpdated?.ToShortDateString()) ?? string.Empty;
+    public string CreatedBy => (DashboardItem.IsFolder ? DashboardItem.Folder.CreatedBy : DashboardItem.File.CreatedBy) ?? Localizer[Translations.Components.Files.Detail.ContactText];
+    public string UpdatedBy => (DashboardItem.IsFolder ? DashboardItem.Folder.UpdatedBy : DashboardItem.File.UpdatedBy) ?? Localizer[Translations.Components.Files.Detail.ContactText];
+    public string TypeLabel => DashboardItem.IsFolder ? Localizer[Translations.Components.Files.Detail.FolderTypeText] : Localizer[Translations.Components.Files.Detail.FileTypeText];
+    public string Location => ParentFolder?.Name ?? string.Empty;
+}

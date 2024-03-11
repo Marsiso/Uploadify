@@ -1,0 +1,83 @@
+﻿@attribute [Permission]
+@attribute [Route(PageRoutes.More)]
+
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<MudNavMenu Class="mud-width-full mud-height-full"
+            Margin="@Margin.Normal"
+            Rounded>
+    <MudNavLink Href="@PageRoutes.Dashboard"
+                Match="@NavLinkMatch.All">
+        <MudStack AlignItems="@AlignItems.Center"
+                  Class="mud-height-full"
+                  Row
+                  Spacing="5"
+                  Style="height:80px;">
+            <MudIcon Icon="@Icons.Material.Rounded.Folder"/>
+            <div>
+                <MudText Typo="@Typo.h3">@Localizer[Translations.Pages.More.DashboardLink]</MudText>
+                <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.More.DashboardDescription]</MudText>
+            </div>
+        </MudStack>
+    </MudNavLink>
+    <MudNavLink Href="@PageRoutes.Shared"
+                Match="@NavLinkMatch.All">
+        <MudStack AlignItems="@AlignItems.Center"
+                  Class="mud-height-full"
+                  Row
+                  Spacing="5"
+                  Style="height:80px;">
+            <MudIcon Icon="@Icons.Material.Rounded.Share"/>
+            <div>
+                <MudText Typo="@Typo.h3">@Localizer[Translations.Pages.More.SharedLink]</MudText>
+                <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.More.SharedDescription]</MudText>
+            </div>
+        </MudStack>
+    </MudNavLink>
+    <MudNavLink Href="@PageRoutes.About"
+                Match="@NavLinkMatch.All">
+        <MudStack AlignItems="@AlignItems.Center"
+                  Class="mud-height-full"
+                  Row
+                  Spacing="5"
+                  Style="height:80px;">
+            <MudIcon Icon="@Icons.Material.Rounded.Info"/>
+            <div>
+                <MudText Typo="@Typo.h3">@Localizer[Translations.Pages.More.AboutLink]</MudText>
+                <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.More.AboutDescription]</MudText>
+            </div>
+        </MudStack>
+    </MudNavLink>
+    <MudNavLink Href="@PageRoutes.Privacy"
+                Match="@NavLinkMatch.All">
+        <MudStack AlignItems="@AlignItems.Center"
+                  Class="mud-height-full"
+                  Row
+                  Spacing="5"
+                  Style="height:80px;">
+            <MudIcon Icon="@Icons.Material.Rounded.PrivacyTip"/>
+            <div>
+                <MudText Typo="@Typo.h3">@Localizer[Translations.Pages.More.PrivacyLink]</MudText>
+                <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.More.PrivacyDescription]</MudText>
+            </div>
+        </MudStack>
+    </MudNavLink>
+    <PermissionView Permission="Permission.ViewUsers | Permission.ViewRoles | Permission.ViewPermissions">
+        <Authorized>
+            <MudNavLink Href="@PageRoutes.Management"
+                        Match="@NavLinkMatch.All">
+                <MudStack AlignItems="@AlignItems.Center"
+                          Class="mud-height-full"
+                          Row
+                          Spacing="5"
+                          Style="height:80px;">
+                    <MudIcon Icon="@Icons.Material.Rounded.Settings"/>
+                    <div>
+                        <MudText Typo="@Typo.h3">@Localizer[Translations.Pages.More.ManagementLink]</MudText>
+                        <MudText Typo="@Typo.body1">@Localizer[Translations.Pages.More.ManagementDescription]</MudText>
+                    </div>
+                </MudStack>
+            </MudNavLink>
+        </Authorized>
+    </PermissionView>
+</MudNavMenu>

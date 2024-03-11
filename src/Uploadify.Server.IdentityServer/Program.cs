@@ -2,7 +2,7 @@ using Quartz;
 using Uploadify.Server.Application.Infrastructure.Extensions;
 using Uploadify.Server.Application.Infrastructure.Services;
 using Uploadify.Server.Data.Infrastructure.EF;
-using Uploadify.Server.Domain.Infrastructure.Services;
+using Uploadify.Server.Domain.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,7 @@ services.AddSingleton(environment);
 
 services.AddDatabase(environment.IsDevelopment(), settings)
     .AddIdentity(settings)
-    .AddValidations(settings)
+    .AddValidators(settings)
     .AddRequests(settings)
     .AddControllersWithViews();
 

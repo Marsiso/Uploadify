@@ -1,0 +1,101 @@
+﻿@using Uploadify.Client.Application.Files.Services
+@inject FileService FileService
+@inject ISnackbar Snackbar
+@inject IStringLocalizer Localizer
+
+<div class="mud-width-full mb-4">
+    @Children
+</div>
+
+<MudFileUpload AppendMultipleFiles
+               Disabled="@IsDisabled"
+               Hidden="false"
+               MaximumFileCount="50"
+               InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
+               InputStyle="opacity:0"
+               @ondragend="@ClearDropzoneClass"
+               @ondragenter="@SetDropzoneClass"
+               @ondragleave="@ClearDropzoneClass"
+               OnFilesChanged="@(args => HandleFilesChanged(args))"
+               T="IReadOnlyList<IBrowserFile>">
+    <ButtonTemplate>
+        <MudPaper Class="@DropzoneClass"
+                  Outlined>
+            <MudStack AlignItems="@AlignItems.Center"
+                      Justify="@Justify.Center"
+                      Row
+                      Style="height:50px">
+                <MudIconButton Disabled
+                               Icon="@Icons.Material.Rounded.FileUpload"/>
+            </MudStack>
+        </MudPaper>
+        <MudToolBar Class="relative d-flex justify-end gap-4 z-30">
+            <MudIconButton for="@context.Id"
+                           HtmlTag="label"
+                           Icon="@Icons.Material.Rounded.FileUpload"/>
+        </MudToolBar>
+    </ButtonTemplate>
+</MudFileUpload>
+
+@code {
+    public const string DefaultDropzoneClass = "relative rounded-lg border-2 border-dashed pa-4 mud-width-full mud-height-full z-10";
+
+    [Parameter] [EditorRequired] public required bool IsDisabled { get; set; }
+    [Parameter] [EditorRequired] public required RenderFragment Children { get; set; }
+    [Parameter] [EditorRequired] public required FolderOverview? Destination { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnUploaded { get; set; }
+
+    public string? DropzoneClass { get; set; } = DefaultDropzoneClass;
+
+    public void SetDropzoneClass()
+    {
+        DropzoneClass = $"{DefaultDropzoneClass} mud-border-primary";
+    }
+
+    public void ClearDropzoneClass()
+    {
+        DropzoneClass = DefaultDropzoneClass;
+    }
+
+    public async Task HandleFilesChanged(InputFileChangeEventArgs args)
+    {
+        if (args.FileCount == 0 || Destination == null)
+        {
+            ClearDropzoneClass();
+            return;
+        }
+
+        IsDisabled = true;
+
+        if (args.FileCount > 50)
+        {
+            Snackbar.Add(Localizer[Translations.Components.Files.Inputs.DragAndDropWrapper.TooManyFiles], Severity.Info);
+        }
+
+        var files = args.GetMultipleFiles();
+
+        foreach (var file in files.Where(file => file.Size <= 104857600L))
+        {
+            var resourceResponse = await FileService.Upload(Destination, file);
+            if (resourceResponse.IsSuccess)
+            {
+                Snackbar.Add(string.Format(Localizer[Translations.Components.Files.Inputs.DragAndDropWrapper.UploadSuccess], file.Name), Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add(string.Format(Localizer[Translations.Components.Files.Inputs.DragAndDropWrapper.UploadFailure], file.Name), Severity.Error);
+            }
+        }
+
+        foreach (var file in files.Where(file => file.Size > 104857600L))
+        {
+            Snackbar.Add(string.Format(Localizer[Translations.Components.Files.Inputs.DragAndDropWrapper.FileTooLarge], file.Name), Severity.Info);
+        }
+
+        ClearDropzoneClass();
+        IsDisabled = false;
+
+        await OnUploaded.InvokeAsync();
+    }
+
+}

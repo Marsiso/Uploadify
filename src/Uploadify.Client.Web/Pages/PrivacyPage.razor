@@ -1,8 +1,11 @@
-﻿@attribute [Permission]
+﻿@using Uploadify.Client.Web.Components.Shared
+@attribute [Permission]
 @attribute [Route(PageRoutes.Privacy)]
 
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<PageTitle>@Localizer[Translations.Pages.Privacy.Title]</PageTitle>
-<MudText Typo="Typo.h1">@Localizer[Translations.Pages.Privacy.Title]</MudText>
-<MudText Typo="Typo.body1" Class="mt-4">@Localizer[Translations.Pages.Privacy.Description]</MudText>
+<Heading Title="@Localizer[Translations.Pages.Privacy.Title]"/>
+<MudText Class="mt-4"
+         Typo="@Typo.body1">
+    @Localizer[Translations.Pages.Privacy.Description]
+</MudText>

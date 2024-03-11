@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Uploadify.Server.Domain.Common.Contracts;
+using Uploadify.Server.Domain.Data.Contracts;
 
 namespace Uploadify.Server.Data.Infrastructure.EF.Services;
 
@@ -22,12 +22,12 @@ public class AuditInterceptor : SaveChangesInterceptor
     {
         if (eventData.Context is not DataContext context)
         {
-            return new ValueTask<InterceptionResult<int>>(result);
+            return new(result);
         }
 
         OnBeforeSavedChanges(context);
 
-        return new ValueTask<InterceptionResult<int>>(result);
+        return new(result);
     }
 
     private static void OnBeforeSavedChanges(DataContext context)

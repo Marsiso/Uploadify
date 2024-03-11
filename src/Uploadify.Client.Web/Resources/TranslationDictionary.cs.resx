@@ -19,7 +19,7 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="pages.dashboard.title" xml:space="preserve">
-        <value>Moje soubory</value>
+        <value>Můj disk</value>
     </data>
     <data name="pages.detail.title" xml:space="preserve">
         <value>Podrobnosti o souboru</value>
@@ -31,7 +31,7 @@
         <value>O aplikaci</value>
     </data>
     <data name="components.authenticated_layout.dashboard_link" xml:space="preserve">
-        <value>Moje soubory</value>
+        <value>Můj disk</value>
     </data>
     <data name="components.authenticated_layout.email_label" xml:space="preserve">
         <value>Email</value>
@@ -191,5 +191,212 @@
     </data>
     <data name="components.permission_dashboard.title" xml:space="preserve">
         <value>Přehled oprávnění</value>
+    </data>
+    <data name="components.files.dialogs.create.title" xml:space="preserve">
+        <value>Přidat složku</value>
+    </data>
+    <data name="components.files.dialogs.create.name_label" xml:space="preserve">
+        <value>Název</value>
+    </data>
+    <data name="components.files.dialogs.create.submit_button" xml:space="preserve">
+        <value>Přidat</value>
+    </data>
+    <data name="components.files.dialogs.delete.title" xml:space="preserve">
+        <value>Přesunout složku do koše</value>
+    </data>
+    <data name="components.files.dialogs.delete.description" xml:space="preserve">
+        <value>Opravdu chcete přesunout soubor do koše? Soubor lze po dobu 7 dní od jeho smazání obnovit, později bude změna nenávratná.</value>
+    </data>
+    <data name="components.files.dialogs.delete.submit_button" xml:space="preserve">
+        <value>Smazat</value>
+    </data>
+    <data name="components.files.dialogs.move.title" xml:space="preserve">
+        <value>Změnit umístnění</value>
+    </data>
+    <data name="components.files.dialogs.move.folder_select_label" xml:space="preserve">
+        <value>Přemístit do</value>
+    </data>
+    <data name="components.files.dialogs.move.submit_button" xml:space="preserve">
+        <value>Přesunout</value>
+    </data>
+    <data name="components.files.dialogs.rename.title" xml:space="preserve">
+        <value>Změnit název</value>
+    </data>
+    <data name="components.files.dialogs.rename.name_label" xml:space="preserve">
+        <value>Název</value>
+    </data>
+    <data name="components.files.dialogs.rename.submit_button" xml:space="preserve">
+        <value>Přejmenovat</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.uplaod_success" xml:space="preserve">
+        <value>Nahrání souboru {0} bylo dokončeno</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.uplaod_failure" xml:space="preserve">
+        <value>Nahrání souboru {0} se nezdařilo</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.file_too_large" xml:space="preserve">
+        <value>Velikost souboru je příliš veliká.</value>
+    </data>
+    <data name="components.files.dashboard_row_options.detail_link" xml:space="preserve">
+        <value>Podrobnosti</value>
+    </data>
+    <data name="components.files.dashboard_row_options.open_link" xml:space="preserve">
+        <value>Otevřít</value>
+    </data>
+    <data name="components.files.dashboard_row_options.download_link" xml:space="preserve">
+        <value>Stáhnout</value>
+    </data>
+    <data name="components.files.dashboard_row_options.move_link" xml:space="preserve">
+        <value>Přesunout</value>
+    </data>
+    <data name="components.files.dashboard_row_options.rename_link" xml:space="preserve">
+        <value>Přejmenovat</value>
+    </data>
+    <data name="components.files.dashboard_row_options.delete_link" xml:space="preserve">
+        <value>Smazat</value>
+    </data>
+    <data name="components.files.detail.rename_button" xml:space="preserve">
+        <value>Přejmenovat</value>
+    </data>
+    <data name="components.files.detail.created_by_label" xml:space="preserve">
+        <value>Vytvořeno uživatelem</value>
+    </data>
+    <data name="components.files.detail.user_created_by_label" xml:space="preserve">
+        <value>Vytvořil</value>
+    </data>
+    <data name="components.files.detail.date_created_label" xml:space="preserve">
+        <value>Vytvořeno</value>
+    </data>
+    <data name="components.files.detail.date_updated_label" xml:space="preserve">
+        <value>Naposledy změněno</value>
+    </data>
+    <data name="components.files.detail.user_updated_by_label" xml:space="preserve">
+        <value>Provedl</value>
+    </data>
+    <data name="components.files.detail.download_label" xml:space="preserve">
+        <value>Staženo</value>
+    </data>
+    <data name="components.files.detail.resource_type_label" xml:space="preserve">
+        <value>Typ</value>
+    </data>
+    <data name="components.files.detail.download_button" xml:space="preserve">
+        <value>Stáhnout</value>
+    </data>
+    <data name="components.files.detail.location_label" xml:space="preserve">
+        <value>Umístění</value>
+    </data>
+    <data name="components.files.detail.move_button" xml:space="preserve">
+        <value>Přesunout</value>
+    </data>
+    <data name="components.files.detail.extension_label" xml:space="preserve">
+        <value>Přípona souboru</value>
+    </data>
+    <data name="components.files.detail.mime_label" xml:space="preserve">
+        <value>MIME</value>
+    </data>
+    <data name="components.files.detail.size_label" xml:space="preserve">
+        <value>Velikost</value>
+    </data>
+    <data name="components.files.detail.drive_size_label" xml:space="preserve">
+        <value>Využití úložiště</value>
+    </data>
+    <data name="components.files.detail.delete_button" xml:space="preserve">
+        <value>Smazat</value>
+    </data>
+    <data name="components.files.detail.folder_items_count_label" xml:space="preserve">
+        <value>Počet souborů</value>
+    </data>
+    <data name="components.files.detail.open_subfolder_label" xml:space="preserve">
+        <value>Otevřít</value>
+    </data>
+    <data name="request_statuses.not_found" xml:space="preserve">
+        <value>Položka nebyla nalezena.</value>
+    </data>
+    <data name="request_statuses.internal_server_error" xml:space="preserve">
+        <value>Nastala chyba, zkuste to prosím později.</value>
+    </data>
+    <data name="request_statuses.unauthorized" xml:space="preserve">
+        <value>K provedení akce nebo zobrazení položky nemáte oprávnění.</value>
+    </data>
+    <data name="validations.permission.required" xml:space="preserve">
+        <value>Vyžadováno oprávnění vlastníka položky.</value>
+    </data>
+    <data name="validations.role_name.required" xml:space="preserve">
+        <value>Vyžadován název role.</value>
+    </data>
+    <data name="request_statuses.forbidden" xml:space="preserve">
+        <value>Přístup k položce byl zabráněn.</value>
+    </data>
+    <data name="request_statuses.client_canceled_operation" xml:space="preserve">
+        <value>Požadavek byl ukončen uživatelem.</value>
+    </data>
+    <data name="request_statuses.bad_request" xml:space="preserve">
+        <value>Neplatný požadavek.</value>
+    </data>
+    <data name="components.files.dashboard_row_options.share_link" xml:space="preserve">
+        <value>Sdílet</value>
+    </data>
+    <data name="components.files.detail.shared_label" xml:space="preserve">
+        <value>Sdíleno</value>
+    </data>
+    <data name="components.files.detail.share_button" xml:space="preserve">
+        <value>Sdílet</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.too_many_files" xml:space="preserve">
+        <value>Nahrání souborů je omezeno na 50 ve stejný okamžik</value>
+    </data>
+    <data name="common.translation_not_found" xml:space="preserve">
+        <value>Překlad nebyl nalezen.</value>
+    </data>
+    <data name="validations.folder_name.exists" xml:space="preserve">
+        <value>Složka se zvoleným jménem existuje.</value>
+    </data>
+    <data name="pages.more.title" xml:space="preserve">
+        <value>Více</value>
+    </data>
+    <data name="pages.more.shared_link" xml:space="preserve">
+        <value>Sdíleno se mnou</value>
+    </data>
+    <data name="pages.more.about_link" xml:space="preserve">
+        <value>O aplikaci</value>
+    </data>
+    <data name="pages.more.management_link" xml:space="preserve">
+        <value>Spravovat</value>
+    </data>
+    <data name="pages.more.dashboard_link" xml:space="preserve">
+        <value>Můj disk</value>
+    </data>
+    <data name="pages.more.shared_description" xml:space="preserve">
+        <value>Objevte další obsah, který vám byl zpřístupněn ostatními uživateli.</value>
+    </data>
+    <data name="pages.more.about_description" xml:space="preserve">
+        <value>Chcete se dozvědět více o aplikaci?</value>
+    </data>
+    <data name="pages.more.management_description" xml:space="preserve">
+        <value>Spravujte oprávnění a uživatelské účty.</value>
+    </data>
+    <data name="pages.more.dashboard_description" xml:space="preserve">
+        <value>Procházejte a spravujte vámi nahrané soubory.</value>
+    </data>
+    <data name="pages.more.privacy_link" xml:space="preserve">
+        <value>Soukromí</value>
+    </data>
+    <data name="pages.more.privacy_description" xml:space="preserve">
+        <value>Přečtěte si o zásadách zpracování dat.</value>
+    </data>
+    <data name="components.files.detail.contact_text" xml:space="preserve">
+        <value>vy</value>
+    </data>
+    <data name="components.files.detail.file_type_text" xml:space="preserve">
+        <value>soubor</value>
+    </data>
+    <data name="components.files.detail.file_name_label" xml:space="preserve">
+        <value>Název souboru</value>
+    </data>
+    <data name="components.files.detail.folder_type_text" xml:space="preserve">
+        <value>složka</value>
+    </data>
+    <data name="components.files.detail.folder_name_label" xml:space="preserve">
+        <value>Název složky</value>
     </data>
 </root>

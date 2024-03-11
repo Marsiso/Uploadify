@@ -1,8 +1,8 @@
-using NSwag;
 using OpenIddict.Validation.AspNetCore;
 using Uploadify.Authorization.Extensions;
+using Uploadify.Server.Application.Files.Helpers;
 using Uploadify.Server.Application.Infrastructure.Extensions;
-using Uploadify.Server.Domain.Infrastructure.Services;
+using Uploadify.Server.Domain.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,7 @@ services.AddSingleton(environment);
 
 services.AddDatabase(environment.IsDevelopment(), settings)
     .AddIdentity(settings)
-    .AddValidations(settings)
+    .AddValidators(settings)
     .AddRequests(settings)
     .AddControllers();
 
@@ -25,13 +25,13 @@ services.AddOpenApiDocument(options =>
 {
     options.PostProcess = document =>
     {
-        document.Info = new OpenApiInfo
+        document.Info = new()
         {
             Version = "v1",
             Title = "Uploadify Resource Server",
             Description = "An ASP.NET Core RESTful API.",
-            Contact = new OpenApiContact { Name = "LinkedIn", Url = "https://www.linkedin.com/in/marek-ol%C5%A1%C3%A1k-1715b724a/" },
-            License = new OpenApiLicense { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
+            Contact = new() { Name = "LinkedIn", Url = "https://www.linkedin.com/in/marek-ol%C5%A1%C3%A1k-1715b724a/" },
+            License = new() { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
         };
     };
 });
@@ -52,6 +52,12 @@ services.AddOpenIddict()
 
 services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
 services.AddPermissions();
+
+var path = Path.Combine(Directory.GetCurrentDirectory(), FileSystemHelpers.StaticFilesFolderName);
+if (!Directory.Exists(path))
+{
+    Directory.CreateDirectory(path);
+}
 
 var application = builder.Build();
 
@@ -75,6 +81,12 @@ application.UseCors(options =>
 
 application.UseHttpsRedirection();
 application.UseStaticFiles();
+// application.UseStaticFiles(new StaticFileOptions
+// {
+//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), FileSystemHelpers.StaticFilesFolderName)),
+//     RequestPath = new PathString("/cdn/files")
+// });
+
 application.UseRouting();
 application.UseAuthentication();
 application.UseAuthorization();

@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using OpenIddict.Abstractions;
-using Uploadify.Server.Application.Authentication.Commands;
-using Uploadify.Server.Application.Authentication.Validators;
-using Uploadify.Server.Application.Requests.Services;
+using Uploadify.Server.Application.Auth.Validators;
+using Uploadify.Server.Application.Files.Queries;
+using Uploadify.Server.Application.Infrastructure.Requests.Services;
 using Uploadify.Server.Application.Security.Services;
-using Uploadify.Server.Core.Application.Commands;
+using Uploadify.Server.Core.Files.Queries;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Data.Infrastructure.EF.Services;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Authorization.Constants;
-using Uploadify.Server.Domain.Infrastructure.Services;
+using Uploadify.Server.Domain.Auth.Constants;
+using Uploadify.Server.Domain.Infrastructure.Models;
 
 namespace Uploadify.Server.Application.Infrastructure.Extensions;
 
@@ -86,11 +86,9 @@ public static class IServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddValidations(this IServiceCollection services, SystemSettings settings)
+    public static IServiceCollection AddValidators(this IServiceCollection services, SystemSettings settings)
     {
         services.AddValidatorsFromAssembly(typeof(CreateUserCommandValidator).Assembly);
-        services.AddValidatorsFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
-
         return services;
     }
 
@@ -101,8 +99,8 @@ public static class IServiceCollectionExtensions
         {
             options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthorizationPipelineBehaviour<,>));
             options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
-            options.RegisterServicesFromAssembly(typeof(SignUpCommand).Assembly);
-            options.RegisterServicesFromAssembly(typeof(SignInPreProcessorCommand).Assembly);
+            options.RegisterServicesFromAssembly(typeof(GetFileQuery).Assembly);
+            options.RegisterServicesFromAssembly(typeof(GetFileDetailQuery).Assembly);
         });
 
         return services;

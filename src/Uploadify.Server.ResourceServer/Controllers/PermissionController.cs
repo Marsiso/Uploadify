@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Validation.AspNetCore;
 using Uploadify.Authorization.Attributes;
 using Uploadify.Authorization.Models;
-using Uploadify.Server.Application.Authorization.Commands;
+using Uploadify.Server.Application.Auth.Commands;
 using Uploadify.Server.ResourceServer.Infrastructure.Controllers.Models;
 
 namespace Uploadify.Server.ResourceServer.Controllers;
@@ -24,7 +24,7 @@ public class PermissionController : BaseApiController<PermissionController>
     ///
     ///     Sample request:
     ///
-    ///         POST: /api/permission/grant
+    ///         PUT: /api/permissions/grant
     ///         {
     ///             name: "user_admin",
     ///             permission: 128
@@ -40,7 +40,7 @@ public class PermissionController : BaseApiController<PermissionController>
     /// <response code="400">If the request is malformed or invalid.</response>
     /// <response code="401">If the user is unauthorized to perform this action.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPost("~/api/permission/grant")]
+    [HttpPut("~/api/permission/grant")]
     [IgnoreAntiforgeryToken]
     [Permission(Permission.EditPermissions, AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     [ProducesResponseType(typeof(GrantPermissionCommandResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
@@ -58,7 +58,7 @@ public class PermissionController : BaseApiController<PermissionController>
     ///
     ///     Sample request:
     ///
-    ///         POST: /api/permission/revoke
+    ///         PUT: /api/permissions/revoke
     ///         {
     ///             name: "user_admin",
     ///             permission: 128
@@ -74,7 +74,7 @@ public class PermissionController : BaseApiController<PermissionController>
     /// <response code="400">If the request is malformed or invalid.</response>
     /// <response code="401">If the user is unauthorized to perform this action.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPost("~/api/permission/revoke")]
+    [HttpPut("~/api/permission/revoke")]
     [IgnoreAntiforgeryToken]
     [Permission(Permission.EditPermissions, AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     [ProducesResponseType(typeof(RevokePermissionCommandResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]

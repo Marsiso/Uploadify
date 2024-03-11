@@ -1,0 +1,43 @@
+﻿
+@if (ShowTitle && !string.IsNullOrWhiteSpace(Title))
+{
+    <Heading Title="@Title"/>
+}
+
+@if (IsLoading && Skeleton != null)
+{
+    @Skeleton
+}
+
+@if (IsLoading && Skeleton == null)
+{
+    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-4" : "mud-width-full mud-height-full")">
+        <PrimarySkeleton FullWidth Height="80%"/>
+    </div>
+}
+
+@if (!IsLoading && Errors is not { Length: > 0 })
+{
+    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-4" : "mud-width-full mud-height-full")">
+        @Children
+    </div>
+}
+
+@if (!IsLoading && Errors is { Length: > 0 })
+{
+    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-4" : "mud-width-full mud-height-full")">
+        @foreach (var error in Errors)
+        {
+            <MudText Color="@Color.Error">@error</MudText>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string[]? Errors { get; set; }
+    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public bool ShowTitle { get; set; } = true;
+    [Parameter, EditorRequired] public required RenderFragment Children { get; set; }
+    [Parameter] public RenderFragment? Skeleton { get; set; }
+}

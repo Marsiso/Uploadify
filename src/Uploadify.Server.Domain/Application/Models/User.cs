@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Uploadify.Server.Domain.Common.Contracts;
-using Uploadify.Server.Domain.FileSystem.Models;
+using Uploadify.Server.Domain.Data.Contracts;
+using Uploadify.Server.Domain.Files.Models;
 
 namespace Uploadify.Server.Domain.Application.Models;
 
@@ -24,4 +24,6 @@ public class User : IdentityUser, IChangeTrackingBaseEntity
     public ICollection<UserRole>? Roles { get; set; }
     public ICollection<Folder>? Folders { get; set; }
     public ICollection<SharedFile>? SharedFiles { get; set; }
+
+    public string FullName => $"{GivenName} {FamilyName}";
 }

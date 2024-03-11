@@ -63,6 +63,103 @@ public static class Translations
             public const string Description = $"{BasePermissionAssignment}.description";
             public const string SubmitButton = $"{BasePermissionAssignment}.submit_button";
         }
+
+        public static class Files
+        {
+            public const string BaseFiles = $"{BaseComponents}.files";
+
+            public static class Dialogs
+            {
+                public const string BaseDialogs = $"{BaseFiles}.dialogs";
+
+                public static class Create
+                {
+                    public const string BaseCreate = $"{BaseDialogs}.create";
+                    public const string Title = $"{BaseCreate}.title";
+                    public const string NameLabel = $"{BaseCreate}.name_label";
+                    public const string SubmitButton = $"{BaseCreate}.submit_button";
+                }
+
+                public static class Delete
+                {
+                    public const string BaseDelete = $"{BaseDialogs}.delete";
+                    public const string Title = $"{BaseDelete}.title";
+                    public const string Description = $"{BaseDelete}.description";
+                    public const string SubmitButton = $"{BaseDelete}.submit_button";
+                }
+
+                public static class Move
+                {
+                    public const string BaseMove= $"{BaseDialogs}.move";
+                    public const string Title = $"{BaseMove}.title";
+                    public const string FolderSelectLabel = $"{BaseMove}.folder_select_label";
+                    public const string SubmitButton = $"{BaseMove}.submit_button";
+                }
+
+                public static class Rename
+                {
+                    public const string BaseRename= $"{BaseDialogs}.rename";
+                    public const string Title = $"{BaseRename}.title";
+                    public const string NameLabel = $"{BaseRename}.name_label";
+                    public const string SubmitButton = $"{BaseRename}.submit_button";
+                }
+            }
+
+            public static class Inputs
+            {
+                public const string BaseInputs= $"{BaseFiles}.inputs";
+
+                public static class DragAndDropWrapper
+                {
+                    public const string BaseDragAndDropWrapper= $"{BaseFiles}.drag_and_drop_wrapper";
+                    public const string UploadSuccess = $"{BaseDragAndDropWrapper}.uplaod_success";
+                    public const string UploadFailure = $"{BaseDragAndDropWrapper}.uplaod_failure";
+                    public const string FileTooLarge = $"{BaseDragAndDropWrapper}.file_too_large";
+                    public const string TooManyFiles = $"{BaseDragAndDropWrapper}.too_many_files";
+                }
+            }
+
+            public static class DashboardRowOptions
+            {
+                public const string BaseDashboardRowOptions = $"{BaseFiles}.dashboard_row_options";
+                public const string DetailLink = $"{BaseDashboardRowOptions}.detail_link";
+                public const string OpenLink = $"{BaseDashboardRowOptions}.open_link";
+                public const string DownloadLink = $"{BaseDashboardRowOptions}.download_link";
+                public const string MoveLink = $"{BaseDashboardRowOptions}.move_link";
+                public const string RenameLink = $"{BaseDashboardRowOptions}.rename_link";
+                public const string DeleteLink = $"{BaseDashboardRowOptions}.delete_link";
+                public const string ShareLink = $"{BaseDashboardRowOptions}.share_link";
+            }
+
+            public static class Detail
+            {
+                public const string BaseDetail = $"{BaseFiles}.detail";
+                public const string RenameButton = $"{BaseDetail}.rename_button";
+                public const string DateCreatedLabel = $"{BaseDetail}.date_created_label";
+                public const string UserCreatedByLabel = $"{BaseDetail}.user_created_by_label";
+                public const string DateUpdatedLabel = $"{BaseDetail}.date_updated_label";
+                public const string UserUpdatedByLabel = $"{BaseDetail}.user_updated_by_label";
+                public const string DownloadLabel = $"{BaseDetail}.download_label";
+                public const string DownloadButton = $"{BaseDetail}.download_button";
+                public const string ResourceTypeLabel = $"{BaseDetail}.resource_type_label";
+                public const string LocationLabel = $"{BaseDetail}.location_label";
+                public const string MoveButton = $"{BaseDetail}.move_button";
+                public const string ExtensionLabel = $"{BaseDetail}.extension_label";
+                public const string MimeLabel = $"{BaseDetail}.mime_label";
+                public const string SizeLabel = $"{BaseDetail}.size_label";
+                public const string DriveSizeLabel = $"{BaseDetail}.drive_size_label";
+                public const string DeleteButton = $"{BaseDetail}.delete_button";
+                public const string FolderItemsCountLabel = $"{BaseDetail}.folder_items_count_label";
+                public const string OpenSubfolderLabel = $"{BaseDetail}.open_subfolder_label";
+                public const string SharedLabel = $"{BaseDetail}.shared_label";
+                public const string ShareButton = $"{BaseDetail}.share_button";
+                public const string FolderNameLabel = $"{BaseDetail}.folder_name_label";
+                public const string FolderTypeText = $"{BaseDetail}.folder_type_text";
+                public const string FileNameLabel = $"{BaseDetail}.file_name_label";
+                public const string FileTypeText = $"{BaseDetail}.file_type_text";
+                public const string ContactText = $"{BaseDetail}.contact_text";
+            }
+        }
     }
 
     public static class Pages
@@ -128,6 +225,22 @@ public static class Translations
             public const string Title = $"{BaseShared}.title";
             public const string Description = $"{BaseShared}.description";
         }
+
+        public static class More
+        {
+            public const string BaseMore= $"{BasePages}.more";
+            public const string Title = $"{BaseMore}.title";
+            public const string SharedLink = $"{BaseMore}.shared_link";
+            public const string SharedDescription = $"{BaseMore}.shared_description";
+            public const string AboutLink = $"{BaseMore}.about_link";
+            public const string AboutDescription = $"{BaseMore}.about_description";
+            public const string ManagementLink = $"{BaseMore}.management_link";
+            public const string ManagementDescription = $"{BaseMore}.management_description";
+            public const string DashboardLink = $"{BaseMore}.dashboard_link";
+            public const string DashboardDescription = $"{BaseMore}.dashboard_description";
+            public const string PrivacyLink = $"{BaseMore}.privacy_link";
+            public const string PrivacyDescription = $"{BaseMore}.privacy_description";
+        }
     }
 
     public static class Authorization
@@ -155,6 +268,7 @@ public static class Translations
         public const string BaseValidations = "validations";
         public const string PermissionRequired = $"{BaseValidations}.permission.required";
         public const string RoleNameRequired = $"{BaseValidations}.role_name.required";
+        public const string FolderNameExists = $"{BaseValidations}.folder_name.exists";
     }
 
     public static class RequestStatuses

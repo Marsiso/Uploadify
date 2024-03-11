@@ -1,0 +1,26 @@
+﻿@using Uploadify.Client.Application.Files.Models
+@using Uploadify.Client.Application.Files.Services
+@using Uploadify.Client.Web.Components.Shared.Dialogs
+@inject FileService FileService
+@inject FolderService FolderService
+
+<Dialog IsVisible="@IsVisible"
+        OnClose="@OnClose"
+        Title="@Name">
+    <Content>
+        <Detail DashboardItem="@DashboardItem"
+                OnOpen="@OnOpen"
+                ParentFolder="@ParentFolder" />
+    </Content>
+</Dialog>
+
+@code {
+    [Parameter] [EditorRequired] public required bool IsVisible { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnOpen { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnClose { get; set; }
+    [Parameter] [EditorRequired] public required DashboardItem DashboardItem { get; set; }
+    [Parameter] [EditorRequired] public required FolderOverview? ParentFolder { get; set; }
+    [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }
+
+    private string Name => DashboardItem.IsFolder ? DashboardItem.Folder.Name : DashboardItem.File.Name;
+}

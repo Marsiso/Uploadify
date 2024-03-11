@@ -7,7 +7,7 @@ public class DataContextFactory : IDesignTimeDbContextFactory<DataContext>
 {
     public DataContext CreateDbContext(string[] args)
     {
-        return new DataContext(new DbContextOptionsBuilder<DataContext>()
+        return new(new DbContextOptionsBuilder<DataContext>()
             .UseNpgsql()
             .UseOpenIddict().Options);
     }

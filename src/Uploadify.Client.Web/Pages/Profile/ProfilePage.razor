@@ -1,5 +1,4 @@
-﻿@using Uploadify.Client.Integration.Resources
-@using Uploadify.Client.Core.Infrastructure.Services
+﻿@using Uploadify.Client.Web.Components.Shared
 @using OpenIddict.Abstractions
 @attribute [Permission]
 @attribute [Route(PageRoutes.Profile)]
@@ -8,8 +7,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<PageTitle>@Localizer[Translations.Pages.Profile.Title]</PageTitle>
-<MudText Typo="Typo.h1">@Localizer[Translations.Pages.Profile.Title]</MudText>
+<Heading Title="@Localizer[Translations.Pages.Profile.Title]"/>
 <MudText Class="mt-4 mb-8"
          Typo="Typo.body1">
     @Localizer[Translations.Pages.Profile.Description]
@@ -24,9 +22,9 @@
 
     @if (IsLoading || User == null)
     {
-        <MudSkeleton Animation="Animation.Pulse"
+        <MudSkeleton Animation="@Animation.Pulse"
                      Height="150px"
-                     SkeletonType="SkeletonType.Rectangle"
+                     SkeletonType="@SkeletonType.Rectangle"
                      Width="100%"/>
     }
     else
@@ -39,7 +37,7 @@
         <MudTextField Adornment="@(User.EmailConfirmed is true ? Adornment.End : Adornment.None)"
                       AdornmentIcon="@Icons.Material.Rounded.Verified"
                       DisableUnderLine="true"
-                      IconSize="Size.Small"
+                      IconSize="@Size.Small"
                       Label="@Localizer[Translations.Pages.Profile.EmailLabel]"
                       T="string"
                       Value="@User.Email"/>
@@ -47,7 +45,7 @@
         <MudTextField Adornment="@(User.PhoneNumberConfirmed is true ? Adornment.End : Adornment.None)"
                       AdornmentIcon="@Icons.Material.Rounded.Verified"
                       DisableUnderLine="true"
-                      IconSize="Size.Small"
+                      IconSize="@Size.Small"
                       Label="@Localizer[Translations.Pages.Profile.PhoneLabel]"
                       T="string"
                       Value="@User.PhoneNumber"/>
@@ -61,9 +59,9 @@
 
     @if (IsLoading || User == null)
     {
-        <MudSkeleton Animation="Animation.Pulse"
+        <MudSkeleton Animation="@Animation.Pulse"
                      Height="100px"
-                     SkeletonType="SkeletonType.Rectangle"
+                     SkeletonType="@SkeletonType.Rectangle"
                      Width="100%"/>
     }
     else

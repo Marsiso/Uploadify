@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Uploadify.Client.Core.Infrastructure.Services;
-using Uploadify.Client.Core.Translations.Helpers;
+using Uploadify.Client.Core.Infrastructure.Translations.Helpers;
 using Uploadify.Client.Integration.Resources;
 using static System.String;
 
@@ -30,7 +30,7 @@ public abstract class BaseResourceService<TService> where TService : class
     protected void LogError(Exception exception, [CallerMemberName] string? actionName = null) =>
         Logger.LogError(Format("Service: '{0}' Action: '{1}' Message: '{2}'.", typeof(TService).Name, actionName, exception.Message));
 
-    protected string[] GetErrorMessages(RequestFailure? requestFailure)
+    protected string[] HandleServerErrorMessages(RequestFailure? requestFailure)
     {
         if (!IsNullOrWhiteSpace(requestFailure?.UserFriendlyMessage))
         {

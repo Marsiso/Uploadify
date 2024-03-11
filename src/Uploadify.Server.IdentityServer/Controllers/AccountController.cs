@@ -2,12 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Uploadify.Server.Application.Authentication.Commands;
-using Uploadify.Server.Application.Authentication.DataTransferObjects;
-using Uploadify.Server.Application.Authentication.ViewModels;
-using Uploadify.Server.Core.Application.Commands;
+using Uploadify.Server.Application.Auth.Commands;
+using Uploadify.Server.Application.Auth.Models;
+using Uploadify.Server.Application.Auth.ViewModels;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.Requests.Models;
+using Uploadify.Server.Domain.Infrastructure.Requests.Models;
 
 namespace Uploadify.Server.IdentityServer.Controllers;
 
@@ -43,10 +42,10 @@ public class AccountController : Controller
 
         if (form == null)
         {
-            return View("Login", new LoginViewModel() { ReturnUrl = returnUrl, Form = new LoginForm() });
+            return View("Login", new LoginViewModel() { ReturnUrl = returnUrl, Form = new() });
         }
 
-        var response = await _mediator.Send(form.Adapt<SignInPreProcessorCommand>(), cancellationToken);
+        var response = await _mediator.Send(form.Adapt<SignInCommand>(), cancellationToken);
         if (response.Status != Status.Ok)
         {
             return View("Login", new LoginViewModel() { ReturnUrl = returnUrl, Form = form, Errors = response.Failure?.Errors });
@@ -74,7 +73,7 @@ public class AccountController : Controller
 
         if (form == null)
         {
-            return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = new RegisterForm() });
+            return View("Register", new RegisterViewModel { ReturnUrl = returnUrl, Form = new() });
         }
 
         var response = await _mediator.Send(form.Adapt<SignUpCommand>(), cancellationToken);

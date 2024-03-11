@@ -1,8 +1,11 @@
 ﻿@using Uploadify.Client.Application.Utilities.Constants
 @inherits LayoutComponentBase
 
-<MudThemeProvider Theme="Themes.DefaultTheme"/>
-<MudDialogProvider Position="DialogPosition.Center" FullWidth="true" CloseButton="false"/>
+<MudThemeProvider Theme="@Themes.DefaultTheme"/>
+<MudDialogProvider CloseButton="false"
+                   FullWidth="true"
+                   Position="@DialogPosition.Center"/>
+
 <MudSnackbarProvider/>
 
 <PermissionView>

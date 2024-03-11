@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using OpenIddict.EntityFrameworkCore.Models;
 using Uploadify.Server.Domain.Application.Models;
-using Uploadify.Server.Domain.FileSystem.Models;
-using File = Uploadify.Server.Domain.FileSystem.Models.File;
+using Uploadify.Server.Domain.Data.Models;
+using Uploadify.Server.Domain.Files.Models;
+using File = Uploadify.Server.Domain.Files.Models.File;
 
 namespace Uploadify.Server.Data.Infrastructure.EF;
 
@@ -28,6 +30,20 @@ public class DataContext : IdentityDbContext<User, Role, string, UserClaim, User
     public DataContext(DbContextOptions<DataContext> options, ISaveChangesInterceptor interceptor) : base(options)
     {
         _interceptor = interceptor;
+    }
+
+    public Task<EntityEntry<TEntity>> UpdateEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return Task.FromResult(base.Update(entity));
+    }
+
+    public Task<EntityEntry<TEntity>> DeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        entity.IsActive = false;
+
+        return Task.FromResult(base.Update(entity));
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

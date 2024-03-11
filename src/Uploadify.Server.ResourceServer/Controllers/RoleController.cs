@@ -1,12 +1,11 @@
 ﻿using System.Net.Mime;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Validation.AspNetCore;
 using Uploadify.Authorization.Attributes;
 using Uploadify.Authorization.Models;
 using Uploadify.Server.Application.Application.Queries;
-using Uploadify.Server.Domain.Pagination.Models;
+using Uploadify.Server.Domain.Infrastructure.Pagination.Models.Application;
 using Uploadify.Server.ResourceServer.Infrastructure.Controllers.Models;
 
 namespace Uploadify.Server.ResourceServer.Controllers;
@@ -26,7 +25,7 @@ public class RoleController : BaseApiController<UserController>
     ///
     ///     Sample request:
     ///
-    ///         GET: /api/role/3/overview
+    ///         GET: /api/roles/3/overview
     ///
     ///     Sample response:
     ///
@@ -52,12 +51,12 @@ public class RoleController : BaseApiController<UserController>
     /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("~/api/role/{roleID}/overview")]
     [Permission(Permission.ViewRoles, AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
-    [ProducesResponseType(typeof(RoleOverviewQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(RoleOverviewQueryResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(RoleOverviewQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(RoleOverviewQueryResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(RoleOverviewQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
-    public async Task<IActionResult> GetRoleOverview(string? roleID, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new RoleOverviewQuery(roleID), cancellationToken));
+    [ProducesResponseType(typeof(GetRoleOverviewQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetRoleOverviewQueryResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetRoleOverviewQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetRoleOverviewQueryResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetRoleOverviewQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
+    public async Task<IActionResult> Overview(string? roleID, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new GetRoleOverviewQuery(roleID), cancellationToken));
 
     /// <summary>
     ///     Retrieves a summary of all roles, supporting pagination.
@@ -133,8 +132,8 @@ public class RoleController : BaseApiController<UserController>
     /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("~/api/roles/summary")]
     [Permission(Permission.ViewRoles, AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
-    [ProducesResponseType(typeof(RolesSummaryQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(RolesSummaryQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(RolesSummaryQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
-    public async Task<IActionResult> GetRolesSummary([FromQuery] RoleQueryString queryString, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new RolesSummaryQuery(queryString), cancellationToken));
+    [ProducesResponseType(typeof(GetRolesSummaryQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetRolesSummaryQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetRolesSummaryQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
+    public async Task<IActionResult> Summary([FromQuery] RoleQueryString queryString, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new GetRolesSummaryQuery(queryString), cancellationToken));
 }

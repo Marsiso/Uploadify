@@ -1,0 +1,91 @@
+﻿@using Uploadify.Client.Domain.Resources.Models
+@using Uploadify.Client.Web.Components.Shared.Dialogs
+@using Uploadify.Client.Application.Files.Services
+@using System.Diagnostics.CodeAnalysis
+@using Uploadify.Client.Application.Files.Helpers
+@inject FileService FileService
+@inject FolderService FolderService
+@inject IStringLocalizer Localizer
+
+<Dialog IsVisible="@IsVisible"
+        Title="@Localizer[Translations.Components.Files.Dialogs.Rename.Title]"
+        OnClose="@OnClose">
+    <Content>
+        <MudForm Errors="@(ResourceResponse?.ErrorMessages ?? Array.Empty<string>())">
+            <MudStack Spacing="5">
+                <MudTextField @bind-Value="@Name"
+                              DebounceInterval="100"
+                              Error="@(ResourceResponse is { ErrorMessages.Length: > 0 })"
+                              ErrorText="@ResourceResponse?.ErrorMessages.FirstOrDefault()"
+                              Label="@Localizer[Translations.Components.Files.Dialogs.Rename.NameLabel]"
+                              OnDebounceIntervalElapsed="@(() => { ResourceResponse = null; IsDisabled = DefaultName.Equals(Name, StringComparison.Ordinal); })"/>
+                <MudButton Color="@Color.Tertiary"
+                           Disabled="@(IsLoading || IsDisabled || DefaultName.Equals(Name, StringComparison.Ordinal))"
+                           FullWidth
+                           OnClick="@HandleSubmit"
+                           Size="@Size.Large"
+                           Style="border-radius: 1.5rem;"
+                           Variant="@Variant.Filled">
+                    @Localizer[Translations.Components.Files.Dialogs.Rename.SubmitButton]
+                </MudButton>
+            </MudStack>
+        </MudForm>
+    </Content>
+</Dialog>
+
+@code {
+    [Parameter] [EditorRequired] public required bool IsVisible { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnSuccess { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnClose { get; set; }
+    [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    [MemberNotNullWhen(true, nameof(Folder))]
+    [MemberNotNullWhen(false, nameof(File))]
+    public required bool IsFolder { get; set; }
+
+    [Parameter] [EditorRequired] public FileOverview? File { get; set; }
+    [Parameter] [EditorRequired] public FolderOverview? Folder { get; set; }
+
+    public bool IsLoading { get; set; }
+    public bool IsDisabled { get; set; }
+
+    public string Name { get; set; } = string.Empty;
+    public string DefaultName { get; set; } = string.Empty;
+    public ResourceResponse? ResourceResponse { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (IsFolder)
+        {
+            Name = DefaultName = Folder.Name;
+            return;
+        }
+
+        Name = DefaultName = Path.GetFileNameWithoutExtension(File.Name);
+    }
+
+    private async Task HandleSubmit()
+    {
+        IsLoading = true;
+
+        if (IsFolder)
+        {
+            ResourceResponse = await FolderService.Rename(Folder, Name, CancellationToken);
+        }
+        else
+        {
+            ResourceResponse = await FileService.Rename(File, FileHelpers.Rename(File.Name, Name), CancellationToken);
+        }
+
+        if (ResourceResponse.IsSuccess)
+        {
+            await OnSuccess.InvokeAsync();
+            await OnClose.InvokeAsync();
+        }
+
+        IsLoading = false;
+    }
+
+}

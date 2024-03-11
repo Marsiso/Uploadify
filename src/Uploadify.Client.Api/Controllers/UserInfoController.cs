@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uploadify.Client.Api.Infrastructure.Controllers.Models;
-using Uploadify.Client.Application.Authentication.Helpers;
-using Uploadify.Client.Domain.Authentication.Models;
+using Uploadify.Client.Application.Auth.Helpers;
+using Uploadify.Client.Domain.Auth.Models;
 
 namespace Uploadify.Client.Api.Controllers;
 

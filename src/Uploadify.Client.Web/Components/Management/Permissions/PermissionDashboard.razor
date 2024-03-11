@@ -3,7 +3,7 @@
 @inject IStringLocalizer<TranslationDictionary> Localizer
 @using Mapster
 @using Uploadify.Client.Application.Application.Services
-@using Uploadify.Client.Core.Authorization.Constants
+@using Uploadify.Client.Core.Auth.Constants
 @implements IDisposable
 
 <MudStack>
@@ -22,14 +22,14 @@
         </PermissionView>
     </MudToolBar>
 
-    <MudDataGrid Culture="CultureInfo.CurrentCulture"
+    <MudDataGrid Culture="@CultureInfo.CurrentCulture"
                  Filterable="false"
-                 Groupable="true"
-                 GroupStyle="color: var(--mud-palette-dark); background-color: var(--mud-palette-white);"
+                 Groupable
+                 GroupStyle="color:var(--mud-palette-dark);background-color:var(--mud-palette-white);"
                  Items="@ProjectByPermission(_summary?.Roles ?? Enumerable.Empty<RoleOverview>())"
-                 Loading="_isLoading || _summary is not { Roles: not null }"
-                 LoadingProgressColor="Color.Dark"
-                 SortMode="SortMode.None"
+                 Loading="@(_isLoading || _summary is not { Roles: not null })"
+                 LoadingProgressColor="@Color.Dark"
+                 SortMode="@SortMode.None"
                  T="Element">
         <Columns>
             <PropertyColumn Groupable="false"
@@ -40,7 +40,7 @@
                             Groupable="false">
                 <CellTemplate>
                     <MudToolBar Class="px-0"
-                                Dense="true">
+                                Dense>
                         @{
                             var element = context.Item;
                         }
@@ -53,9 +53,9 @@
                                 <MudIconButton Icon="@Icons.Material.Rounded.Delete"/>
                             </Authorized>
                             <NotAuthorized>
-                                <MudIconButton Disabled="true"
+                                <MudIconButton Disabled
                                                Icon="@Icons.Material.Rounded.GroupRemove"/>
-                                <MudIconButton Disabled="true"
+                                <MudIconButton Disabled
                                                Icon="@Icons.Material.Rounded.Delete"/>
                             </NotAuthorized>
                         </PermissionView>
@@ -63,21 +63,21 @@
                 </CellTemplate>
             </TemplateColumn>
             <PropertyColumn Groupable="true"
-                            GroupBy="element => GroupByPermission(element.Role)"
-                            Grouping="true"
-                            Hidden="true"
-                            Property="element => element.Permission">
+                            GroupBy="@(element => GroupByPermission(element.Role))"
+                            Grouping
+                            Hidden
+                            Property="@(element => element.Permission)">
                 <GroupTemplate>
                     <MudText Class="ps-2"
-                             Inline="true"
+                             Inline
                              Style="font-weight: 700; width: 100%;">
                         @if (context.Grouping.Key is Permission permission)
                         {
                             @Localizer[PermissionTranslationKeys.Values[permission]]
                         }
-                        <MudChip Color="Color.Primary"
-                                 Size="Size.Small"
-                                 Variant="Variant.Text">
+                        <MudChip Color="@Color.Primary"
+                                 Size="@Size.Small"
+                                 Variant="@Variant.Text">
                             @context.Grouping.Count()
                         </MudChip>
                     </MudText>
@@ -87,9 +87,9 @@
     </MudDataGrid>
 </MudStack>
 
-<PermissionAssignment CancellationToken="_cancellationTokenSource.Token"
+<PermissionAssignment CancellationToken="@_cancellationTokenSource.Token"
                       OnSuccess="FetchRoleSummary"
-                      @ref="PermissionAssignment"/>
+                      @ref="@PermissionAssignment"/>
 
 @code {
     private readonly IEnumerable<Permission> _permissions = PermissionHelpers.GetValues();
@@ -179,10 +179,9 @@
         }
     }
 
-    public void Dispose()
+    void IDisposable.Dispose()
     {
         _cancellationTokenSource.Cancel();
         _cancellationTokenSource.Dispose();
     }
-
 }

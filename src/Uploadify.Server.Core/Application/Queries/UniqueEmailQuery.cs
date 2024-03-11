@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Uploadify.Server.Data.Infrastructure.EF;
-using Uploadify.Server.Domain.Localization.Constants;
-using Uploadify.Server.Domain.Requests.Exceptions;
-using Uploadify.Server.Domain.Requests.Models;
-using Uploadify.Server.Domain.Requests.Services;
+using Uploadify.Server.Domain.Infrastructure.Localization.Constants;
+using Uploadify.Server.Domain.Infrastructure.Requests.Contracts;
+using Uploadify.Server.Domain.Infrastructure.Requests.Exceptions;
+using Uploadify.Server.Domain.Infrastructure.Requests.Models;
 using static System.String;
-using static Uploadify.Server.Domain.Requests.Models.Status;
+using static Uploadify.Server.Domain.Infrastructure.Requests.Models.Status;
 
 namespace Uploadify.Server.Core.Application.Queries;
 
-public class UniqueEmailQuery : BaseRequest<UniqueEmailQueryResponse>, IQuery<UniqueEmailQueryResponse>
+public class UniqueEmailQuery : IBaseRequest<UniqueEmailQueryResponse>, IQuery<UniqueEmailQueryResponse>
 {
     public UniqueEmailQuery(string? email)
     {
@@ -38,14 +38,14 @@ public class UniqueEmailQueryHandler : IQueryHandler<UniqueEmailQuery, UniqueEma
     {
         if (IsNullOrWhiteSpace(request.Email))
         {
-            return new UniqueEmailQueryResponse(BadRequest, new RequestFailure
+            return new(BadRequest, new()
             {
                 UserFriendlyMessage = Translations.RequestStatuses.BadRequest,
                 Exception = new BadRequestException(nameof(request.Email))
             });
         }
 
-        return new UniqueEmailQueryResponse(!await Query(_context, _normalizer.NormalizeEmail(request.Email)));
+        return new(!await Query(_context, _normalizer.NormalizeEmail(request.Email)));
     }
 }
 

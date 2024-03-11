@@ -19,7 +19,7 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="pages.dashboard.title" xml:space="preserve">
-        <value>My files</value>
+        <value>Personal</value>
     </data>
     <data name="pages.detail.title" xml:space="preserve">
         <value>File details</value>
@@ -40,7 +40,7 @@
         <value>Log out</value>
     </data>
     <data name="components.authenticated_layout.dashboard_link" xml:space="preserve">
-        <value>My files</value>
+        <value>Personal</value>
     </data>
     <data name="components.authenticated_layout.shared_link" xml:space="preserve">
         <value>Shared with me</value>
@@ -193,30 +193,213 @@
         <value>Permission</value>
     </data>
     <data name="request_statuses.internal_server_error" xml:space="preserve">
-        <value />
+        <value>There's been an error, please try again later.</value>
     </data>
     <data name="request_statuses.client_canceled_operation" xml:space="preserve">
-        <value />
+        <value>The request has been terminated by the user.</value>
     </data>
     <data name="request_statuses.unauthorized" xml:space="preserve">
-        <value />
+        <value>You do not have permission to perform the action or view the item.</value>
     </data>
     <data name="request_statuses.not_found" xml:space="preserve">
-        <value />
+        <value>Item was not found.</value>
     </data>
     <data name="request_statuses.forbidden" xml:space="preserve">
-        <value />
+        <value>Access to the item has been denied.</value>
     </data>
     <data name="request_statuses.bad_request" xml:space="preserve">
-        <value />
+        <value>Invalid request.</value>
     </data>
     <data name="validations.role_name.required" xml:space="preserve">
-        <value />
+        <value>Required role name.</value>
     </data>
     <data name="validations.permission.required" xml:space="preserve">
-        <value />
+        <value>Item owner permission required.</value>
     </data>
     <data name="components.permission_dashboard.title" xml:space="preserve">
         <value>Permission overview</value>
+    </data>
+    <data name="components.files.dialogs.create.title" xml:space="preserve">
+        <value>Add folder</value>
+    </data>
+    <data name="components.files.dialogs.create.name_label" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="components.files.dialogs.create.submit_button" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="components.files.dialogs.delete.title" xml:space="preserve">
+        <value>Move folder to recycle bin</value>
+    </data>
+    <data name="components.files.dialogs.delete.description" xml:space="preserve">
+        <value>Do you really want to move the file to the recycle bin? The file can be restored for 7 days after deletion, after that the change will be irreversible.</value>
+    </data>
+    <data name="components.files.dialogs.delete.submit_button" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="components.files.dialogs.move.title" xml:space="preserve">
+        <value>Change location</value>
+    </data>
+    <data name="components.files.dialogs.move.folder_select_label" xml:space="preserve">
+        <value>Move to</value>
+    </data>
+    <data name="components.files.dialogs.move.submit_button" xml:space="preserve">
+        <value>Move</value>
+    </data>
+    <data name="components.files.dialogs.rename.title" xml:space="preserve">
+        <value>Rename</value>
+    </data>
+    <data name="components.files.dialogs.rename.name_label" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="components.files.dialogs.rename.submit_button" xml:space="preserve">
+        <value>Rename</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.uplaod_success" xml:space="preserve">
+        <value>File {0} upload was successful</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.uplaod_failure" xml:space="preserve">
+        <value>File {0} upload failed</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.file_too_large" xml:space="preserve">
+        <value>File is too large</value>
+    </data>
+    <data name="components.files.dashboard_row_options.detail_link" xml:space="preserve">
+        <value>Detail</value>
+    </data>
+    <data name="components.files.dashboard_row_options.open_link" xml:space="preserve">
+        <value>Open</value>
+    </data>
+    <data name="components.files.dashboard_row_options.download_link" xml:space="preserve">
+        <value>Download</value>
+    </data>
+    <data name="components.files.dashboard_row_options.move_link" xml:space="preserve">
+        <value>Move</value>
+    </data>
+    <data name="components.files.dashboard_row_options.rename_link" xml:space="preserve">
+        <value>Rename</value>
+    </data>
+    <data name="components.files.dashboard_row_options.delete_link" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="components.files.detail.rename_button" xml:space="preserve">
+        <value>Rename</value>
+    </data>
+    <data name="components.files.detail.created_by_label" xml:space="preserve">
+        <value>Created by</value>
+    </data>
+    <data name="components.files.detail.user_created_by_label" xml:space="preserve">
+        <value>Created by</value>
+    </data>
+    <data name="components.files.detail.date_created_label" xml:space="preserve">
+        <value>Created</value>
+    </data>
+    <data name="components.files.detail.date_updated_label" xml:space="preserve">
+        <value>Last updated</value>
+    </data>
+    <data name="components.files.detail.user_updated_by_label" xml:space="preserve">
+        <value>Updated by</value>
+    </data>
+    <data name="components.files.detail.download_label" xml:space="preserve">
+        <value>Downloads</value>
+    </data>
+    <data name="components.files.detail.resource_type_label" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="components.files.detail.download_button" xml:space="preserve">
+        <value>Download</value>
+    </data>
+    <data name="components.files.detail.location_label" xml:space="preserve">
+        <value>Location</value>
+    </data>
+    <data name="components.files.detail.move_button" xml:space="preserve">
+        <value>Move</value>
+    </data>
+    <data name="components.files.detail.extension_label" xml:space="preserve">
+        <value>Extension</value>
+    </data>
+    <data name="components.files.detail.mime_label" xml:space="preserve">
+        <value>MIME</value>
+    </data>
+    <data name="components.files.detail.size_label" xml:space="preserve">
+        <value>Size</value>
+    </data>
+    <data name="components.files.detail.drive_size_label" xml:space="preserve">
+        <value>Size on disk</value>
+    </data>
+    <data name="components.files.detail.delete_button" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="components.files.detail.folder_items_count_label" xml:space="preserve">
+        <value>Total items</value>
+    </data>
+    <data name="components.files.detail.open_subfolder_label" xml:space="preserve">
+        <value>Open</value>
+    </data>
+    <data name="components.files.dashboard_row_options.share_link" xml:space="preserve">
+        <value>Share</value>
+    </data>
+    <data name="components.files.detail.shared_label" xml:space="preserve">
+        <value>Shared</value>
+    </data>
+    <data name="components.files.detail.share_button" xml:space="preserve">
+        <value>Share</value>
+    </data>
+    <data name="components.files.drag_and_drop_wrapper.too_many_files" xml:space="preserve">
+        <value>File upload is limited to 50 files at the same time</value>
+    </data>
+    <data name="common.translation_not_found" xml:space="preserve">
+        <value>Translation not found.</value>
+    </data>
+    <data name="validations.folder_name.exists" xml:space="preserve">
+        <value>Folder with the given name exists.</value>
+    </data>
+    <data name="pages.more.title" xml:space="preserve">
+        <value>More</value>
+    </data>
+    <data name="pages.more.shared_link" xml:space="preserve">
+        <value>Shared with me</value>
+    </data>
+    <data name="pages.more.about_link" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="pages.more.management_link" xml:space="preserve">
+        <value>Management</value>
+    </data>
+    <data name="pages.more.dashboard_link" xml:space="preserve">
+        <value>Personal</value>
+    </data>
+    <data name="pages.more.shared_description" xml:space="preserve">
+        <value>Explore other content that has been shared with you by other users.</value>
+    </data>
+    <data name="pages.more.about_description" xml:space="preserve">
+        <value>Would you like to learn more about the application?</value>
+    </data>
+    <data name="pages.more.management_description" xml:space="preserve">
+        <value>Manage permissions and user accounts.</value>
+    </data>
+    <data name="pages.more.dashboard_description" xml:space="preserve">
+        <value>Browse and manage your uploaded files.</value>
+    </data>
+    <data name="pages.more.privacy_link" xml:space="preserve">
+        <value>Privacy</value>
+    </data>
+    <data name="pages.more.privacy_description" xml:space="preserve">
+        <value>Learn about our privacy policy.</value>
+    </data>
+    <data name="components.files.detail.contact_text" xml:space="preserve">
+        <value>you</value>
+    </data>
+    <data name="components.files.detail.file_type_text" xml:space="preserve">
+        <value>file</value>
+    </data>
+    <data name="components.files.detail.file_name_label" xml:space="preserve">
+        <value>Filename</value>
+    </data>
+    <data name="components.files.detail.folder_type_text" xml:space="preserve">
+        <value>folder</value>
+    </data>
+    <data name="components.files.detail.folder_name_label" xml:space="preserve">
+        <value>Folder name</value>
     </data>
 </root>

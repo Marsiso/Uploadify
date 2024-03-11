@@ -7,22 +7,22 @@ namespace Uploadify.Client.Core.Infrastructure.Services;
 
 public class ApiCallWrapper
 {
-    private readonly HttpClient _httpClient;
-    private readonly ApiCallWrapperOptions _options;
-    public readonly ILogger<ApiCallWrapper> _logger;
+    public readonly HttpClient HttpClient;
+    public readonly ApiCallWrapperOptions Options;
+    public readonly ILogger<ApiCallWrapper> Logger;
 
     public ApiCallWrapper(HttpClient httpClient, IOptions<ApiCallWrapperOptions> options, ILogger<ApiCallWrapper> logger)
     {
-        _httpClient = httpClient;
-        _options = options.Value;
-        _logger = logger;
+        HttpClient = httpClient;
+        Options = options.Value;
+        Logger = logger;
     }
 
     public async Task<TResponse?> Call<TResponse>(Func<UploadifyClient, Task<ApiCallResponse<TResponse>>> client) where TResponse : BaseResponse
     {
         try
         {
-            return (await client.Invoke(new UploadifyClient(_httpClient))).Result;
+            return (await client.Invoke(new(HttpClient))).Result;
         }
         catch (ApiCallException<TResponse> exception)
         {
@@ -49,22 +49,35 @@ public class ApiCallWrapper
         }
     }
 
+    public async Task<TResponse?> Call<TResponse>(Func<UploadifyClient, Task<TResponse>> client) where TResponse : class
+    {
+        try
+        {
+            return await client.Invoke(new(HttpClient));
+        }
+        catch (Exception exception)
+        {
+            LogError(nameof(ApiCallWrapper), exception);
+            return null;
+        }
+    }
+
     public void LogInformation(string? service, Exception exception, [CallerMemberName] string? memberName = null)
     {
-        if (_options.IsDevelopment)
+        if (Options.IsDevelopment)
         {
-            _logger.LogInformation($"Service: '{service}' Action: '{memberName}' Message: '{exception.Message}' Inner exception: '{exception.InnerException}'.");
+            Logger.LogInformation($"Service: '{service}' Action: '{memberName}' Message: '{exception.Message}' Inner exception: '{exception.InnerException}'.");
         }
     }
 
     public void LogError(string? service, Exception exception, [CallerMemberName] string? memberName = null)
     {
-        if (_options.IsDevelopment)
+        if (Options.IsDevelopment)
         {
-            _logger.LogError($"Service: '{service}' Action: '{memberName}' Message: '{exception.Message}' Inner exception: '{exception.InnerException}'.");
+            Logger.LogError($"Service: '{service}' Action: '{memberName}' Message: '{exception.Message}' Inner exception: '{exception.InnerException}'.");
             return;
         }
 
-        _logger.LogError($"Service: '{service}' Action: '{memberName}' Message: 'We apologize for the inconvenience, but it seems we're experiencing some technical difficulties.'.");
+        Logger.LogError($"Service: '{service}' Action: '{memberName}' Message: 'We apologize for the inconvenience, but it seems we're experiencing some technical difficulties.'.");
     }
 }
