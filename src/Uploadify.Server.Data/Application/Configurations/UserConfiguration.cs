@@ -96,11 +96,5 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasForeignKey(entity => entity.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasMany(entity => entity.SharedFiles)
-            .WithOne(entity => entity.User)
-            .HasForeignKey(entity => entity.UserId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -21,6 +21,10 @@
       <Folder Include="Files\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Files\8cd50d50-5242-480d-879a-89bbaf7ded97\PersonalData (2).json" />
+    </ItemGroup>
+
     <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);1591</NoWarn>
