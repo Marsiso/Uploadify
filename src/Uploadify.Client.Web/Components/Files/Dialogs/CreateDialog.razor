@@ -19,6 +19,7 @@
                                   ErrorText="@ResourceResponse?.ErrorMessages.FirstOrDefault()"
                                   Label="@Localizer[Translations.Components.Files.Dialogs.Create.NameLabel]"
                                   DebounceInterval="100"
+                                  Variant="@Variant.Outlined"
                                   OnDebounceIntervalElapsed="@(() => { ResourceResponse = null; IsDisabled = string.IsNullOrWhiteSpace(Name); })"/>
                     <MudButton Color="@Color.Tertiary"
                                Disabled="@(IsLoading || IsDisabled || string.IsNullOrWhiteSpace(Name))"

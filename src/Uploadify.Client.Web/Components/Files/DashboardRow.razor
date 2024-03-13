@@ -25,7 +25,8 @@
                          OnRename="@OnRename"
                          OnMove="@OnMove"
                          OnNavigate="@OnNavigate"
-                         OnDownload="@OnDownload"/>
+                         OnDownload="@OnDownload"
+                         OnChangeVisibility="@OnChangeVisibility"/>
 </div>
 
 @code {
@@ -37,6 +38,7 @@
     [Parameter] [EditorRequired] public required EventCallback OnDelete { get; set; }
     [Parameter] [EditorRequired] public required EventCallback OnRename { get; set; }
     [Parameter] [EditorRequired] public required EventCallback OnDownload { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnChangeVisibility { get; set; }
     [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }
 
     private readonly Func<DashboardItem, string> GetDashboardItemName = item => item.IsFolder ? item.Folder.Name : item.File.Name;

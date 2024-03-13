@@ -48,6 +48,13 @@ public class FileConfiguration : IEntityTypeConfiguration<File>
         builder.Property(entity => entity.Size)
             .IsRequired();
 
+        builder.HasGeneratedTsVectorColumn(
+                entity => entity.SearchVector,
+                "english",
+                entity => new { entity.UnsafeName, entity.Extension, entity.MimeType })
+            .HasIndex(entity => entity.SearchVector)
+            .HasMethod("GIN");
+
         builder.HasOne(entity => entity.Category)
             .WithMany()
             .HasForeignKey(entity => entity.CategoryId)

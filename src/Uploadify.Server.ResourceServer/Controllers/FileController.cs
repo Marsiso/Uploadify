@@ -6,6 +6,7 @@ using Uploadify.Authorization.Attributes;
 using Uploadify.Server.Application.Files.Commands;
 using Uploadify.Server.Application.Files.Queries;
 using Uploadify.Server.Domain.Infrastructure.Localization.Constants;
+using Uploadify.Server.Domain.Infrastructure.Pagination.Models.Files;
 using Uploadify.Server.Domain.Infrastructure.Requests.Models;
 using Uploadify.Server.ResourceServer.Infrastructure.Controllers.Models;
 
@@ -60,6 +61,7 @@ public class FileController : BaseApiController<FileController>
     [Permission(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     [ProducesResponseType(typeof(RenameFileCommandResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(RenameFileCommandResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(RenameFileCommandResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(RenameFileCommandResponse), StatusCodes.Status403Forbidden, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(RenameFileCommandResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(RenameFileCommandResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
@@ -69,6 +71,7 @@ public class FileController : BaseApiController<FileController>
     [Permission(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     [ProducesResponseType(typeof(MoveFileCommandResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(MoveFileCommandResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(MoveFileCommandResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(MoveFileCommandResponse), StatusCodes.Status403Forbidden, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(MoveFileCommandResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(MoveFileCommandResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
@@ -78,8 +81,27 @@ public class FileController : BaseApiController<FileController>
     [Permission(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     [ProducesResponseType(typeof(DeleteFileCommandResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(DeleteFileCommandResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(DeleteFileCommandResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(DeleteFileCommandResponse), StatusCodes.Status403Forbidden, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(DeleteFileCommandResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(DeleteFileCommandResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
     public async Task<IActionResult> Delete([FromRoute] int fileId, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new DeleteFileCommand { FileId = fileId }, cancellationToken));
+
+    [HttpGet("~/api/files/public")]
+    [Permission(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    [ProducesResponseType(typeof(GetAllPublicFilesQueryResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetAllPublicFilesQueryResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(GetAllPublicFilesQueryResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
+    public async Task<IActionResult> GetAllPublic([FromQuery] FileQueryString query, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(new GetAllPublicFilesQuery(query), cancellationToken));
+
+    [HttpPut("~/api/file/change-visibility")]
+    [Permission(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    [ProducesResponseType(typeof(ChangeFileVisibilityCommandResponse), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ChangeFileVisibilityCommandResponse), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ChangeFileVisibilityCommandResponse), StatusCodes.Status401Unauthorized, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ChangeFileVisibilityCommandResponse), StatusCodes.Status403Forbidden, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ChangeFileVisibilityCommandResponse), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ChangeFileVisibilityCommandResponse), StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json)]
+    public async Task<IActionResult> ChangeVisibility([FromBody] ChangeFileVisibilityCommand command, CancellationToken cancellationToken) => ConvertToActionResult(await Mediator.Send(command, cancellationToken));
+
 }

@@ -45,4 +45,6 @@ public class BaseQueryString
             }
         }
     }
+
+    public string? SearchTerm { get; set; }
 }
