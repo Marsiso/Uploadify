@@ -1,5 +1,9 @@
 ﻿using FluentValidation;
+using Hangfire;
+using Hangfire.Dashboard.BasicAuthorization;
+using Hangfire.PostgreSql;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +11,8 @@ using Npgsql;
 using OpenIddict.Abstractions;
 using Uploadify.Server.Application.Auth.Validators;
 using Uploadify.Server.Application.Files.Queries;
+using Uploadify.Server.Application.Infrastructure.Jobs;
+using Uploadify.Server.Application.Infrastructure.Jobs.Files;
 using Uploadify.Server.Application.Infrastructure.Requests.Services;
 using Uploadify.Server.Application.Security.Services;
 using Uploadify.Server.Core.Files.Queries;
@@ -104,5 +110,48 @@ public static class IServiceCollectionExtensions
         });
 
         return services;
+    }
+
+    public static IServiceCollection AddBackgroundTasks(this IServiceCollection services, SystemSettings settings)
+    {
+        services.AddHangfire(options => options
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UsePostgreSqlStorage(new NpgsqlConnectionStringBuilder
+            {
+                Username = settings.Database.Username,
+                Password = settings.Database.Password,
+                Host = settings.Database.Host,
+                Database = settings.Database.Database,
+                Pooling = settings.Database.Pooling,
+                Port = settings.Database.Port
+            }.ConnectionString));
+
+        services.AddTransient<DeleteFilesJob>();
+
+        return services.AddHangfireServer();
+    }
+
+    public static IApplicationBuilder UseBackgroundTask(this IApplicationBuilder builder, IServiceProvider services, SystemSettings settings)
+    {
+        builder.UseHangfireDashboard("/hangfire", new()
+        {
+            DashboardTitle = "Uploadify task manager",
+            Authorization =
+            [
+                new BasicAuthAuthorizationFilter(new()
+                {
+                    Users = [new BasicAuthAuthorizationUser { Login = settings.Hangfire.Login, PasswordClear = settings.Hangfire.Password }]
+                })
+            ]
+        });
+
+        using var scope = services.CreateScope();
+        var job = scope.ServiceProvider.GetRequiredService<DeleteFilesJob>() as IJob;
+
+        RecurringJob.AddOrUpdate(nameof(DeleteFilesJob), () => job.Execute(), Cron.Weekly());
+
+        return builder;
     }
 }

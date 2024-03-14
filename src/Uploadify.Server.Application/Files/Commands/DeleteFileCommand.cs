@@ -57,7 +57,7 @@ public class DeleteFileCommandHandler : ICommandHandler<DeleteFileCommand, Delet
             });
         }
 
-        await _context.DeleteEntity(fileResponse.File, cancellationToken: default);
+        await _context.SoftDeleteEntity(fileResponse.File, cancellationToken: default);
         await _context.SaveChangesAsync(cancellationToken: default);
 
         var overview = fileResponse.File.Adapt<FileOverview>();

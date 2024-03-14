@@ -40,6 +40,12 @@ public class DataContext : IdentityDbContext<User, Role, string, UserClaim, User
     public Task<EntityEntry<TEntity>> DeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
     {
         cancellationToken.ThrowIfCancellationRequested();
+        return Task.FromResult(base.Remove(entity));
+    }
+
+    public Task<EntityEntry<TEntity>> SoftDeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
+    {
+        cancellationToken.ThrowIfCancellationRequested();
         entity.IsActive = false;
 
         return Task.FromResult(base.Update(entity));

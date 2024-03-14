@@ -9,6 +9,7 @@ public class SystemSettings
     public ClientSettings? Api { get; set; }
     public IdentityProviderSettings? IdentityProvider { get; set; }
     public ReverseProxySettings? ReverseProxy { get; set; }
+    public HangfireSettings? Hangfire { get; set; }
 }
 
 public class ReverseProxySettings
@@ -43,4 +44,10 @@ public class ClientSettings
     public string? DisplayName { get; set; }
     public string? RedirectUri { get; set; }
     public string? PostLogoutRedirectUri { get; set; }
+}
+
+public class HangfireSettings
+{
+    public string? Login { get; set; }
+    public string? Password { get; set; }
 }

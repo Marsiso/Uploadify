@@ -52,6 +52,7 @@ services.AddOpenIddict()
 
 services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
 services.AddPermissions();
+services.AddBackgroundTasks(settings);
 
 var path = Path.Combine(Directory.GetCurrentDirectory(), FileSystemHelpers.StaticFilesFolderName);
 if (!Directory.Exists(path))
@@ -81,11 +82,6 @@ application.UseCors(options =>
 
 application.UseHttpsRedirection();
 application.UseStaticFiles();
-// application.UseStaticFiles(new StaticFileOptions
-// {
-//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), FileSystemHelpers.StaticFilesFolderName)),
-//     RequestPath = new PathString("/cdn/files")
-// });
 
 application.UseRouting();
 application.UseAuthentication();
@@ -95,5 +91,7 @@ application.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+
+application.UseBackgroundTask(application.Services, settings);
 
 application.Run();
