@@ -6,6 +6,7 @@ public class FileOverview
     public int FolderId { get; set; }
     public string Name { get; set; } = string.Empty;
     public long Size { get; set; }
+    public bool IsPublic { get; set; }
     public string Extension { get; set; } = string.Empty;
     public string MimeType { get; set; } = string.Empty;
     public string? CreatedBy { get; set; }

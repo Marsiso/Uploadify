@@ -19,7 +19,6 @@ public class DataContext : IdentityDbContext<User, Role, string, UserClaim, User
     public DbSet<CodeListItem> CodeListItems { get; set; } = null!;
     public DbSet<Folder> Folders { get; set; } = null!;
     public DbSet<File> Files { get; set; } = null!;
-    public DbSet<SharedFile> SharedFiles { get; set; } = null!;
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {

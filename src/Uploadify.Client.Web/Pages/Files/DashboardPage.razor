@@ -5,7 +5,6 @@
 @inject FolderService FolderService
 @inject ISnackbar Snackbar
 @inject IStringLocalizer Localizer
-
 @using Uploadify.Client.Application.Files.Models
 @using Uploadify.Client.Application.Files.Services
 @using Uploadify.Client.Domain.Resources.Models
@@ -25,10 +24,10 @@
                         MaxItems="4"
                         Separator=">">
             <ItemTemplate Context="breadcrumb">
-                <MudLink Disabled="@breadcrumb.Disabled"
+                <MudLink Class="folder-link"
+                         Disabled="@breadcrumb.Disabled"
                          OnClick="@(() => FetchFolderSummary(int.Parse(breadcrumb.Href)))"
-                         Underline="@Underline.None"
-                         Class="folder-link">
+                         Underline="@Underline.None">
                     @breadcrumb.Text
                 </MudLink>
             </ItemTemplate>
@@ -55,6 +54,7 @@
                                                  CancellationToken="@_cancellationTokenSource.Token"
                                                  DashboardItem="@context"
                                                  FullWidth
+                                                 OnChangeVisibility="@(() => HandleChangeVisibility(context))"
                                                  OnDelete="@(() => IsDeleteDialogVisible = true)"
                                                  OnDetail="@(() => IsDetailDialogVisible = true)"
                                                  OnDownload="@(() => HandleDashboardItemDownload(context))"
@@ -65,6 +65,7 @@
                                 <Row>
                                     <DashboardRow CancellationToken="@_cancellationTokenSource.Token"
                                                   DashboardItem="@context"
+                                                  OnChangeVisibility="@(() => HandleChangeVisibility(context))"
                                                   OnDelete="@(() => IsDeleteDialogVisible = true)"
                                                   OnDetail="@(() => IsDetailDialogVisible = true)"
                                                   OnDownload="@(() => HandleDashboardItemDownload(context))"
@@ -80,12 +81,15 @@
             </Children>
         </DragAndDropWrapper>
 
-        <MudFab Class="folder-create-fab" Color="@Color.Tertiary" StartIcon="@Icons.Material.Rounded.Add" OnClick="@(() => IsCreateDialogVisible = true)"/>
+        <MudFab Class="folder-create-fab"
+                Color="@Color.Tertiary"
+                OnClick="@(() => IsCreateDialogVisible = true)"
+                StartIcon="@Icons.Material.Rounded.Add"/>
         <CreateDialog CancellationToken="@_cancellationTokenSource.Token"
-                      ParentFolder="@FolderSummaryResponse.Resource"
-                      OnClose="@(() => IsCreateDialogVisible = false)"
                       IsVisible="@IsCreateDialogVisible"
-                      OnSuccess="@HandleDashboardItemCreate"/>
+                      OnClose="@(() => IsCreateDialogVisible = false)"
+                      OnSuccess="@HandleDashboardItemCreate"
+                      ParentFolder="@FolderSummaryResponse.Resource"/>
 
     </Children>
 </LoadingWrapper>
@@ -123,7 +127,6 @@
                 IsVisible="@IsMoveDialogVisible"
                 OnClose="@(() => IsMoveDialogVisible = false)"
                 OnSuccess="@(() => HandleDashboardItemMoved(SelectedDashboardItem))"/>
-
 }
 
 @code {
@@ -187,12 +190,6 @@
         return Task.CompletedTask;
     }
 
-    void IDisposable.Dispose()
-    {
-        _cancellationTokenSource.Cancel();
-        _cancellationTokenSource.Dispose();
-    }
-
     private Task HandleDashboardItemRenamed(DashboardItem dashboardItem)
     {
         IsRenameDialogVisible = false;
@@ -223,14 +220,14 @@
             return;
         }
 
-        var isSuccess = await FileService.Download(dashboardItem.File);
+        var isSuccess = await FileService.Download(dashboardItem.File.FileId.Value, dashboardItem.File.Name);
         if (isSuccess)
         {
-            Snackbar.Add($"Stahování {dashboardItem.File.Name} bylo dokončeno", Severity.Success); // TODO: Add localization.
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadSuccess], dashboardItem.File.Name), Severity.Success);
         }
         else
         {
-            Snackbar.Add($"Stahování {dashboardItem.File.Name} nebylo dokončeno", Severity.Error); // TODO: Add localization.
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadFailure], dashboardItem.File.Name), Severity.Error);
         }
     }
 
@@ -238,6 +235,31 @@
     {
         IsCreateDialogVisible = false;
         return FetchFolderSummary(FolderSummaryResponse?.Resource?.FolderId, _cancellationTokenSource.Token);
+    }
+
+    private async Task HandleChangeVisibility(DashboardItem dashboardItem)
+    {
+        if (dashboardItem.File?.IsPublic == null)
+        {
+            return;
+        }
+
+        var resourceResponse = await FileService.ChangeVisibility(dashboardItem.File.FileId.Value, !dashboardItem.File.IsPublic.Value, _cancellationTokenSource.Token);
+        if (resourceResponse.IsSuccess)
+        {
+            dashboardItem.File.IsPublic = !dashboardItem.File.IsPublic;
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Dashboard.VisibilityChangedSuccess], dashboardItem.File.Name), Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Dashboard.VisibilityChangedFailure], dashboardItem.File.Name), Severity.Error);
+        }
+    }
+
+    void IDisposable.Dispose()
+    {
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
     }
 
 }

@@ -343,7 +343,7 @@
         <value>Shared</value>
     </data>
     <data name="components.files.detail.share_button" xml:space="preserve">
-        <value>Share</value>
+        <value>Visibility</value>
     </data>
     <data name="components.files.drag_and_drop_wrapper.too_many_files" xml:space="preserve">
         <value>File upload is limited to 50 files at the same time</value>
@@ -401,5 +401,44 @@
     </data>
     <data name="components.files.detail.folder_name_label" xml:space="preserve">
         <value>Folder name</value>
+    </data>
+    <data name="components.files.detail.public_accessibility_text" xml:space="preserve">
+        <value>public</value>
+    </data>
+    <data name="components.files.detail.private_accessibility_text" xml:space="preserve">
+        <value>private</value>
+    </data>
+    <data name="components.files.dashboard_row_options.hide_link" xml:space="preserve">
+        <value>Hide</value>
+    </data>
+    <data name="components.files.dashboard_row_options.publish_link" xml:space="preserve">
+        <value>Share</value>
+    </data>
+    <data name="pages.shared.download.button" xml:space="preserve">
+        <value>Download</value>
+    </data>
+    <data name="pages.shared.filename_label" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="pages.shared.search_label" xml:space="preserve">
+        <value>Search</value>
+    </data>
+    <data name="pages.shared.matches_not_found" xml:space="preserve">
+        <value>Files not found</value>
+    </data>
+    <data name="pages.shared.download.success" xml:space="preserve">
+        <value>Downloading {0} has been completed</value>
+    </data>
+    <data name="pages.shared.download.failure" xml:space="preserve">
+        <value>File {0} download failed</value>
+    </data>
+    <data name="pages.shared.pagination_format" xml:space="preserve">
+        <value>{first_item}-{last_item} of {all_items}</value>
+    </data>
+    <data name="pages.dashboard.visibility_changed.success" xml:space="preserve">
+        <value>File {0} has been published</value>
+    </data>
+    <data name="pages.dashboard.visibility_changed.failure" xml:space="preserve">
+        <value>File {0} has been made private</value>
     </data>
 </root>

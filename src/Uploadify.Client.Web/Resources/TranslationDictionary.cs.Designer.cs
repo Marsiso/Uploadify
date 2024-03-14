@@ -285,6 +285,15 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skrýt.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_hide_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.hide_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Přesunout.
         /// </summary>
         internal static string components_files_dashboard_row_options_move_link {
@@ -299,6 +308,15 @@ namespace Uploadify.Client.Web.Resources {
         internal static string components_files_dashboard_row_options_open_link {
             get {
                 return ResourceManager.GetString("components.files.dashboard_row_options.open_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zveřejnit.
+        /// </summary>
+        internal static string components_files_dashboard_row_options_publish_link {
+            get {
+                return ResourceManager.GetString("components.files.dashboard_row_options.publish_link", resourceCulture);
             }
         }
         
@@ -483,6 +501,24 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to soukromé.
+        /// </summary>
+        internal static string components_files_detail_private_accessibility_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.private_accessibility_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to veřejné.
+        /// </summary>
+        internal static string components_files_detail_public_accessibility_text {
+            get {
+                return ResourceManager.GetString("components.files.detail.public_accessibility_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Přejmenovat.
         /// </summary>
         internal static string components_files_detail_rename_button {
@@ -501,7 +537,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sdílet.
+        ///   Looks up a localized string similar to Viditelnost.
         /// </summary>
         internal static string components_files_detail_share_button {
             get {
@@ -852,6 +888,24 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Soubor {0} byl skryt před ostatními uživateli.
+        /// </summary>
+        internal static string pages_dashboard_visibility_changed_failure {
+            get {
+                return ResourceManager.GetString("pages.dashboard.visibility_changed.failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soubor {0} byl zveřejněn.
+        /// </summary>
+        internal static string pages_dashboard_visibility_changed_success {
+            get {
+                return ResourceManager.GetString("pages.dashboard.visibility_changed.success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Podrobnosti o souboru.
         /// </summary>
         internal static string pages_detail_title {
@@ -1109,6 +1163,69 @@ namespace Uploadify.Client.Web.Resources {
         internal static string pages_profile_username_label {
             get {
                 return ResourceManager.GetString("pages.profile.username_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stáhnout.
+        /// </summary>
+        internal static string pages_shared_download_button {
+            get {
+                return ResourceManager.GetString("pages.shared.download.button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stahování souboru {0} selhalo.
+        /// </summary>
+        internal static string pages_shared_download_failure {
+            get {
+                return ResourceManager.GetString("pages.shared.download.failure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stahování souboru {0} bylo dokončeno.
+        /// </summary>
+        internal static string pages_shared_download_success {
+            get {
+                return ResourceManager.GetString("pages.shared.download.success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Název.
+        /// </summary>
+        internal static string pages_shared_filename_label {
+            get {
+                return ResourceManager.GetString("pages.shared.filename_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nebyly nalezeny soubory.
+        /// </summary>
+        internal static string pages_shared_matches_not_found {
+            get {
+                return ResourceManager.GetString("pages.shared.matches_not_found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {first_item}-{last_item} z {all_items}.
+        /// </summary>
+        internal static string pages_shared_pagination_format {
+            get {
+                return ResourceManager.GetString("pages.shared.pagination_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hledat.
+        /// </summary>
+        internal static string pages_shared_search_label {
+            get {
+                return ResourceManager.GetString("pages.shared.search_label", resourceCulture);
             }
         }
         

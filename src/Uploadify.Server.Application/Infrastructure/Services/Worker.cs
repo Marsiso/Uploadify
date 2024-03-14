@@ -249,25 +249,13 @@ public class Worker : IHostedService
             return;
         }
 
-        var rootFolders = await context.Folders.Where(folder => folder.ParentId == null)
+        var roots = await context.Folders.Where(folder => folder.ParentId == null)
             .Select(folder => new KeyValuePair<string, int>(folder.UserId, folder.Id))
             .ToListAsync(cancellationToken: cancellationToken);
 
-        foreach (var (userId, folderId) in rootFolders)
+        foreach (var (userId, folderId) in roots)
         {
-            await context.AddRangeAsync(FileGenerator.GenerateFiles(RandomNumberGenerator.GetInt32(1, 10), folderId), cancellationToken);
-            await context.AddRangeAsync(FolderGenerator.GenerateFolders(RandomNumberGenerator.GetInt32(1, 10), userId, folderId), cancellationToken);
-        }
-
-        await context.SaveChangesAsync(cancellationToken);
-
-        foreach (var (userId, folderId) in rootFolders)
-        {
-            foreach (var childFolderId in await context.Folders.Where(folder => folder.ParentId == folderId && folder.UserId == userId).Select(folder => folder.Id).ToListAsync(cancellationToken))
-            {
-                await context.AddRangeAsync(FileGenerator.GenerateFiles(RandomNumberGenerator.GetInt32(1, 10), childFolderId), cancellationToken);
-                await context.AddRangeAsync(FolderGenerator.GenerateFolders(RandomNumberGenerator.GetInt32(1, 10), userId, childFolderId), cancellationToken);
-            }
+            await context.AddRangeAsync(FolderGenerator.GenerateFolders(RandomNumberGenerator.GetInt32(5, 10), userId, folderId), cancellationToken);
         }
 
         await context.SaveChangesAsync(cancellationToken);

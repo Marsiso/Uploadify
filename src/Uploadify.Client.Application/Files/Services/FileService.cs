@@ -62,19 +62,18 @@ public class FileService : BaseResourceService<FileService>
         };
     }
 
-    public async Task<bool> Download(FileOverview file, CancellationToken cancellationToken = default)
+    public async Task<bool> Download(int identifier, string filename, CancellationToken cancellationToken = default)
     {
         try
         {
-            var response = await ApiCallWrapper.Call(client => client.ApiFileGetAsync(file.FileId.Value, cancellationToken));
+            var response = await ApiCallWrapper.Call(client => client.ApiFileGetAsync(identifier, cancellationToken));
             if (response == null)
             {
                 return false;
             }
 
             using var stream = new DotNetStreamReference(response.Stream);
-
-            await JavaScriptRuntime.InvokeVoidAsync("downloadFileFromStream", cancellationToken, file.Name, stream);
+            await JavaScriptRuntime.InvokeVoidAsync("downloadFileFromStream", cancellationToken, filename, stream);
             return true;
         }
         catch (Exception exception)
@@ -82,5 +81,25 @@ public class FileService : BaseResourceService<FileService>
             LogError(exception);
             return false;
         }
+    }
+
+    public async Task<ResourceResponse<ICollection<PublicFileOverview>>> GetPublicFiles(int pageNumber, int pageSize, string? searchTerm, CancellationToken cancellationToken = default)
+    {
+        var response = await ApiCallWrapper.Call(client => client.ApiFilesPublicAsync(pageNumber:pageNumber, pageSize: pageSize, searchTerm: searchTerm ,cancellationToken: cancellationToken));
+        return response?.Status switch
+        {
+            Status.Ok => new(response.Files),
+            _ => new(HandleServerErrorMessages(response?.Failure))
+        };
+    }
+
+    public async Task<ResourceResponse> ChangeVisibility(int identifier, bool isPublic, CancellationToken cancellationToken = default)
+    {
+        var response = await ApiCallWrapper.Call(client => client.ApiFileChangeVisibilityAsync(new ChangeFileVisibilityCommand { FileId = identifier, Visibility = isPublic },cancellationToken: cancellationToken));
+        return response?.Status switch
+        {
+            Status.Ok => new(),
+            _ => new(HandleServerErrorMessages(response?.Failure))
+        };
     }
 }

@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using NpgsqlTypes;
 using Uploadify.Server.Data.Infrastructure.EF;
 
 #nullable disable
@@ -12,9 +12,11 @@ using Uploadify.Server.Data.Infrastructure.EF;
 namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240311210905_RemoveSharedFilesTable")]
+    partial class RemoveSharedFilesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -678,13 +680,6 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                         .IsUnicode(false)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<NpgsqlTsVector>("SearchVector")
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("tsvector")
-                        .HasAnnotation("Npgsql:TsVectorConfig", "english")
-                        .HasAnnotation("Npgsql:TsVectorProperties", new[] { "UnsafeName", "Extension", "MimeType" });
-
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
 
@@ -708,10 +703,6 @@ namespace Uploadify.Server.Data.Infrastructure.EF.Migrations
                     b.HasIndex("IsActive");
 
                     b.HasIndex("IsPublic");
-
-                    b.HasIndex("SearchVector");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("SearchVector"), "GIN");
 
                     b.HasIndex("UnsafeName");
 

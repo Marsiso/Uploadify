@@ -32,13 +32,20 @@
                 <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.OpenLink]</MudText>
             </MudMenuItem>
         }
-        <MudMenuItem Icon="@Icons.Material.Rounded.PersonAdd">
-            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.ShareLink]</MudText>
-        </MudMenuItem>
-        <MudMenuItem Icon="@Icons.Material.Rounded.FileDownload"
-                     OnClick="@OnDownload">
-            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DownloadLink]</MudText>
-        </MudMenuItem>
+
+        @if (!DashboardItem.IsFolder)
+        {
+            <MudMenuItem Icon="@(DashboardItem.File.IsPublic.Value ? Icons.Material.Rounded.GroupRemove : Icons.Material.Rounded.GroupAdd)"
+                         OnClick="@OnChangeVisibility">
+                <MudText>@(DashboardItem.File.IsPublic.Value ? Localizer[Translations.Components.Files.DashboardRowOptions.HideLink] : Localizer[Translations.Components.Files.DashboardRowOptions.PublishLink])</MudText>
+            </MudMenuItem>
+
+            <MudMenuItem Icon="@Icons.Material.Rounded.FileDownload"
+                         OnClick="@OnDownload">
+                <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DownloadLink]</MudText>
+            </MudMenuItem>
+        }
+
         <MudMenuItem Icon="@Icons.Material.Rounded.DriveFileMove"
                      OnClick="@OnMove">
             <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.MoveLink]</MudText>
@@ -64,6 +71,7 @@
     [Parameter] [EditorRequired] public required EventCallback OnDelete { get; set; }
     [Parameter] [EditorRequired] public required EventCallback OnRename { get; set; }
     [Parameter] [EditorRequired] public required EventCallback OnDownload { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnChangeVisibility { get; set; }
     [Parameter] [EditorRequired] public required MouseEvent ActivationEvent { get; set; }
     [Parameter] [EditorRequired] public required DashboardItem DashboardItem { get; set; }
     [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }

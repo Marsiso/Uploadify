@@ -1,4 +1,5 @@
-﻿using Uploadify.Server.Domain.Application.Models;
+﻿using NpgsqlTypes;
+using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Data.Models;
 
 namespace Uploadify.Server.Domain.Files.Models;
@@ -14,8 +15,9 @@ public class File : ChangeTrackingBaseEntity
     public string Location { get; set; } = string.Empty;
     public string Extension { get; set; } = string.Empty;
     public string MimeType { get; set; } = string.Empty;
+    public bool IsPublic { get; set; }
+    public NpgsqlTsVector SearchVector { get; set; } = null!;
 
     public Folder? Folder { get; set; }
     public CodeListItem? Category { get; set; }
-    public ICollection<SharedFile>? Users { get; set; }
 }

@@ -24,9 +24,12 @@
                   Label="@Localizer[Translations.Components.Files.Detail.UserUpdatedByLabel]"
                   Value="@UpdatedBy"/>
 
-    <MudTextField DisableUnderLine
-                  Label="@Localizer[Translations.Components.Files.Detail.SharedLabel]"
-                  Value="0"/>
+    @if (!IsFolder)
+    {
+        <MudTextField DisableUnderLine
+                      Label="@Localizer[Translations.Components.Files.Detail.SharedLabel]"
+                      Value="@(File.IsPublic.Value ? Localizer[Translations.Components.Files.Detail.PublicAccessibilityText] : Localizer[Translations.Components.Files.Detail.PrivateAccessibilityText])"/>
+    }
 
     <MudTextField DisableUnderLine
                   Label="@Localizer[Translations.Components.Files.Detail.ResourceTypeLabel]"

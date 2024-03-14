@@ -73,6 +73,15 @@ tr.selected > * {
     right: 30px;
     z-index: 2001;
 }
-.container-padding {
 
+.container-padding {
+}
+
+p {
+    max-width: 45ch;
+}
+
+.mud-list-padding {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }

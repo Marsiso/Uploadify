@@ -3,7 +3,7 @@
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -340,7 +340,7 @@
         <value>Sdíleno</value>
     </data>
     <data name="components.files.detail.share_button" xml:space="preserve">
-        <value>Sdílet</value>
+        <value>Viditelnost</value>
     </data>
     <data name="components.files.drag_and_drop_wrapper.too_many_files" xml:space="preserve">
         <value>Nahrání souborů je omezeno na 50 ve stejný okamžik</value>
@@ -398,5 +398,44 @@
     </data>
     <data name="components.files.detail.folder_name_label" xml:space="preserve">
         <value>Název složky</value>
+    </data>
+    <data name="components.files.detail.public_accessibility_text" xml:space="preserve">
+        <value>veřejné</value>
+    </data>
+    <data name="components.files.detail.private_accessibility_text" xml:space="preserve">
+        <value>soukromé</value>
+    </data>
+    <data name="components.files.dashboard_row_options.hide_link" xml:space="preserve">
+        <value>Skrýt</value>
+    </data>
+    <data name="components.files.dashboard_row_options.publish_link" xml:space="preserve">
+        <value>Zveřejnit</value>
+    </data>
+    <data name="pages.shared.download.button" xml:space="preserve">
+        <value>Stáhnout</value>
+    </data>
+    <data name="pages.shared.filename_label" xml:space="preserve">
+        <value>Název</value>
+    </data>
+    <data name="pages.shared.search_label" xml:space="preserve">
+        <value>Hledat</value>
+    </data>
+    <data name="pages.shared.matches_not_found" xml:space="preserve">
+        <value>Nebyly nalezeny soubory</value>
+    </data>
+    <data name="pages.shared.download.success" xml:space="preserve">
+        <value>Stahování souboru {0} bylo dokončeno</value>
+    </data>
+    <data name="pages.shared.download.failure" xml:space="preserve">
+        <value>Stahování souboru {0} selhalo</value>
+    </data>
+    <data name="pages.shared.pagination_format" xml:space="preserve">
+        <value>{first_item}-{last_item} z {all_items}</value>
+    </data>
+    <data name="pages.dashboard.visibility_changed.success" xml:space="preserve">
+        <value>Soubor {0} byl zveřejněn</value>
+    </data>
+    <data name="pages.dashboard.visibility_changed.failure" xml:space="preserve">
+        <value>Soubor {0} byl skryt před ostatními uživateli</value>
     </data>
 </root>

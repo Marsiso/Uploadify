@@ -10,12 +10,13 @@ public class FileConfiguration : IEntityTypeConfiguration<File>
 {
     public void Configure(EntityTypeBuilder<File> builder)
     {
-        builder.ToTable(Tables.Files, Schemas.FileSystem)
+        builder.ToTable(Tables.Files, Schemas.Files)
             .HasKey(entity => entity.Id);
 
         builder.HasIndex(entity => entity.FolderId);
         builder.HasIndex(entity => entity.CategoryId);
         builder.HasIndex(entity => entity.UnsafeName);
+        builder.HasIndex(entity => entity.IsPublic);
 
         ChangeTrackingBaseEntityConfigurationHelpers<File>.Configure(builder);
 
@@ -47,16 +48,17 @@ public class FileConfiguration : IEntityTypeConfiguration<File>
         builder.Property(entity => entity.Size)
             .IsRequired();
 
+        builder.HasGeneratedTsVectorColumn(
+                entity => entity.SearchVector,
+                "english",
+                entity => new { entity.UnsafeName, entity.Extension, entity.MimeType })
+            .HasIndex(entity => entity.SearchVector)
+            .HasMethod("GIN");
+
         builder.HasOne(entity => entity.Category)
             .WithMany()
             .HasForeignKey(entity => entity.CategoryId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasMany(entity => entity.Users)
-            .WithOne(entity => entity.File)
-            .HasForeignKey(entity => entity.FileId)
-            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

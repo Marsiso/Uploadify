@@ -58,10 +58,10 @@ public class DeleteFolderCommandHandler : ICommandHandler<DeleteFolderCommand, D
             });
         }
 
-        foreach (Folder folder in folderResponse.Folder.Children ?? Enumerable.Empty<Folder>())
+        foreach (var folder in folderResponse.Folder.Children ?? Enumerable.Empty<Folder>())
         {
-            var deleteFolderResponse = await _sender.Send(new DeleteFolderCommand(), cancellationToken: default);
-            if (deleteFolderResponse is not { Status: Ok, Folder: not null })
+            var deleteFolderResponse = await _sender.Send(new DeleteFolderCommand { FolderId = folder.Id }, cancellationToken: default);
+            if (deleteFolderResponse is not { Status: Ok })
             {
                 return new(deleteFolderResponse);
             }

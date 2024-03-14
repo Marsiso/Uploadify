@@ -10,7 +10,7 @@ public class FolderConfiguration : IEntityTypeConfiguration<Folder>
 {
     public void Configure(EntityTypeBuilder<Folder> builder)
     {
-        builder.ToTable(Tables.Folders, Schemas.FileSystem)
+        builder.ToTable(Tables.Folders, Schemas.Files)
             .HasKey(entity => entity.Id);
 
         builder.HasIndex(entity => entity.Name);
