@@ -69,10 +69,10 @@ public class DeleteFolderCommandHandler : ICommandHandler<DeleteFolderCommand, D
 
         foreach (var file in folderResponse.Folder.Files ?? Enumerable.Empty<File>())
         {
-            await _context.DeleteEntity(file, cancellationToken: default);
+            await _context.SoftDeleteEntity(file, cancellationToken: default);
         }
 
-        await _context.DeleteEntity(folderResponse.Folder, cancellationToken: default);
+        await _context.SoftDeleteEntity(folderResponse.Folder, cancellationToken: default);
         await _context.SaveChangesAsync(cancellationToken: default);
 
         var overview = folderResponse.Folder.Adapt<FolderOverview>();

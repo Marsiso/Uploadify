@@ -84,8 +84,6 @@ public class CreateFileCommandHandler : ICommandHandler<CreateFileCommand, Creat
 
                 file.FolderId = request.FolderId.Value;
                 file.CategoryId = request.CategoryId;
-                file.UnsafeName = filename;
-                file.SafeName = Guid.NewGuid().ToString();
                 file.Size = request.File.Length;
                 file.Extension = Path.GetExtension(filename);
                 file.MimeType = request.File.ContentType;
