@@ -19,14 +19,6 @@ public class GetFolderLinksQuery : IBaseRequest<GetFolderLinksQueryResponse>, IQ
 
 public class GetFolderLinksQueryHandler : IQueryHandler<GetFolderLinksQuery, GetFolderLinksQueryResponse>
 {
-    private static readonly Func<DataContext, int, Task<FolderLink>> Query = EF.CompileAsyncQuery((DataContext context, int folderId) =>
-        context.Folders.Where(folder => folder.Id == folderId).Select(folder => new FolderLink
-        {
-            FolderId = folder.Id,
-            ParentId = folder.ParentId,
-            Name = folder.Name
-        }).Single());
-
     private readonly DataContext _context;
 
     public GetFolderLinksQueryHandler(DataContext context)
@@ -38,8 +30,16 @@ public class GetFolderLinksQueryHandler : IQueryHandler<GetFolderLinksQuery, Get
     {
         var links = new List<FolderLink>();
 
-        do links.Add(await Query(_context, links.LastOrDefault()?.ParentId ?? request.FolderId));
-        while (links.Last().ParentId.HasValue);
+        do
+        {
+            var folderId = links.LastOrDefault()?.ParentId ?? request.FolderId;
+            links.Add(await _context.Folders.Select(folder => new FolderLink
+            {
+                FolderId = folder.Id,
+                ParentId = folder.ParentId,
+                Name = folder.Name
+            }).SingleAsync(folder => folder.FolderId == folderId, cancellationToken));
+        } while (links.Last().ParentId.HasValue);
 
         links.Reverse();
 

@@ -22,9 +22,6 @@ public class UniqueEmailQuery : IBaseRequest<UniqueEmailQueryResponse>, IQuery<U
 
 public class UniqueEmailQueryHandler : IQueryHandler<UniqueEmailQuery, UniqueEmailQueryResponse>
 {
-    private static readonly Func<DataContext, string, Task<bool>> Query = EF.CompileAsyncQuery((DataContext context, string email) =>
-        context.Users.Any(user => user.NormalizedEmail == email));
-
     private readonly DataContext _context;
     private readonly ILookupNormalizer _normalizer;
 
@@ -45,7 +42,8 @@ public class UniqueEmailQueryHandler : IQueryHandler<UniqueEmailQuery, UniqueEma
             });
         }
 
-        return new(!await Query(_context, _normalizer.NormalizeEmail(request.Email)));
+        var normalizedEmail = _normalizer.NormalizeEmail(request.Email);
+        return new(! await _context.Users.AnyAsync(user => user.NormalizedEmail == normalizedEmail, cancellationToken: cancellationToken));
     }
 }
 
@@ -59,9 +57,8 @@ public class UniqueEmailQueryResponse : BaseResponse
     {
     }
 
-    public UniqueEmailQueryResponse(bool isUnique)
+    public UniqueEmailQueryResponse(bool isUnique) : base(Ok)
     {
-        Status = Ok;
         IsUnique = isUnique;
     }
 

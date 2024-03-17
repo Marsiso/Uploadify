@@ -38,6 +38,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Authorization", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Authorization.Components", "libs\Uploadify.Authorization.Components\Uploadify.Authorization.Components.csproj", "{C7366DA3-C09F-4C53-92EF-9B617E4FB625}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.ResourceServer.Tests", "tests\Uploadify.Server.ResourceServer.Tests\Uploadify.Server.ResourceServer.Tests.csproj", "{4103516F-4DC1-456A-91CE-841A2454AEF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.Application.Tests", "tests\Uploadify.Server.Application.Tests\Uploadify.Server.Application.Tests.csproj", "{704C806B-BC0E-41A4-8A98-B73110B52CB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.Tests.Common", "tests\Uploadify.Server.Tests.Common\Uploadify.Server.Tests.Common.csproj", "{932B2CC3-B25A-434E-859C-DD56EB0943B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uploadify.Server.Core.Tests", "tests\Uploadify.Server.Core.Tests\Uploadify.Server.Core.Tests.csproj", "{881FABC6-922F-41D1-9623-C1311D22A989}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +68,10 @@ Global
 		{54E18DF9-EBDD-4F34-A6D2-A24848106673} = {D8E95E4D-3D8C-45BD-9011-00009B3920EF}
 		{515498B9-5A26-4871-9838-40ED7F69018B} = {A3B3410A-DB8F-4AB1-B09F-B905F8CC96CF}
 		{C7366DA3-C09F-4C53-92EF-9B617E4FB625} = {A3B3410A-DB8F-4AB1-B09F-B905F8CC96CF}
+		{4103516F-4DC1-456A-91CE-841A2454AEF5} = {B10F7C6B-D89D-4B33-9DA5-F51F2CC2DA74}
+		{704C806B-BC0E-41A4-8A98-B73110B52CB1} = {B10F7C6B-D89D-4B33-9DA5-F51F2CC2DA74}
+		{932B2CC3-B25A-434E-859C-DD56EB0943B6} = {B10F7C6B-D89D-4B33-9DA5-F51F2CC2DA74}
+		{881FABC6-922F-41D1-9623-C1311D22A989} = {B10F7C6B-D89D-4B33-9DA5-F51F2CC2DA74}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C30B26C4-8525-45A4-8FB2-8914CE275859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -118,5 +130,21 @@ Global
 		{C7366DA3-C09F-4C53-92EF-9B617E4FB625}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7366DA3-C09F-4C53-92EF-9B617E4FB625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7366DA3-C09F-4C53-92EF-9B617E4FB625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4103516F-4DC1-456A-91CE-841A2454AEF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4103516F-4DC1-456A-91CE-841A2454AEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4103516F-4DC1-456A-91CE-841A2454AEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4103516F-4DC1-456A-91CE-841A2454AEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{704C806B-BC0E-41A4-8A98-B73110B52CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704C806B-BC0E-41A4-8A98-B73110B52CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704C806B-BC0E-41A4-8A98-B73110B52CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704C806B-BC0E-41A4-8A98-B73110B52CB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{932B2CC3-B25A-434E-859C-DD56EB0943B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{932B2CC3-B25A-434E-859C-DD56EB0943B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{932B2CC3-B25A-434E-859C-DD56EB0943B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{932B2CC3-B25A-434E-859C-DD56EB0943B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{881FABC6-922F-41D1-9623-C1311D22A989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{881FABC6-922F-41D1-9623-C1311D22A989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{881FABC6-922F-41D1-9623-C1311D22A989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{881FABC6-922F-41D1-9623-C1311D22A989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

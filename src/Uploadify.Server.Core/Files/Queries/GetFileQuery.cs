@@ -16,13 +16,6 @@ public class GetFileQuery : IQuery<GetFileQueryResponse>
 
 public class GetFileQueryHandler : IQueryHandler<GetFileQuery, GetFileQueryResponse>
 {
-    private readonly Func<DataContext, int, Task<File?>> Query = EF.CompileAsyncQuery((DataContext context, int fileId) =>
-        context.Files
-            .Include(file => file.Folder)
-            .Include(file => file.UserCreatedBy)
-            .Include(file => file.UserUpdatedBy)
-            .SingleOrDefault(file => file.Id == fileId));
-
     private readonly DataContext _context;
 
     public GetFileQueryHandler(DataContext context)
@@ -41,7 +34,12 @@ public class GetFileQueryHandler : IQueryHandler<GetFileQuery, GetFileQueryRespo
             });
         }
 
-        var file = await Query(_context, request.FileId.Value);
+        var file = await _context.Files
+            .Include(file => file.Folder)
+            .Include(file => file.UserCreatedBy)
+            .Include(file => file.UserUpdatedBy)
+            .SingleOrDefaultAsync(file => file.Id == request.FileId.Value, cancellationToken: cancellationToken);
+
         if (file == null)
         {
             return new(NotFound, new()
@@ -57,13 +55,16 @@ public class GetFileQueryHandler : IQueryHandler<GetFileQuery, GetFileQueryRespo
 
 public class GetFileQueryResponse : BaseResponse
 {
+    public GetFileQueryResponse()
+    {
+    }
+
     public GetFileQueryResponse(Status status, RequestFailure? failure = null) : base(status, failure)
     {
     }
 
-    public GetFileQueryResponse(File? file)
+    public GetFileQueryResponse(File file) : base(Ok)
     {
-        Status = Ok;
         File = file;
     }
 

@@ -9,6 +9,7 @@ using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Files.Models;
 using Uploadify.Server.Domain.Infrastructure.Localization.Constants;
 using Uploadify.Server.Domain.Infrastructure.Requests.Contracts;
+using Uploadify.Server.Domain.Infrastructure.Requests.Exceptions;
 using Uploadify.Server.Domain.Infrastructure.Requests.Models;
 using static Uploadify.Server.Domain.Infrastructure.Requests.Models.Status;
 
@@ -54,7 +55,11 @@ public class CreateFolderCommandHandler : ICommandHandler<CreateFolderCommand, C
 
         if (folderResponse.Folder.UserId != userResponse.User.Id)
         {
-            return new(Forbidden, new() { UserFriendlyMessage = Translations.RequestStatuses.Forbidden });
+            return new(Unauthorized, new()
+            {
+                Exception = new UnauthorizedException(request.UserName, request.ParentId.ToString(), nameof(Folder)),
+                UserFriendlyMessage = Translations.RequestStatuses.Unauthorized
+            });
         }
 
         var folder = request.Adapt<Folder>();
@@ -87,7 +92,10 @@ public class CreateFolderCommandResponse : BaseResponse
     {
     }
 
-    public CreateFolderCommandResponse(FolderOverview? folder) : base(Created) => Folder = folder;
+    public CreateFolderCommandResponse(FolderOverview folder) : base(Created)
+    {
+        Folder = folder;
+    }
 
     public FolderOverview? Folder { get; set; }
 }

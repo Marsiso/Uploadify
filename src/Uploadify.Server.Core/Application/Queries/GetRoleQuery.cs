@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Uploadify.Server.Data.Infrastructure.EF;
 using Uploadify.Server.Domain.Application.Models;
 using Uploadify.Server.Domain.Infrastructure.Localization.Constants;
@@ -22,14 +23,13 @@ public class GetRoleQuery : IBaseRequest<GetRoleQueryResponse>, IQuery<GetRoleQu
 
 public class GetRoleQueryHandler : IQueryHandler<GetRoleQuery, GetRoleQueryResponse>
 {
-    private static readonly Func<DataContext, string, Task<Role?>> Query = EF.CompileAsyncQuery((DataContext context, string name) =>
-        context.Roles.SingleOrDefault(role => role.Name == name));
-
     private readonly DataContext _context;
+    private readonly ILookupNormalizer _normalizer;
 
-    public GetRoleQueryHandler(DataContext context)
+    public GetRoleQueryHandler(DataContext context, ILookupNormalizer normalizer)
     {
         _context = context;
+        _normalizer = normalizer;
     }
 
     public async Task<GetRoleQueryResponse> Handle(GetRoleQuery request, CancellationToken cancellationToken)
@@ -43,7 +43,8 @@ public class GetRoleQueryHandler : IQueryHandler<GetRoleQuery, GetRoleQueryRespo
             });
         }
 
-        var role = await Query(_context, request.Name);
+        var normalizerRoleName = _normalizer.NormalizeName(request.Name);
+        var role = await _context.Roles.SingleOrDefaultAsync(role => role.NormalizedName == normalizerRoleName, cancellationToken: cancellationToken);
         if (role == null)
         {
             return new(NotFound, new()
@@ -59,15 +60,16 @@ public class GetRoleQueryHandler : IQueryHandler<GetRoleQuery, GetRoleQueryRespo
 
 public class GetRoleQueryResponse : BaseResponse
 {
-    public GetRoleQueryResponse(Status status, RequestFailure failure) : base(status, failure)
+    public GetRoleQueryResponse()
     {
-        Status = status;
-        Failure = failure;
     }
 
-    public GetRoleQueryResponse(Role role)
+    public GetRoleQueryResponse(Status status, RequestFailure failure) : base(status, failure)
     {
-        Status = Ok;
+    }
+
+    public GetRoleQueryResponse(Role role) : base(Ok)
+    {
         Role = role;
     }
 
