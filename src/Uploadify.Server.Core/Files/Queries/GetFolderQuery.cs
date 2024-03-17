@@ -25,14 +25,6 @@ public class GetFolderQuery : IQuery<GetFolderQueryResponse>
 
 public class GetFolderQueryHandler : IQueryHandler<GetFolderQuery, GetFolderQueryResponse>
 {
-    private static readonly Func<DataContext, int, Task<Folder?>> Query = EF.CompileAsyncQuery((DataContext context, int id) =>
-        context.Folders
-            .Include(folder => folder.Files)
-            .Include(folder => folder.Children)
-            .Include(folder => folder.UserCreatedBy)
-            .Include(folder => folder.UserUpdatedBy)
-            .SingleOrDefault(folder => folder.Id == id));
-
     private readonly DataContext _context;
 
     public GetFolderQueryHandler(DataContext context)
@@ -51,7 +43,13 @@ public class GetFolderQueryHandler : IQueryHandler<GetFolderQuery, GetFolderQuer
             });
         }
 
-        var folder = await Query(_context, request.FolderId.Value);
+        var folder = await _context.Folders
+            .Include(folder => folder.Files)
+            .Include(folder => folder.Children)
+            .Include(folder => folder.UserCreatedBy)
+            .Include(folder => folder.UserUpdatedBy)
+            .SingleOrDefaultAsync(folder => folder.Id == request.FolderId.Value, cancellationToken: cancellationToken);
+
         if (folder == null)
         {
             return new(NotFound, new()
@@ -67,13 +65,16 @@ public class GetFolderQueryHandler : IQueryHandler<GetFolderQuery, GetFolderQuer
 
 public class GetFolderQueryResponse : BaseResponse
 {
+    public GetFolderQueryResponse()
+    {
+    }
+
     public GetFolderQueryResponse(Status status, RequestFailure? failure) : base(status, failure)
     {
     }
 
-    public GetFolderQueryResponse(Folder? folder)
+    public GetFolderQueryResponse(Folder folder) : base(Ok)
     {
-        Status = Ok;
         Folder = folder;
     }
 

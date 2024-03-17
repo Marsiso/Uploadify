@@ -52,9 +52,9 @@ public class RenameFolderCommandHandler : ICommandHandler<RenameFolderCommand, R
 
         if (folderResponse.Folder.UserId != userResponse.User.Id)
         {
-            return new(Forbidden, new()
+            return new(Unauthorized, new()
             {
-                UserFriendlyMessage = Translations.RequestStatuses.Forbidden
+                UserFriendlyMessage = Translations.RequestStatuses.Unauthorized
             });
         }
 
@@ -86,9 +86,8 @@ public class RenameFolderCommandResponse : BaseResponse
     {
     }
 
-    public RenameFolderCommandResponse(FolderOverview? folder)
+    public RenameFolderCommandResponse(FolderOverview folder) : base(Ok)
     {
-        Status = Ok;
         Folder = folder;
     }
 

@@ -22,9 +22,6 @@ public class UniqueUserNameQuery : IBaseRequest<UniqueUserNameQueryResponse>, IQ
 
 public class UniqueUserNameQueryHandler : IQueryHandler<UniqueUserNameQuery, UniqueUserNameQueryResponse>
 {
-    private static readonly Func<DataContext, string, Task<bool>> Query = EF.CompileAsyncQuery((DataContext context, string username) =>
-        context.Users.Any(user => user.NormalizedUserName == username));
-
     private readonly DataContext _context;
     private readonly ILookupNormalizer _normalizer;
 
@@ -45,7 +42,8 @@ public class UniqueUserNameQueryHandler : IQueryHandler<UniqueUserNameQuery, Uni
             });
         }
 
-        return new(!await Query(_context, _normalizer.NormalizeName(request.Username)));
+        var normalizedUserName = _normalizer.NormalizeName(request.Username);
+        return new(!await _context.Users.AnyAsync(user => user.NormalizedUserName == normalizedUserName, cancellationToken: cancellationToken));
     }
 }
 
@@ -59,9 +57,8 @@ public class UniqueUserNameQueryResponse : BaseResponse
     {
     }
 
-    public UniqueUserNameQueryResponse(bool isUnique)
+    public UniqueUserNameQueryResponse(bool isUnique) : base(Ok)
     {
-        Status = Ok;
         IsUnique = isUnique;
     }
 

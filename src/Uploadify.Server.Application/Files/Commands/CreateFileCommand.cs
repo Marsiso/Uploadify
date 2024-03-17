@@ -9,8 +9,10 @@ using Uploadify.Server.Application.Files.Models;
 using Uploadify.Server.Core.Application.Queries;
 using Uploadify.Server.Core.Files.Queries;
 using Uploadify.Server.Data.Infrastructure.EF;
+using Uploadify.Server.Domain.Files.Models;
 using Uploadify.Server.Domain.Infrastructure.Localization.Constants;
 using Uploadify.Server.Domain.Infrastructure.Requests.Contracts;
+using Uploadify.Server.Domain.Infrastructure.Requests.Exceptions;
 using Uploadify.Server.Domain.Infrastructure.Requests.Models;
 using static Uploadify.Server.Domain.Infrastructure.Requests.Models.Status;
 using File = Uploadify.Server.Domain.Files.Models.File;
@@ -57,9 +59,12 @@ public class CreateFileCommandHandler : ICommandHandler<CreateFileCommand, Creat
 
         if (folderResponse.Folder.UserId != userResponse.User.Id)
         {
-            return new(Forbidden, new() { UserFriendlyMessage = Translations.RequestStatuses.Forbidden} );
+            return new(Unauthorized, new()
+            {
+                Exception = new UnauthorizedException(request.UserName, request.FolderId.ToString(), nameof(Folder)),
+                UserFriendlyMessage = Translations.RequestStatuses.Unauthorized
+            } );
         }
-
 
         var filename = FileSystemHelpers.GetFileName(request.File.ContentDisposition);
         var file = new File
@@ -136,7 +141,7 @@ public class CreateFileCommandResponse : BaseResponse
     {
     }
 
-    public CreateFileCommandResponse(FileOverview? file) : base(Created)
+    public CreateFileCommandResponse(FileOverview file) : base(Created)
     {
         File = file;
     }

@@ -43,9 +43,9 @@ public class GetFolderSummaryQueryHandler : IQueryHandler<GetFolderSummaryQuery,
         var folder = await _context.Folders
             .Where(folder => folder.UserId == userResponse.User.Id && (request.FolderId.HasValue ? folder.Id == request.FolderId : folder.ParentId == null))
             .Include(folder => folder.Parent)
-            !.ThenInclude(folder => folder.UserCreatedBy)
+            .ThenInclude(folder => folder!.UserCreatedBy)
             .Include(folder => folder.Parent)
-            !.ThenInclude(folder => folder.UserUpdatedBy)
+            .ThenInclude(folder => folder!.UserUpdatedBy)
             .Include(folder => folder.Files)
             !.ThenInclude(file => file.UserCreatedBy)
             .Include(folder => folder.Files)
@@ -95,7 +95,7 @@ public class GetFolderSummaryQueryHandler : IQueryHandler<GetFolderSummaryQuery,
                     DateCreated = folder.Parent.DateCreated,
                     DateUpdated = folder.Parent.DateUpdated
                 }
-            }).SingleOrDefaultAsync(cancellationToken: cancellationToken);
+            }).SingleOrDefaultAsync(cancellationToken);
 
         if (folder == null)
         {
@@ -132,9 +132,8 @@ public class GetFolderSummaryQueryResponse : BaseResponse
     {
     }
 
-    public GetFolderSummaryQueryResponse(FolderSummary? summary)
+    public GetFolderSummaryQueryResponse(FolderSummary? summary) : base(Ok)
     {
-        Status = Ok;
         Summary = summary;
     }
 

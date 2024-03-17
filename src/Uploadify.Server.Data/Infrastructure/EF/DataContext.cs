@@ -15,10 +15,10 @@ public class DataContext : IdentityDbContext<User, Role, string, UserClaim, User
 {
     private readonly ISaveChangesInterceptor _interceptor;
 
-    public DbSet<CodeList> CodeLists { get; set; } = null!;
-    public DbSet<CodeListItem> CodeListItems { get; set; } = null!;
-    public DbSet<Folder> Folders { get; set; } = null!;
-    public DbSet<File> Files { get; set; } = null!;
+    public virtual DbSet<CodeList> CodeLists { get; set; } = null!;
+    public virtual DbSet<CodeListItem> CodeListItems { get; set; } = null!;
+    public virtual DbSet<Folder> Folders { get; set; } = null!;
+    public virtual DbSet<File> Files { get; set; } = null!;
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
@@ -31,19 +31,19 @@ public class DataContext : IdentityDbContext<User, Role, string, UserClaim, User
         _interceptor = interceptor;
     }
 
-    public Task<EntityEntry<TEntity>> UpdateEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
+    public virtual Task<EntityEntry<TEntity>> UpdateEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
     {
         cancellationToken.ThrowIfCancellationRequested();
         return Task.FromResult(base.Update(entity));
     }
 
-    public Task<EntityEntry<TEntity>> DeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
+    public virtual Task<EntityEntry<TEntity>> DeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
     {
         cancellationToken.ThrowIfCancellationRequested();
         return Task.FromResult(base.Remove(entity));
     }
 
-    public Task<EntityEntry<TEntity>> SoftDeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
+    public virtual Task<EntityEntry<TEntity>> SoftDeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : BaseEntity
     {
         cancellationToken.ThrowIfCancellationRequested();
         entity.IsActive = false;
@@ -73,5 +73,11 @@ public class DataContext : IdentityDbContext<User, Role, string, UserClaim, User
         modelBuilder.Entity<OpenIddictEntityFrameworkCoreScope>().ToTable(Tables.Scopes, Schemas.OpenIdConnect);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+
+        // For testing purposes
+        if (!Database.IsNpgsql())
+        {
+            modelBuilder.Entity<File>().Ignore(file => file.SearchVector);
+        }
     }
 }

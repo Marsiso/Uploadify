@@ -68,6 +68,7 @@ public class RenameFileCommandHandler : ICommandHandler<RenameFileCommand, Renam
 
         var overview = fileResponse.File.Adapt<FileOverview>();
 
+        overview.Name = fileResponse.File.UnsafeName;
         overview.CreatedBy = fileResponse.File.UserCreatedBy?.FullName;
         overview.UpdatedBy = fileResponse.File.UserUpdatedBy?.FullName;
 

@@ -23,12 +23,6 @@ public class GetUserQuery : IBaseRequest<GetUserQueryResponse>, IQuery<GetUserQu
 
 public class GetUserQueryHandler : IQueryHandler<GetUserQuery, GetUserQueryResponse>
 {
-    private static readonly Func<DataContext, string, Task<User?>> Query = EF.CompileAsyncQuery((DataContext context, string username) =>
-        context.Users.Where(user => user.NormalizedUserName == username)
-            .Include(user => user.Roles)
-            !.ThenInclude(userRole => userRole.Role)
-            .SingleOrDefault());
-
     private readonly DataContext _context;
     private readonly ILookupNormalizer _normalizer;
 
@@ -53,7 +47,12 @@ public class GetUserQueryHandler : IQueryHandler<GetUserQuery, GetUserQueryRespo
             };
         }
 
-        var user = await Query(_context, _normalizer.NormalizeName(request.UserName));
+        var normalizedUserName = _normalizer.NormalizeName(request.UserName);
+        var user = await _context.Users
+            .Include(user => user.Roles)
+            !.ThenInclude(userRole => userRole.Role)
+            .SingleOrDefaultAsync(user => user.NormalizedUserName == normalizedUserName, cancellationToken);
+
         if (user == null)
         {
             return new(NotFound, new()
@@ -77,9 +76,8 @@ public class GetUserQueryResponse : BaseResponse
     {
     }
 
-    public GetUserQueryResponse(User user)
+    public GetUserQueryResponse(User user) : base(Ok)
     {
-        Status = Ok;
         User = user;
     }
 
