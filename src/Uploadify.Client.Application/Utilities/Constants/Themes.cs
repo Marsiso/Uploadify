@@ -6,6 +6,18 @@ public static class Themes
 {
     public static readonly MudTheme DefaultTheme = new()
     {
+        PaletteDark = new PaletteDark
+        {
+            Primary = Colors.Shades.White,
+            PrimaryContrastText = Colors.Shades.White,
+            TextPrimary = Colors.Shades.White,
+            
+            AppbarText = Colors.Shades.White,
+            AppbarBackground = Colors.Grey.Darken4,
+            
+            DrawerText = Colors.Shades.White,
+            DrawerIcon = Colors.Shades.White
+        },
         Typography = new()
         {
             H1 = new() { FontSize = "2rem", FontWeight = 700 },

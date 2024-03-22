@@ -1,21 +1,21 @@
 ﻿@inject IStringLocalizer<TranslationDictionary> Localizer
 
 <MudNavMenu Margin="@Margin.Normal" Rounded>
-    <MudNavLink Href="@PageRoutes.Homepage" Icon="@Icons.Material.Rounded.Folder" Match="@NavLinkMatch.All">
+    <MudNavLink Href="@PageRoutes.Homepage" Icon="@Icons.Material.Rounded.Folder" Match="@NavLinkMatch.All" IconColor="@Color.Inherit">
         @Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]
     </MudNavLink>
-    <MudNavLink Href="@PageRoutes.Shared" Icon="@Icons.Material.Rounded.Share" Match="@NavLinkMatch.All">
+    <MudNavLink Href="@PageRoutes.Shared" Icon="@Icons.Material.Rounded.Share" Match="@NavLinkMatch.All" IconColor="@Color.Inherit">
         @Localizer[Translations.Components.AuthenticatedLayout.SharedLink]
     </MudNavLink>
-    <MudNavLink Href="@PageRoutes.About" Icon="@Icons.Material.Rounded.Info" Match="@NavLinkMatch.All">
+    <MudNavLink Href="@PageRoutes.About" Icon="@Icons.Material.Rounded.Info" Match="@NavLinkMatch.All" IconColor="@Color.Inherit">
         @Localizer[Translations.Components.AuthenticatedLayout.AboutLink]
     </MudNavLink>
-    <MudNavLink Href="@PageRoutes.Privacy" Icon="@Icons.Material.Rounded.PrivacyTip" Match="@NavLinkMatch.All">
+    <MudNavLink Href="@PageRoutes.Privacy" Icon="@Icons.Material.Rounded.PrivacyTip" Match="@NavLinkMatch.All" IconColor="@Color.Inherit">
         @Localizer[Translations.Components.AuthenticatedLayout.PrivacyLink]
     </MudNavLink>
     <PermissionView Permission="Permission.ViewUsers | Permission.ViewRoles | Permission.ViewPermissions">
         <Authorized>
-            <MudNavLink Href="@PageRoutes.Management" Icon="@Icons.Material.Rounded.Settings" Match="@NavLinkMatch.All">
+            <MudNavLink Href="@PageRoutes.Management" Icon="@Icons.Material.Rounded.Settings" Match="@NavLinkMatch.All" IconColor="@Color.Inherit">
                 @Localizer[Translations.Components.AuthenticatedLayout.ManagementLink]
             </MudNavLink>
         </Authorized>

@@ -5,9 +5,9 @@
                        Size="@Size.Medium"/>
 </div>
 <div>
-    @Body
+    @Children
 </div>
 
 @code {
-    [Parameter, EditorRequired] public required RenderFragment Body { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Children { get; set; }
 }

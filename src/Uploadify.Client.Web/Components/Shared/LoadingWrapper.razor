@@ -11,21 +11,21 @@
 
 @if (IsLoading && Skeleton == null)
 {
-    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-4" : "mud-width-full mud-height-full")">
+    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-5" : "mud-width-full mud-height-full")">
         <PrimarySkeleton FullWidth Height="80%"/>
     </div>
 }
 
 @if (!IsLoading && Errors is not { Length: > 0 })
 {
-    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-4" : "mud-width-full mud-height-full")">
+    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-5" : "mud-width-full mud-height-full")">
         @Children
     </div>
 }
 
 @if (!IsLoading && Errors is { Length: > 0 })
 {
-    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-4" : "mud-width-full mud-height-full")">
+    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-5" : "mud-width-full mud-height-full")">
         @foreach (var error in Errors)
         {
             <MudText Color="@Color.Error">@error</MudText>

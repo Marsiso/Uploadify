@@ -1,7 +1,7 @@
 ﻿@using Uploadify.Client.Application.Utilities.Constants
 @inherits LayoutComponentBase
 
-<MudThemeProvider Theme="@Themes.DefaultTheme"/>
+<MudThemeProvider Theme="@Themes.DefaultTheme" IsDarkMode/>
 <MudDialogProvider FullWidth="true"
                    Position="@DialogPosition.Center"/>
 
@@ -16,6 +16,10 @@
         </AuthenticatedLayout>
     </Authorized>
     <NotAuthorized>
-        <UnathenticatedLayout Body="@Body"/>
+        <UnathenticatedLayout>
+            <Children>
+                @Body
+            </Children>
+        </UnathenticatedLayout>
     </NotAuthorized>
 </PermissionView>
