@@ -1,0 +1,14 @@
+﻿@inject IStringLocalizer Localizer
+
+<MudStack AlignItems="@AlignItems.Center" Row Spacing="5">
+    <MudImage Alt="Application logo"
+              ObjectFit="@ObjectFit.ScaleDown"
+              ObjectPosition="@ObjectPosition.Center"
+              Src="icons/brand-logo.svg"
+              Width="34">
+    </MudImage>
+    <MudText Inline
+             Typo="@Typo.h2">
+        @Localizer[Translations.Common.AppName]
+    </MudText>
+</MudStack>

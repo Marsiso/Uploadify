@@ -2,15 +2,18 @@
 @inherits LayoutComponentBase
 
 <MudThemeProvider Theme="@Themes.DefaultTheme"/>
-<MudDialogProvider CloseButton="false"
-                   FullWidth="true"
+<MudDialogProvider FullWidth="true"
                    Position="@DialogPosition.Center"/>
 
 <MudSnackbarProvider/>
 
 <PermissionView>
     <Authorized>
-        <AuthenticatedLayout Body="@Body"/>
+        <AuthenticatedLayout>
+            <Children>
+                @Body
+            </Children>
+        </AuthenticatedLayout>
     </Authorized>
     <NotAuthorized>
         <UnathenticatedLayout Body="@Body"/>

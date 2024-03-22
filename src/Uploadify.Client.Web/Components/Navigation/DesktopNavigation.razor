@@ -1,45 +1,23 @@
 ﻿@inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudDrawer Anchor="Anchor.Left"
-           Class="pa-8"
-           ClipMode="DrawerClipMode.Docked"
-           DisableOverlay
-           Elevation="0"
-           Fixed="false"
-           Open
-           Style="height: fit-content !important;"
-           Variant="DrawerVariant.Persistent">
-    <MudNavMenu Margin="@Margin.Normal"
-                Rounded>
-        <MudNavLink Href="@PageRoutes.Homepage"
-                    Icon="@Icons.Material.Rounded.Folder"
-                    Match="NavLinkMatch.All">
-            @Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]
-        </MudNavLink>
-        <MudNavLink Href="@PageRoutes.Shared"
-                    Icon="@Icons.Material.Rounded.Share"
-                    Match="NavLinkMatch.All">
-            @Localizer[Translations.Components.AuthenticatedLayout.SharedLink]
-        </MudNavLink>
-        <MudNavLink Class="mt-4"
-                    Href="@PageRoutes.About"
-                    Icon="@Icons.Material.Rounded.Info"
-                    Match="NavLinkMatch.All">
-            @Localizer[Translations.Components.AuthenticatedLayout.AboutLink]
-        </MudNavLink>
-        <MudNavLink Href="@PageRoutes.Privacy"
-                    Icon="@Icons.Material.Rounded.PrivacyTip"
-                    Match="NavLinkMatch.All">
-            @Localizer[Translations.Components.AuthenticatedLayout.PrivacyLink]
-        </MudNavLink>
-        <PermissionView Permission="Permission.ViewUsers | Permission.ViewRoles | Permission.ViewPermissions">
-            <Authorized>
-                <MudNavLink Href="@PageRoutes.Management"
-                            Icon="@Icons.Material.Rounded.Settings"
-                            Match="NavLinkMatch.All">
-                    @Localizer[Translations.Components.AuthenticatedLayout.ManagementLink]
-                </MudNavLink>
-            </Authorized>
-        </PermissionView>
-    </MudNavMenu>
-</MudDrawer>
+<MudNavMenu Margin="@Margin.Normal" Rounded>
+    <MudNavLink Href="@PageRoutes.Homepage" Icon="@Icons.Material.Rounded.Folder" Match="@NavLinkMatch.All">
+        @Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]
+    </MudNavLink>
+    <MudNavLink Href="@PageRoutes.Shared" Icon="@Icons.Material.Rounded.Share" Match="@NavLinkMatch.All">
+        @Localizer[Translations.Components.AuthenticatedLayout.SharedLink]
+    </MudNavLink>
+    <MudNavLink Href="@PageRoutes.About" Icon="@Icons.Material.Rounded.Info" Match="@NavLinkMatch.All">
+        @Localizer[Translations.Components.AuthenticatedLayout.AboutLink]
+    </MudNavLink>
+    <MudNavLink Href="@PageRoutes.Privacy" Icon="@Icons.Material.Rounded.PrivacyTip" Match="@NavLinkMatch.All">
+        @Localizer[Translations.Components.AuthenticatedLayout.PrivacyLink]
+    </MudNavLink>
+    <PermissionView Permission="Permission.ViewUsers | Permission.ViewRoles | Permission.ViewPermissions">
+        <Authorized>
+            <MudNavLink Href="@PageRoutes.Management" Icon="@Icons.Material.Rounded.Settings" Match="@NavLinkMatch.All">
+                @Localizer[Translations.Components.AuthenticatedLayout.ManagementLink]
+            </MudNavLink>
+        </Authorized>
+    </PermissionView>
+</MudNavMenu>

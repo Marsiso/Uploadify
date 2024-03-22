@@ -3,58 +3,48 @@
 @using OpenIddict.Abstractions
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudMenu AnchorOrigin="Origin.BottomLeft"
-         TransformOrigin="Origin.BottomLeft"
-         Variant="Variant.Text"
-         ListClass="py-0">
-    <ActivatorContent>
-        <MudIconButton Icon="@Icons.Material.Rounded.AccountCircle"
-                       Size="Size.Medium"/>
-    </ActivatorContent>
-    <ChildContent>
-        <MudMenuItem Disabled
-                     Icon="@Icons.Material.Rounded.Person3"
-                     IconColor="Color.Primary">
-            <MudText Color="Color.Primary">
-                @_fullname
-            </MudText>
-        </MudMenuItem>
-        <MudMenuItem Disabled
-                     Icon="@Icons.Material.Rounded.Email"
-                     IconColor="Color.Primary">
-            <MudText Color="Color.Primary">
-                @_email
-            </MudText>
-        </MudMenuItem>
-        <MudMenuItem Href="@PageRoutes.Profile"
-                     Icon="@Icons.Material.Rounded.AccountBox">
-            <MudText>@Localizer[Translations.Components.AuthenticatedLayout.ProfileLink]</MudText>
-        </MudMenuItem>
-        <form action="@ApiRoutes.Logout"
-              method="post">
-            <AntiForgeryTokenInput/>
-            <button style="width: 100%;"
-                    type="submit">
-                <MudMenuItem AutoClose="false"
-                             Icon="@Icons.Material.Rounded.Logout">
-                    <MudText>@Localizer[Translations.Components.AuthenticatedLayout.LogOutButton]</MudText>
+<PermissionView Context="authState">
+    <Authorized>
+        <MudMenu AnchorOrigin="@Origin.BottomLeft"
+                 TransformOrigin="@Origin.BottomLeft"
+                 Variant="@Variant.Text"
+                 ListClass="py-0">
+            <ActivatorContent>
+                <MudIconButton Icon="@Icons.Material.Rounded.AccountCircle" Size="@Size.Medium"/>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem Disabled
+                             Icon="@Icons.Material.Rounded.Person3"
+                             IconColor="@Color.Primary">
+                    <MudText Color="@Color.Primary">
+                        @FullName(authState)
+                    </MudText>
                 </MudMenuItem>
-            </button>
-        </form>
-    </ChildContent>
-</MudMenu>
+                <MudMenuItem Disabled
+                             Icon="@Icons.Material.Rounded.Email"
+                             IconColor="@Color.Primary">
+                    <MudText Color="@Color.Primary">
+                        @Email(authState)
+                    </MudText>
+                </MudMenuItem>
+                <MudMenuItem Href="@PageRoutes.Profile"
+                             Icon="@Icons.Material.Rounded.AccountBox">
+                    <MudText>@Localizer[Translations.Components.AuthenticatedLayout.ProfileLink]</MudText>
+                </MudMenuItem>
+                <form action="@ApiRoutes.Logout" method="post">
+                    <AntiForgeryTokenInput/>
+                    <button class="mud-width-full" type="submit">
+                        <MudMenuItem AutoClose="false" Icon="@Icons.Material.Rounded.Logout">
+                            <MudText>@Localizer[Translations.Components.AuthenticatedLayout.LogOutButton]</MudText>
+                        </MudMenuItem>
+                    </button>
+                </form>
+            </ChildContent>
+        </MudMenu>
+    </Authorized>
+</PermissionView>
 
 @code {
-    [Parameter] [EditorRequired] public required ClaimsPrincipal User { get; set; }
-
-    private string _email = string.Empty;
-    private string _fullname = string.Empty;
-
-    protected override void OnParametersSet()
-    {
-        _email = User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.Email)?.Value ?? string.Empty;
-        _fullname = string.Format("{0}{1}",
-            User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.GivenName)?.Value,
-            User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.FamilyName)?.Value);
-    }
+    public string Email(AuthenticationState authState) => authState.User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.Email)?.Value ?? string.Empty;
+    public string FullName(AuthenticationState authState) => $"{authState.User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.GivenName)?.Value}{authState.User.Claims.FirstOrDefault(claim => claim.Type == OpenIddictConstants.Claims.FamilyName)?.Value}";
 }

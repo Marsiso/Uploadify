@@ -2,27 +2,21 @@
 @inject IJSRuntime JavaScriptRuntime
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudMenu AnchorOrigin="Origin.BottomLeft"
-         TransformOrigin="Origin.BottomLeft"
-         Variant="Variant.Text">
+<MudMenu AnchorOrigin="@Origin.BottomLeft" TransformOrigin="@Origin.BottomLeft" Variant="@Variant.Text">
     <ActivatorContent>
-        <MudIconButton Icon="@Icons.Material.Rounded.Language"
-                       Size="Size.Medium"/>
+        <MudIconButton Icon="@Icons.Material.Rounded.Language" Size="@Size.Medium"/>
     </ActivatorContent>
     <ChildContent>
-        <MudMenuItem Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.Czech)"
-                     OnClick="@(() => OnCultureChange(Locales.Czech))">
+        <MudMenuItem Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.Czech)" OnClick="@(() => OnCultureChange(Locales.Czech))">
             <MudText>Czech</MudText>
         </MudMenuItem>
-        <MudMenuItem Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.English)"
-                     OnClick="@(() => OnCultureChange(Locales.English))">
+        <MudMenuItem Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.English)" OnClick="@(() => OnCultureChange(Locales.English))">
             <MudText>English</MudText>
         </MudMenuItem>
     </ChildContent>
 </MudMenu>
 
 @code {
-
     private void OnCultureChange(string culture)
     {
         var cultureInfo = new CultureInfo(culture);

@@ -1,78 +1,59 @@
 ﻿@using Uploadify.Client.Application.Utilities.Services
 @using Uploadify.Client.Web.Components.Navigation
+@using Uploadify.Client.Web.Components.Shared
+
 @inject MobileViewManager MobileViewManager
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
 <MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged"/>
 
-<PermissionView>
-    <Authorized Context="AuthenticationState">
-        <MudContainer Class="pa-0"
-                      MaxWidth="@MaxWidth.Large"
-                      Style="height: 100vh; width: 100%;">
-            <MudLayout Style="height: 100vh; width: 100%;">
-                <MudAppBar Class="pt-8 px-4"
-                           Elevation="0"
-                           Fixed="false">
-                    <MudStack AlignItems="AlignItems.Center"
-                              Row="true"
-                              Spacing="4">
-                        <MudImage Alt="brand logo"
-                                  ObjectFit="@ObjectFit.ScaleDown"
-                                  ObjectPosition="@ObjectPosition.Center"
-                                  Src="icons/brand-logo.svg"
-                                  Width="34">
-                        </MudImage>
-                        <MudText Inline
-                                 Typo="@Typo.h2">
-                            @Localizer[Translations.Common.AppName]
-                        </MudText>
-                    </MudStack>
-                    <MudSpacer/>
-                    <Avatar User="AuthenticationState.User"/>
-                    <LocaleSelector/>
-                </MudAppBar>
-                @if (MobileViewManager.IsDesktop)
-                {
-                    <DesktopNavigation/>
-                }
-                else
-                {
-                    <MobileNavigation/>
-                }
-
-                <MudMainContent Class="@_mainContentClass">
-                    <MudContainer Class="mud-width-full mud-height-full"
-                                  MaxWidth="@MaxWidth.Small">
-                        @Body
-                    </MudContainer>
-                </MudMainContent>
-            </MudLayout>
-        </MudContainer>
-    </Authorized>
-</PermissionView>
+<MudLayout>
+    <MudAppBar Class="pt-10 px-5" Fixed="false">
+        <AppLogo/>
+        <MudSpacer/>
+        <Avatar/>
+        <LocaleSelector/>
+    </MudAppBar>
+    
+    <MudMainContent>
+        @if (MobileViewManager.IsDesktop)
+        {
+            <div class="d-flex flex-grow-1 gap-15" style="padding-bottom:96px;">
+                <div class="flex-1">
+                    <div class="d-flex justify-end mud-width-full">
+                        <DesktopNavigation/>
+                    </div>
+                </div>
+                <div style="min-width:600px;max-width:600px;">
+                    @Children
+                </div>
+                <div class="flex-1"></div>
+            </div>
+        }
+        else
+        {
+            <MobileNavigation/>
+            <MudContainer MaxWidth="@MaxWidth.Small" Style="padding-bottom:96px;">
+                @Children
+            </MudContainer>
+        }
+    </MudMainContent>
+</MudLayout>
 
 @code {
-    private bool _isAuthenticated;
-    private string _mainContentClass => MobileViewManager.IsDesktop ? "mud-width-full mud-height-full pa-8" : "mud-width-full mud-height-full px-4 py-8";
-    private MaxWidth _contentWidth => MobileViewManager.IsDesktop ? MaxWidth.Medium : MaxWidth.False;
-
-    [Parameter] public RenderFragment? Body { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Children { get; set; }
 
     private void OnBreakpointChanged(Breakpoint breakpoint)
     {
         switch (breakpoint)
         {
-            case Breakpoint.Xs or Breakpoint.Sm or Breakpoint.Md:
-            case Breakpoint.SmAndDown or Breakpoint.MdAndDown or Breakpoint.LgAndDown:
-            case Breakpoint.SmAndUp:
-                MobileViewManager.IsDesktop = false;
+            case Breakpoint.Lg or Breakpoint.LgAndUp or Breakpoint.Xl or Breakpoint.XlAndUp or Breakpoint.Xxl:
+                MobileViewManager.IsDesktop = true;
                 return;
 
             default:
-                MobileViewManager.IsDesktop = true;
+                MobileViewManager.IsDesktop = false;
                 return;
         }
     }
-
 }
