@@ -1,4 +1,8 @@
-﻿@model Uploadify.Server.IdentityServer.Views.Shared.InputViewModel
+﻿@inject IViewLocalizer ViewLocalizer
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@model Uploadify.Server.IdentityServer.Views.Shared.InputViewModel
+
 @{
     var isInvalid = Model.Errors != null && Model.Errors.Any();
 }
@@ -17,14 +21,11 @@
                novalidate
                type="@Model.InputType" />
     </label>
-    @if (isInvalid)
+    @if (isInvalid && Model.Errors is { Length: > 0 })
     {
         <p class="help-text">
-            @foreach (var error in Model.Errors ?? Array.Empty<string>())
-            {
-                <span>@error</span>
-                <br/>
-            }
+            <span>@ViewLocalizer[Model.Errors.First()]</span>
+            <br/>
         </p>
     }
 </div>

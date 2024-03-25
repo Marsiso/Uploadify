@@ -1,9 +1,15 @@
 ﻿@using Uploadify.Server.IdentityServer.Views.Shared
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Uploadify.Server.Domain.Infrastructure.Localization.Constants
+@using Uploadify.Server.IdentityServer.Resources.Views.Shared
 @model Uploadify.Server.Application.Auth.ViewModels.RegisterViewModel
+
+@inject IViewLocalizer ViewLocalizer
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Sign up";
+    ViewData["Title"] = ViewLocalizer[Translations.Pages.Register.Title];
 }
 
 <form asp-controller="Account" asp-action="HandleRegister" asp-route-returnUrl="@Model.ReturnUrl" method="post" asp-antiforgery="true" novalidate>
@@ -13,50 +19,44 @@
                 @await Html.PartialAsync("_Logo")
             </div>
             <div class="small-12 cell" style="margin-bottom: 1rem;">
-                <h1 class="text-center">Sign up</h1>
+                <h1 class="text-center">@ViewLocalizer[Translations.Pages.Register.Title]</h1>
             </div>
-            <div class="small-12 cell">
-                <fieldset class="fieldset">
-                    <legend>Credentials</legend>
-                    <div class="grid-container">
-                        <div class="grid-x grid-padding-x">
-                            <div class="small-12 cell">
-                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Login", InputType = "text", PropertyName = nameof(Model.Form.UserName), Value = Model.Form.UserName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.UserName)) })
-                            </div>
-                            <div class="small-12 cell">
-                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Password", InputType = "password", PropertyName = nameof(Model.Form.Password), Value = Model.Form.Password, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.Password)) })
-                            </div>
-                            <div class="small-12 cell">
-                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "ConfirmPassword", InputType = "password", PropertyName = nameof(Model.Form.PasswordRepeat), Value = Model.Form.PasswordRepeat, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.PasswordRepeat)) })
-                            </div>
+            <div class="small-12 cell pb-5">
+                <div class="grid-container px-0">
+                    <div class="grid-x">
+                        <div class="small-12 cell">
+                            @await Html.PartialAsync("_Input", new InputViewModel { Label = ViewLocalizer[Translations.Pages.Register.LoginLabel].Value, InputType = "text", PropertyName = nameof(Model.Form.UserName), Value = Model.Form.UserName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.UserName)) })
+                        </div>
+                        <div class="small-12 cell">
+                            @await Html.PartialAsync("_Input", new InputViewModel { Label = ViewLocalizer[Translations.Pages.Register.PasswordLabel].Value, InputType = "password", PropertyName = nameof(Model.Form.Password), Value = Model.Form.Password, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.Password)) })
+                        </div>
+                        <div class="small-12 cell">
+                            @await Html.PartialAsync("_Input", new InputViewModel { Label = ViewLocalizer[Translations.Pages.Register.ConfirmPasswordLabel].Value, InputType = "password", PropertyName = nameof(Model.Form.PasswordRepeat), Value = Model.Form.PasswordRepeat, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.PasswordRepeat)) })
                         </div>
                     </div>
-                </fieldset>
+                </div>
             </div>
-            <div class="small-12 cell">
-                <fieldset class="fieldset">
-                    <legend>Personal data</legend>
-                    <div class="grid-container">
-                        <div class="grid-x grid-padding-x">
-                            <div class="small-12 cell">
-                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Given name", InputType = "text", PropertyName = nameof(Model.Form.GivenName), Value = Model.Form.GivenName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.GivenName)) })
-                            </div>
-                            <div class="small-12 cell">
-                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Family name", InputType = "text", PropertyName = nameof(Model.Form.FamilyName), Value = Model.Form.FamilyName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.FamilyName)) })
-                            </div>
-                            <div class="small-12 cell">
-                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Phone number", InputType = "tel", PropertyName = nameof(Model.Form.PhoneNumber), Value = Model.Form.PhoneNumber, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.PhoneNumber)) })
-                            </div>
-                            <div class="small-12 cell">
-                                @await Html.PartialAsync("_Input", new InputViewModel { Label = "Email", InputType = "email", PropertyName = nameof(Model.Form.Email), Value = Model.Form.Email, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.Email)) })
-                            </div>
+            <div class="small-12 cell pb-5">
+                <div class="grid-container px-0">
+                    <div class="grid-x">
+                        <div class="small-12 cell">
+                            @await Html.PartialAsync("_Input", new InputViewModel { Label = ViewLocalizer[Translations.Pages.Register.FirstNameLabel].Value, InputType = "text", PropertyName = nameof(Model.Form.GivenName), Value = Model.Form.GivenName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.GivenName)) })
+                        </div>
+                        <div class="small-12 cell">
+                            @await Html.PartialAsync("_Input", new InputViewModel { Label = ViewLocalizer[Translations.Pages.Register.LastNameLabel].Value, InputType = "text", PropertyName = nameof(Model.Form.FamilyName), Value = Model.Form.FamilyName, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.FamilyName)) })
+                        </div>
+                        <div class="small-12 cell">
+                            @await Html.PartialAsync("_Input", new InputViewModel { Label = ViewLocalizer[Translations.Pages.Register.EmailLabel].Value, InputType = "email", PropertyName = nameof(Model.Form.Email), Value = Model.Form.Email, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.Email)) })
+                        </div>
+                        <div class="small-12 cell">
+                            @await Html.PartialAsync("_Input", new InputViewModel { Label = ViewLocalizer[Translations.Pages.Register.PhoneNumberLabel].Value, InputType = "tel", PropertyName = nameof(Model.Form.PhoneNumber), Value = Model.Form.PhoneNumber, Errors = Model.Errors?.GetValueOrDefault(nameof(Model.Form.PhoneNumber)) })
                         </div>
                     </div>
-                </fieldset>
+                </div>
             </div>
             <div class="small-12 cell">
-                <button type="submit" class="button expanded">Sign up</button>
-                <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="button secondary expanded">Sign in</a>
+                <button type="submit" class="button expanded">@ViewLocalizer[Translations.Pages.Register.SignUpButton]</button>
+                <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="button secondary expanded">@ViewLocalizer[Translations.Pages.Register.SignInButton]</a>
             </div>
         </div>
     </div>

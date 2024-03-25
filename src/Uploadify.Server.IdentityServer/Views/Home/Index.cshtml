@@ -1,6 +1,12 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Uploadify.Server.Domain.Infrastructure.Localization.Constants
+
+@inject IViewLocalizer ViewLocalizer
+
+@{
     Layout = "_Layout";
-    ViewData["Title"] = "Homepage";
+    ViewData["Title"] = ViewLocalizer[Translations.Pages.Home.Title];
 }
 
 <form asp-controller="Account" asp-action="HandleLogout" method="post" asp-antiforgery="true" novalidate>
@@ -12,7 +18,7 @@
             @if (User is { Identity.IsAuthenticated: true })
             {
                 <div class="small-12 cell">
-                    <h1 class="text-center">Hello, @User.Identity.Name</h1>
+                    <h1 class="text-center">@ViewLocalizer[Translations.Pages.Home.Greeting], @User.Identity.Name</h1>
                 </div>
                 <div class="small-12 cell table-scroll" style="margin-bottom: 2rem;">
                     <table class="hover unstriped stack">
@@ -20,7 +26,7 @@
                         @foreach (var claim in User.Claims)
                         {
                             <tr>
-                                <td><span style="color: var(--secondary)">@claim.Type</span></td>
+                                <td><span style="color:var(--color-secondary)">@claim.Type</span></td>
                                 <td>@claim.Value</td>
                             </tr>
                         }
@@ -28,17 +34,17 @@
                     </table>
                 </div>
                 <div class="small-12 cell">
-                    <button type="submit" class="button expanded">Sign out</button>
+                    <button type="submit" class="button expanded">@ViewLocalizer[Translations.Pages.Home.SignOutButton]</button>
                 </div>
             }
             else
             {
                 <div class="small-12 cell" style="margin-bottom: 7.5rem;">
-                    <h1 class="text-center">Welcome</h1>
+                    <h1 class="text-center">@ViewLocalizer[Translations.Pages.Home.Title]</h1>
                 </div>
                 <div class="small-12 cell">
-                    <a asp-controller="Account" asp-action="Login" class="button expanded">Sign in</a>
-                    <a asp-controller="Account" asp-action="Register" class="button secondary expanded">Sign up</a>
+                    <a asp-controller="Account" asp-action="Login" class="button expanded">@ViewLocalizer[Translations.Pages.Home.SignInButton]</a>
+                    <a asp-controller="Account" asp-action="Register" class="button secondary expanded">@ViewLocalizer[Translations.Pages.Home.SignUpButton]</a>
                 </div>
             }
         </div>

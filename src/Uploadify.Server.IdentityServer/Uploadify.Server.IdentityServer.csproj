@@ -30,4 +30,64 @@
       <Folder Include="Infrastructure\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Views\Shared\_Input.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_Input.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\Login.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Login.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Account\Register.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Register.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Home\Index.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Authorization\Authorize.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Authorize.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Authorization\Logout.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Logout.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\Views\Shared\_Input.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_Input.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\Login.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Login.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Account\Register.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Register.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Home\Index.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Index.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Authorization\Authorize.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Authorize.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Authorization\Logout.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Logout.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

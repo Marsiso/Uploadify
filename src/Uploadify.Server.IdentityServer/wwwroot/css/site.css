@@ -2,6 +2,7 @@
     --text-error: #CC4B37;
     --light-gray: #E6E6E6;
     --color: #FFFFFF;
+    --color-secondary:#E6E6E6;
     --color-darken: #FFFFFFA0;
     --background: #212121;
     --success: #0BBA83;
@@ -13,10 +14,9 @@
     color: var(--color) !important;
 }
 
-html, body, body > div {
-    position: relative;
-    min-width: 100%;
-    min-height: 100%;
+html, body {
+    width: 100%;
+    height: 100%;
     font-size: 1rem;
 }
 
@@ -42,6 +42,8 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .card {
@@ -63,14 +65,6 @@ form {
 
 .card {
     padding: 3rem .5rem .5rem;
-}
-
-.help-text, label.validation-error, label.validation-error:has(> input.validation-error) {
-    color: var(--text-error) !important;
-}
-
-input.validation-error {
-    border-color: var(--text-error) !important;
 }
 
 .button {
@@ -102,4 +96,21 @@ table, table > * {
     border-color: transparent !important;
     outline-color: transparent !important;
     box-shadow: transparent !important;
+}
+
+.px-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.pb-5 {
+    padding-bottom: 20px;
+}
+
+.help-text, .help-text > span, label.validation-error, label.validation-error:has(> input.validation-error) {
+    color: var(--text-error) !important;
+}
+
+input.validation-error {
+    border-color: var(--text-error) !important;
 }

@@ -89,6 +89,15 @@ public static class Translations
             public const string Title = $"{BasePage}.title";
             public const string SignInButton = $"{BasePage}.sign_in_button";
             public const string SignUpButton = $"{BasePage}.sign_up_button";
+            public const string LoginLabel = $"{BasePage}.login_label";
+            public const string PasswordLabel = $"{BasePage}.password_label";
+        }
+
+        public static class Logout
+        {
+            public const string BasePage = $"{BasePages}.logout";
+            public const string Title = $"{BasePage}.title";
+            public const string SubmitButton = $"{BasePage}.submit_button";
         }
 
         public static class Register
@@ -97,6 +106,13 @@ public static class Translations
             public const string Title = $"{BasePage}.title";
             public const string SignInButton = $"{BasePage}.sign_in_button";
             public const string SignUpButton = $"{BasePage}.sign_up_button";
+            public const string LoginLabel = $"{BasePage}.login_label";
+            public const string PasswordLabel = $"{BasePage}.password_label";
+            public const string ConfirmPasswordLabel = $"{BasePage}.password_repeat_label";
+            public const string FirstNameLabel = $"{BasePage}.first_name_label";
+            public const string LastNameLabel = $"{BasePage}.last_name_label";
+            public const string PhoneNumberLabel = $"{BasePage}.phone_number_label";
+            public const string EmailLabel = $"{BasePage}.email_label";
         }
 
         public static class Home
@@ -105,18 +121,16 @@ public static class Translations
             public const string Title = $"{BasePage}.title";
             public const string SignInButton = $"{BasePage}.sign_in_button";
             public const string SignUpButton = $"{BasePage}.sign_up_button";
+            public const string SignOutButton = $"{BasePage}.sign_out_button";
+            public const string Greeting = $"{BasePage}.greeting";
         }
 
-        public static class Consent
+        public static class Authorize
         {
-            public const string BasePage= $"{BasePages}.consent";
+            public const string BasePage= $"{BasePages}.authorize";
             public const string Title = $"{BasePage}.title";
-            public const string Description = $"{BasePage}.description";
             public const string AcceptButton = $"{BasePage}.accept_button";
             public const string DenyButton = $"{BasePage}.deny_button";
-            public const string ApplicationNameLabel = $"{BasePage}.applicaiton_name_label";
-            public const string ScopesLabel = $"{BasePage}.scopes_label";
-            public const string ClaimsLabel = $"{BasePage}.claims_label";
         }
     }
 }

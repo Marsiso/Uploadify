@@ -1,7 +1,11 @@
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 using Quartz;
 using Uploadify.Server.Application.Infrastructure.Extensions;
 using Uploadify.Server.Application.Infrastructure.Services;
 using Uploadify.Server.Data.Infrastructure.EF;
+using Uploadify.Server.Domain.Infrastructure.Localization.Constants;
 using Uploadify.Server.Domain.Infrastructure.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +22,9 @@ services.AddDatabase(environment.IsDevelopment(), settings)
     .AddIdentity(settings)
     .AddValidators(settings)
     .AddRequests(settings)
-    .AddControllersWithViews();
+    .AddLocalization(options => options.ResourcesPath = "Resources")
+    .AddControllersWithViews()
+    .AddViewLocalization();
 
 services.AddAntiforgery(options =>
 {
@@ -89,6 +95,18 @@ services.AddOpenIddict()
         options.UseAspNetCore();
     });
 
+builder.Services.Configure<RequestLocalizationOptions>(options => {
+    var supportedCultures = new[]
+    {
+        new CultureInfo(Locales.Czech),
+        new CultureInfo(Locales.English)
+    };
+
+    options.DefaultRequestCulture = new RequestCulture(Locales.Default);
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
 services.AddHostedService<Worker>();
 
 var application = builder.Build();
@@ -108,6 +126,9 @@ if (!application.Environment.IsDevelopment())
 
 application.UseHttpsRedirection();
 application.UseStaticFiles();
+
+application.UseRequestLocalization(application.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+
 application.UseRouting();
 application.UseAuthentication();
 application.UseAuthorization();
