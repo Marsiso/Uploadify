@@ -2,27 +2,23 @@
 @using Uploadify.Client.Web.Components.Shared
 @using Uploadify.Client.Web.Components.Shared.Dialogs
 @using Uploadify.Client.Application.Files.Services
-@using System.Diagnostics.CodeAnalysis
+@using Uploadify.Client.Application.Files.Models
+
 @inject FileService FileService
 @inject FolderService FolderService
 @inject IStringLocalizer Localizer
 
-<Dialog IsVisible="@IsVisible"
-        OnClose="@OnClose"
-        Title="@Localizer[Translations.Components.Files.Dialogs.Move.Title]">
+<Dialog IsVisible="@IsVisible" OnClose="@(() => IsVisible = false)" Title="@Localizer[Translations.Components.Files.Dialogs.Move.Title]">
     <Content>
         <MudForm Errors="@(LocationChangedResourceResponse?.ErrorMessages ?? Array.Empty<string>())">
             <MudStack Spacing="5">
-                <LoadingWrapper Errors="@LocationChangedResourceResponse?.ErrorMessages"
-                                IsLoading="@(IsLoading || FolderSummaryResponse == null)">
+                <LoadingWrapper Errors="@LocationChangedResourceResponse?.ErrorMessages" IsLoading="@(IsLoading || FolderSummaryResponse == null)">
                     <Children>
                         <MudSelect AnchorOrigin="@Origin.BottomCenter"
                                    @bind-Value="@Destination"
                                    Label="@Localizer[Translations.Components.Files.Dialogs.Move.FolderSelectLabel]"
-                                   ListClass="py-0"
                                    Error="@(LocationChangedResourceResponse is { ErrorMessages.Length: > 0 })"
                                    ErrorText="@LocationChangedResourceResponse?.ErrorMessages.FirstOrDefault()"
-                                   T="FolderOverview"
                                    Variant="@Variant.Outlined">
                             @if (FolderSummaryResponse is { Resource.Parent: not null })
                             {
@@ -43,15 +39,13 @@
                         </MudSelect>
                     </Children>
                 </LoadingWrapper>
-                <MudButton Color="@Color.Tertiary"
-                           Disabled="@(IsLoading || IsDisabled || Destination == null)"
-                           FullWidth
-                           OnClick="@HandleSubmit"
-                           Size="@Size.Large"
-                           Style="border-radius: 1.5rem;"
-                           Variant="@Variant.Filled">
-                    @Localizer[Translations.Components.Files.Dialogs.Move.SubmitButton]
-                </MudButton>
+                <PrimaryButton IsDisabled="@(IsLoading || IsDisabled || Destination == null)"
+                               IsLoading="@IsLoading"
+                               FullWidth
+                               Color="@Color.Success"
+                               OnClick="@HandleSubmit"
+                               Size="@Size.Large"
+                               Text="@Localizer[Translations.Components.Files.Dialogs.Move.SubmitButton]"/>
             </MudStack>
         </MudForm>
     </Content>
@@ -60,19 +54,10 @@
 @code {
     private FolderOverview? _destination;
 
+    [Parameter] [EditorRequired] public required DashboardItem Item { get; set; }
     [Parameter] [EditorRequired] public required bool IsVisible { get; set; }
     [Parameter] [EditorRequired] public required EventCallback OnSuccess { get; set; }
-    [Parameter] [EditorRequired] public required EventCallback OnClose { get; set; }
     [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }
-
-    [Parameter]
-    [EditorRequired]
-    [MemberNotNullWhen(true, nameof(Folder))]
-    [MemberNotNullWhen(false, nameof(File))]
-    public required bool IsFolder { get; set; }
-
-    [Parameter] [EditorRequired] public FileOverview? File { get; set; }
-    [Parameter] [EditorRequired] public FolderOverview? Folder { get; set; }
 
     public bool IsLoading { get; set; }
     public bool IsDisabled { get; set; }
@@ -95,14 +80,14 @@
     {
         IsLoading = true;
 
-        if (IsFolder)
+        if (Item.IsFolder)
         {
-            FolderSummaryResponse = await FolderService.GetSummary(Folder.ParentId, CancellationToken);
+            FolderSummaryResponse = await FolderService.GetSummary(Item.Folder.ParentId, CancellationToken);
             IsLoading = false;
             return;
         }
 
-        FolderSummaryResponse = await FolderService.GetSummary(File.FolderId, CancellationToken);
+        FolderSummaryResponse = await FolderService.GetSummary(Item.File.FolderId, CancellationToken);
         IsLoading = false;
     }
 
@@ -110,22 +95,21 @@
     {
         IsLoading = true;
 
-        if (IsFolder)
+        if (Item.IsFolder)
         {
-            LocationChangedResourceResponse = await FolderService.Move(Folder.FolderId, Destination?.FolderId, CancellationToken);
+            LocationChangedResourceResponse = await FolderService.Move(Item.Folder.FolderId, Destination?.FolderId, CancellationToken);
         }
         else
         {
-            LocationChangedResourceResponse = await FileService.Move(File.FileId, Destination?.FolderId, CancellationToken);
+            LocationChangedResourceResponse = await FileService.Move(Item.File.FileId, Destination?.FolderId, CancellationToken);
         }
 
         if (LocationChangedResourceResponse.IsSuccess)
         {
             await OnSuccess.InvokeAsync();
-            await OnClose.InvokeAsync();
+            IsVisible = false;
         }
 
         IsLoading = false;
     }
-
 }

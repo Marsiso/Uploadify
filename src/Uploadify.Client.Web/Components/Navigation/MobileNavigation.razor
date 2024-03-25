@@ -1,20 +1,23 @@
 ﻿@inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudAppBar Bottom Elevation="24">
+<MudAppBar Bottom>
     <MudContainer MaxWidth="@MaxWidth.Small">
-        <div class="d-flex justify-center gap-5 mud-width-full">
+        <div class="d-flex justify-center gap-5 mud-width-full pb-5">
             <MudIconButton Href="@PageRoutes.Homepage"
                            Icon="@Icons.Material.Rounded.Folder"
                            Title="@Localizer[Translations.Components.AuthenticatedLayout.DashboardLink]"
-                           Variant="@Variant.Text"/>
+                           Variant="@Variant.Text"
+                           Color="@Color.Primary"/>
             <MudIconButton Href="@PageRoutes.Shared"
                            Icon="@Icons.Material.Rounded.Share"
                            Title="@Localizer[Translations.Components.AuthenticatedLayout.SharedLink]"
-                           Variant="@Variant.Text"/>
+                           Variant="@Variant.Text"
+                           Color="@Color.Primary"/>
             <MudIconButton Href="@PageRoutes.More"
                            Icon="@Icons.Material.Rounded.Navigation"
                            Title="@Localizer[Translations.Components.AuthenticatedLayout.MoreLink]"
-                           Variant="@Variant.Text"/>
+                           Variant="@Variant.Text"
+                           Color="@Color.Primary"/>
         </div>
     </MudContainer>
 </MudAppBar>

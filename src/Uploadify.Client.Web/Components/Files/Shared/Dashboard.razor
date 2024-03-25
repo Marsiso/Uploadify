@@ -1,0 +1,106 @@
+﻿@using Uploadify.Client.Domain.Resources.Models
+@using Uploadify.Client.Web.Components.Shared
+@using Uploadify.Client.Web.Components.Files.Shared.Shared
+@using Uploadify.Client.Application.Files.Services
+@using Uploadify.Client.Application.Files.Models
+
+@inject FileService FilesService
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<LoadingWrapper Title="@Localizer[Translations.Pages.Shared.Title]" IsLoading="@IsLoading">
+    <Skeleton>
+        <PrimarySkeleton FullWidth Height="500px"/>
+    </Skeleton>
+    <Children>
+        <SearchBar OnSearchTermChanged="@HandleSearchTermValueChanged"/>
+        @if (PublicFilesResponse is { IsSuccess: true })
+        {
+            foreach (var file in PublicFilesResponse.Resource.Files)
+            {
+                <DashboardCard File="@file" OnDownload="@HandleDownload" CancellationToken="@CancellationToken"/>
+            }
+
+            <div class="d-flex justify-space-between pt-2">
+                <PrimaryButton Color="@Color.Surface"
+                               IsDisabled="@(!PublicFilesResponse.Resource.HasPrevious.Value)"
+                               Size="@Size.Small"
+                               OnClick="@HandlePrevPage"
+                               Text="Předchozí"
+                               Class="pagination"/>
+
+                <PrimaryButton Color="@Color.Surface"
+                               IsDisabled="@(!PublicFilesResponse.Resource.HasNext.Value)"
+                               Size="@Size.Small"
+                               OnClick="@HandleNextPage"
+                               Text="Další"
+                               Class="pagination"/>
+            </div>
+        }
+    </Children>
+</LoadingWrapper>
+
+@code {
+    public const int MinPageNumber = 1;
+    public const int MinPageSize = 10;
+
+    [Parameter, EditorRequired] public required CancellationToken CancellationToken { get; set; }
+
+    public int TotalItems { get; set; }
+    public int PageNumber { get; set; } = MinPageNumber;
+    public string? SearchTerm { get; set; } = string.Empty;
+    public bool IsLoading { get; set; } = true;
+    public ResourceResponse<PublicFilesSummary>? PublicFilesResponse { get; set; }
+
+    protected override bool ShouldRender() => !IsLoading;
+
+    protected override Task OnInitializedAsync()
+    {
+        return FetchPublicFiles();
+    }
+
+    protected async Task FetchPublicFiles()
+    {
+        IsLoading = true;
+        PublicFilesResponse = await FilesService.GetPublicFiles(PageNumber, MinPageSize, SearchTerm, CancellationToken);
+        if (PublicFilesResponse.IsSuccess)
+        {
+            PageNumber = PublicFilesResponse.Resource.PageNumber.Value;
+        }
+
+        IsLoading = false;
+    }
+
+    protected Task HandleSearchTermValueChanged(string? searchTerm)
+    {
+        PageNumber = MinPageNumber;
+        SearchTerm = searchTerm;
+
+        return FetchPublicFiles();
+    }
+
+    protected async Task HandleDownload(PublicFileOverview file)
+    {
+        var isSuccess = await FilesService.Download(file.FileId.Value, file.Name, CancellationToken);
+        if (isSuccess)
+        {
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadSuccess], file.Name), Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadFailure], file.Name), Severity.Error);
+        }
+    }
+
+    protected Task HandlePrevPage()
+    {
+        PageNumber--;
+        return FetchPublicFiles();
+    }
+
+    protected Task HandleNextPage()
+    {
+        PageNumber++;
+        return FetchPublicFiles();
+    }
+}

@@ -1,0 +1,71 @@
+﻿@using Uploadify.Client.Application.Files.Models
+@inject IStringLocalizer Localizer
+
+<MudMenu IsOpenChanged="@HandleVisibilityChanged" PositionAtCursor>
+    <ActivatorContent>
+        <MudIconButton Icon="@Icons.Material.Rounded.MoreVert" Color="@Color.Primary"/>
+    </ActivatorContent>
+    <ChildContent>
+        <MudMenuItem Icon="@Icons.Material.Rounded.Info" OnClick="@HandleShowDetail" IconColor="@Color.Primary">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DetailLink]</MudText>
+        </MudMenuItem>
+
+        @if (Item.IsFolder)
+        {
+            <MudMenuItem Icon="@Icons.Material.Rounded.FolderOpen" OnClick="@HandleOpenFolder" IconColor="@Color.Primary">
+                <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.OpenLink]</MudText>
+            </MudMenuItem>
+        }
+
+        @if (!Item.IsFolder)
+        {
+            <MudMenuItem Icon="@(Item.File.IsPublic.Value ? Icons.Material.Rounded.GroupRemove : Icons.Material.Rounded.GroupAdd)" OnClick="@HandlePublishFile" IconColor="@Color.Primary">
+                <MudText>@(Item.File.IsPublic.Value ? Localizer[Translations.Components.Files.DashboardRowOptions.HideLink] : Localizer[Translations.Components.Files.DashboardRowOptions.PublishLink])</MudText>
+            </MudMenuItem>
+
+            <MudMenuItem Icon="@Icons.Material.Rounded.FileDownload" OnClick="@HandleDownloadFile" IconColor="@Color.Primary">
+                <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DownloadLink]</MudText>
+            </MudMenuItem>
+        }
+
+        <MudMenuItem Icon="@Icons.Material.Rounded.DriveFileMove" OnClick="@HandleMoveFile" IconColor="@Color.Primary">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.MoveLink]</MudText>
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Rounded.DriveFileRenameOutline" OnClick="@HandleRenameItem" IconColor="@Color.Primary">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.RenameLink]</MudText>
+        </MudMenuItem>
+        <MudMenuItem Icon="@Icons.Material.Rounded.Delete" OnClick="@HandleDeleteItem" IconColor="@Color.Primary">
+            <MudText>@Localizer[Translations.Components.Files.DashboardRowOptions.DeleteLink]</MudText>
+        </MudMenuItem>
+    </ChildContent>
+</MudMenu>
+
+@code {
+    [Parameter] [EditorRequired] public required DashboardItem Item { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnOpen { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnOpenDetailDialog { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnOpenMoveItemDialog { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnOpenFolder { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnOpenDeleteItemDialog { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnOpenRenameItemDialog { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnDownloadFile { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback<DashboardItem> OnPublishFile { get; set; }
+
+    private Task HandleVisibilityChanged(bool isVisible)
+    {
+        if (isVisible)
+        {
+            return OnOpen.InvokeAsync(Item);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    protected Task HandleShowDetail() => OnOpenDetailDialog.InvokeAsync(Item);
+    protected Task HandleOpenFolder() => OnOpenFolder.InvokeAsync(Item);
+    protected Task HandlePublishFile() => OnPublishFile.InvokeAsync(Item);
+    protected Task HandleDownloadFile() => OnDownloadFile.InvokeAsync(Item);
+    protected Task HandleMoveFile() => OnOpenMoveItemDialog.InvokeAsync(Item);
+    protected Task HandleRenameItem() => OnOpenRenameItemDialog.InvokeAsync(Item);
+    protected Task HandleDeleteItem() => OnOpenDeleteItemDialog.InvokeAsync(Item);
+}

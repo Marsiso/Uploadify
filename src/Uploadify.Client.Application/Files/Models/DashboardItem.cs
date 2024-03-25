@@ -14,6 +14,20 @@ public record DashboardItem
         Folder = folder;
     }
 
+    public DashboardItem(FolderOverview folder, bool isParent = false)
+    {
+        Name = folder.Name;
+        IsFolder = true;
+        IsParent = isParent;
+        Folder = folder;
+    }
+
+    public DashboardItem(FileOverview file)
+    {
+        Name = file.Name;
+        File = file;
+    }
+
     public string Name { get; init; }
 
     [MemberNotNullWhen(true, nameof(Folder))]

@@ -1,0 +1,213 @@
+﻿@using Uploadify.Client.Application.Files.Services
+@using Uploadify.Client.Domain.Resources.Models
+@using Uploadify.Client.Web.Components.Shared
+@using Uploadify.Client.Web.Components.Files.Dashboard.Shared
+@using Uploadify.Client.Web.Components.Files.Dashboard.Shared.Dialogs
+@using Uploadify.Client.Application.Files.Models
+@using Uploadify.Client.Application.Utilities.Services
+
+@inject FileService FileService
+@inject FolderService FolderService
+@inject ISnackbar Snackbar
+@inject MobileViewManager MobileViewManager
+@inject IStringLocalizer Localizer
+
+<LoadingWrapper Title="@Localizer[Translations.Pages.Dashboard.Title]" ShowTitle IsLoading="@IsLoading">
+    <Skeleton>
+        <PrimarySkeleton FullWidth Height="500px"/>
+    </Skeleton>
+    <Children>
+        @if (FolderSummaryResponse is { IsSuccess: true })
+        {
+            <div class="d-flex justify-space-between">
+                <DashboardBreadcrumbs Summary="@FolderSummaryResponse.Resource" OnClick="@FetchFolderSummary"/>
+                <div class="d-flex align-center">
+                    <PrimaryButton Icon="@Icons.Material.Rounded.Add"
+                                   Text="Přidat"
+                                   Class="px-5"
+                                   OnClick="@(() => { })"
+                                   Size="@Size.Small"
+                                   Color="@Color.Success"/>
+                </div>
+            </div>
+
+            if (FolderSummaryResponse.Resource.Folders is { Count: > 0 })
+            {
+                foreach (var item in FolderSummaryResponse.Resource.Folders.Select(folder => new DashboardItem(folder)))
+                {
+                    <DashboardCard Item="@item"
+                                   OnOpenOptions="@HandleOptionsOpened"
+                                   OnOpenDetailDialog="@HandleShowDetail"
+                                   OnOpenRenameItemDialog="@HandleRenameItem"
+                                   OnPublishFile="@HandlePublishFile"
+                                   OnOpenFolder="@HandleOpenFolder"
+                                   OnOpenMoveItemDialog="@HandleMoveItem"
+                                   OnDownloadFile="@HandleDownloadFile"
+                                   OnOpenDeleteItemDialog="@HandleDeleteItem"/>
+                }
+            }
+
+            if (FolderSummaryResponse.Resource.Files is { Count: > 0 })
+            {
+                foreach (var item in FolderSummaryResponse.Resource.Files.Select(file => new DashboardItem(file)))
+                {
+                    <DashboardCard Item="@item"
+                                   OnOpenOptions="@HandleOptionsOpened"
+                                   OnOpenDetailDialog="@HandleShowDetail"
+                                   OnOpenRenameItemDialog="@HandleRenameItem"
+                                   OnPublishFile="@HandlePublishFile"
+                                   OnOpenFolder="@HandleOpenFolder"
+                                   OnOpenMoveItemDialog="@HandleMoveItem"
+                                   OnDownloadFile="@HandleDownloadFile"
+                                   OnOpenDeleteItemDialog="@HandleDeleteItem"/>
+                }
+            }
+
+            if (MobileViewManager.IsDesktop)
+            {
+                <FileDropzone Destination="@FolderSummaryResponse.Resource" OnSuccess="@FetchFolderSummary"/>
+            }
+
+            if (SelectedItem != null)
+            {
+                switch (Dialog)
+                {
+                    case VisibleDialog.Detail:
+                        <DashboardItemDetailDialog IsVisible Item="@SelectedItem" ParentFolder="@FolderSummaryResponse.Resource.Parent"/>
+                        break;
+
+                    case VisibleDialog.RenameItem:
+                        <DashboardItemRenameDialog IsVisible Item="@SelectedItem" OnSuccess="@(() => FetchFolderSummary(FolderSummaryResponse.Resource.FolderId))" CancellationToken="@CancellationToken" />
+                        break;
+
+                    case VisibleDialog.DeleteItem:
+                        <DashboardItemDeleteDialog IsVisible Item="@SelectedItem" OnSuccess="@(() => FetchFolderSummary(FolderSummaryResponse.Resource.FolderId))" CancellationToken="@CancellationToken"/>
+                        break;
+
+                    case VisibleDialog.MoveItem:
+                        <DashboardItemMoveDialog IsVisible Item="@SelectedItem" OnSuccess="@(() => FetchFolderSummary(FolderSummaryResponse.Resource.FolderId))" CancellationToken="@CancellationToken"/>
+                        break;
+                }
+            }
+        }
+    </Children>
+</LoadingWrapper>
+
+@code {
+    [Parameter, EditorRequired] public CancellationToken CancellationToken { get; set; }
+
+    public bool IsLoading { get; set; } = true;
+    public DashboardItem? SelectedItem { get; set; }
+    public ResourceResponse<FolderSummary>? FolderSummaryResponse { get; set; }
+
+    protected VisibleDialog Dialog { get; set; }
+    protected override bool ShouldRender() => !IsLoading;
+    protected override async Task OnInitializedAsync() => await FetchFolderSummary();
+
+    protected async Task FetchFolderSummary(int? folderID = null)
+    {
+        IsLoading = true;
+        FolderSummaryResponse = await FolderService.GetSummary(folderID, CancellationToken);
+        IsLoading = false;
+    }
+
+    protected Task HandleOptionsOpened(DashboardItem item)
+    {
+        ResetDialogsVisibility();
+
+        SelectedItem = item;
+        return Task.CompletedTask;
+    }
+
+    protected Task HandleShowDetail(DashboardItem item)
+    {
+        SelectedItem = item;
+        Dialog = VisibleDialog.Detail;
+        return Task.CompletedTask;
+    }
+
+    protected Task HandleRenameItem(DashboardItem item)
+    {
+        SelectedItem = item;
+        Dialog = VisibleDialog.RenameItem;
+        return Task.CompletedTask;
+    }
+
+    protected async Task HandlePublishFile(DashboardItem item)
+    {
+        SelectedItem = item;
+        Dialog = VisibleDialog.None;
+
+        if (item.IsFolder)
+        {
+            return;
+        }
+
+        var resourceResponse = await FileService.ChangeVisibility(item.File.FileId.Value, !item.File.IsPublic.Value, CancellationToken);
+        if (resourceResponse.IsSuccess)
+        {
+            item.File.IsPublic = !item.File.IsPublic;
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Dashboard.VisibilityChangedSuccess], item.File.Name), Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Dashboard.VisibilityChangedFailure], item.File.Name), Severity.Error);
+        }
+
+        await FetchFolderSummary(FolderSummaryResponse.Resource.FolderId);
+    }
+
+    protected async Task HandleDownloadFile(DashboardItem item)
+    {
+        SelectedItem = item;
+        Dialog = VisibleDialog.None;
+
+        if (item.IsFolder)
+        {
+            return;
+        }
+
+        var isSuccess = await FileService.Download(item.File.FileId.Value, item.File.Name, cancellationToken: default);
+        if (isSuccess)
+        {
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadSuccess], item.File.Name), Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadFailure], item.File.Name), Severity.Error);
+        }
+    }
+
+    protected Task HandleOpenFolder(DashboardItem item)
+    {
+        SelectedItem = item;
+        Dialog = VisibleDialog.None;
+
+        return FetchFolderSummary(item.Folder?.FolderId);
+    }
+
+    protected Task HandleDeleteItem(DashboardItem item)
+    {
+        SelectedItem = item;
+        Dialog = VisibleDialog.DeleteItem;
+        return Task.CompletedTask;
+    }
+
+    protected Task HandleMoveItem(DashboardItem item)
+    {
+        SelectedItem = item;
+        Dialog = VisibleDialog.MoveItem;
+        return Task.CompletedTask;
+    }
+
+    protected void ResetDialogsVisibility() => Dialog = VisibleDialog.None;
+
+    protected enum VisibleDialog
+    {
+        None,
+        Detail,
+        RenameItem,
+        DeleteItem,
+        MoveItem
+    }
+}

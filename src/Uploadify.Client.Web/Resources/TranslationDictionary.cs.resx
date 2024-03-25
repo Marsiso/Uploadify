@@ -438,4 +438,10 @@
     <data name="pages.dashboard.visibility_changed.failure" xml:space="preserve">
         <value>Soubor {0} byl skryt před ostatními uživateli</value>
     </data>
+    <data name="common.file" xml:space="preserve">
+        <value>Soubor</value>
+    </data>
+    <data name="common.folder" xml:space="preserve">
+        <value>Složka</value>
+    </data>
 </root>

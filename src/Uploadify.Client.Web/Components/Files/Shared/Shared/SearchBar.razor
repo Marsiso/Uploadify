@@ -1,0 +1,19 @@
+﻿@inject IStringLocalizer Localizer
+
+<MudTextField Adornment="@Adornment.Start"
+              AdornmentIcon="@Icons.Material.Filled.Search"
+              Class="mud-width-full mb-5 px-0"
+              DebounceInterval="250"
+              DisableUnderLine
+              FullWidth
+              MaxLength="255"
+              OnDebounceIntervalElapsed="@HandleSearchTermValueChanged"
+              Placeholder="@Localizer[Translations.Pages.Shared.SearchLabel]"
+              T="string"
+              Variant="@Variant.Outlined"/>
+
+@code {
+    [Parameter, EditorRequired] public required EventCallback<string?> OnSearchTermChanged { get; set; }
+
+    protected Task HandleSearchTermValueChanged(string searchTerm) => OnSearchTermChanged.InvokeAsync(searchTerm);
+}

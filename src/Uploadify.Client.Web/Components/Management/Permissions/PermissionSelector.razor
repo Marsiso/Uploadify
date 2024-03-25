@@ -6,10 +6,10 @@
            Label="@Localizer[Translations.Components.PermissionSelector.Label]"
            T="Permission"
            Variant="Variant.Outlined">
-    @foreach (var permission in _values)
+    @foreach (var permission in Permission)
     {
         <MudSelectItem Value="permission">
-            <MudText Typo="Typo.body1">
+            <MudText>
                 @Localizer[PermissionTranslationKeys.Values[permission]]
             </MudText>
         </MudSelectItem>
@@ -18,8 +18,8 @@
 
 @code {
     private RoleOverview? _role;
-    private Permission _selectedValue = Permission.None;
-    private IEnumerable<Permission> _values = PermissionHelpers.GetValues();
+    public Permission _selectedValue = Authorization.Models.Permission.None;
+    public IEnumerable<Permission> Permission { get; set; } = PermissionHelpers.GetValues();
 
     protected Permission SelectedValue
     {
@@ -38,11 +38,11 @@
         set
         {
             _role = value;
-            _values = PermissionHelpers.GetDistinctValues(value?.Permission);
+            Permission = PermissionHelpers.GetDistinctValues(value?.Permission);
 
-            if (!_values.Any(permission => permission.HasFlag(_selectedValue)))
+            if (!Permission.Any(permission => permission.HasFlag(_selectedValue)))
             {
-                SelectedValue = _values.First();
+                SelectedValue = Permission.First();
             }
         }
     }
@@ -51,8 +51,7 @@
 
     protected override void OnInitialized()
     {
-        _values = PermissionHelpers.GetDistinctValues(Role?.Permission);
-        SelectedValue = _values.First();
+        Permission = PermissionHelpers.GetDistinctValues(Role?.Permission);
+        SelectedValue = Permission.First();
     }
-
 }

@@ -159,6 +159,24 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string common_file {
+            get {
+                return ResourceManager.GetString("common.file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        internal static string common_folder {
+            get {
+                return ResourceManager.GetString("common.folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Translation not found..
         /// </summary>
         internal static string common_translation_not_found {
@@ -1284,7 +1302,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item was not found..
+        ///   Looks up a localized string similar to File was not found..
         /// </summary>
         internal static string request_statuses_not_found {
             get {
@@ -1311,7 +1329,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item owner permission required..
+        ///   Looks up a localized string similar to File owner permission required..
         /// </summary>
         internal static string validations_permission_required {
             get {

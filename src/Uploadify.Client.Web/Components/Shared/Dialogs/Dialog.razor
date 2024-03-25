@@ -4,9 +4,7 @@
            OnBackdropClick="@HandleBackdropClick">
     <TitleContent>
         <MudStack AlignItems="@AlignItems.Center" Row Spacing="2">
-            <MudIconButton Icon="@Icons.Material.Rounded.ArrowBackIosNew"
-                           OnClick="@(() => HandleIsVisibleChanged(false))"
-                           Title="Zavřít"/>
+            <MudIconButton Icon="@Icons.Material.Rounded.ArrowBackIosNew" OnClick="@(() => HandleIsVisibleChanged(false))" Color="@Color.Primary"/>
             <MudText Color="@Color.Primary" Typo="@Typo.h3">@Title</MudText>
         </MudStack>
     </TitleContent>

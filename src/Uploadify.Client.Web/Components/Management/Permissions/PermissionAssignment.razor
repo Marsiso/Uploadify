@@ -1,46 +1,39 @@
 ﻿@using Uploadify.Client.Application.Application.Services
 @using Uploadify.Client.Web.Components.Management.Roles
+@using Uploadify.Client.Web.Components.Shared
+
 @inject NavigationManager Navigation
 @inject PermissionService PermissionService
 @inject IStringLocalizer<TranslationDictionary> Localizer
 
-<MudDialog @bind-IsVisible="@IsVisible"
-           Class="pa-4"
-           ClassActions="px-6">
+<MudDialog @bind-IsVisible="@IsVisible" Class="pa-5" ClassActions="px-5">
     <TitleContent>
-        <MudText Class="mb-4"
-                 Typo="@Typo.h4">
+        <MudText Class="mb-5" Typo="@Typo.h4">
             @Localizer[Translations.Components.PermissionAssignment.Title]
         </MudText>
-        <MudText Typo="@Typo.body1">
+        <MudText>
             @Localizer[Translations.Components.PermissionAssignment.Description]
         </MudText>
     </TitleContent>
     <DialogContent>
         <MudStack>
-            <RoleSelector CancellationToken="@CancellationToken"
-                          OnSelectedValueChanged="@OnSelectedRoleChanged"/>
-            <PermissionSelector OnSelectedValueChanged="@OnSelectedPermissionChanged"
-                                Role="@_selectedRole"/>
+            <RoleSelector CancellationToken="@CancellationToken" OnSelectedValueChanged="@OnSelectedRoleChanged"/>
+            <PermissionSelector OnSelectedValueChanged="@OnSelectedPermissionChanged" Role="@SelectedRole"/>
         </MudStack>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="@Color.Tertiary"
-                   Disabled="@(string.IsNullOrWhiteSpace(_selectedRole?.Name) || _isPermissionAssignmentInProgress || _selectedPermission == Permission.None)"
-                   FullWidth
-                   OnClick="@OnSubmit"
-                   Size="@Size.Large"
-                   Style="border-radius: 1.5rem;"
-                   Variant="@Variant.Filled">
-            @Localizer[Translations.Components.PermissionAssignment.SubmitButton]
-        </MudButton>
+        <PrimaryButton Color="@Color.Success"
+                       IsDisabled="@(string.IsNullOrWhiteSpace(SelectedRole?.Name) || IsLoading || SelectedPermission == Permission.None)"
+                       FullWidth
+                       OnClick="@OnSubmit"
+                       Size="@Size.Large" Text="@Localizer[Translations.Components.PermissionAssignment.SubmitButton]"/>
     </DialogActions>
 </MudDialog>
 
 @code {
-    private bool _isPermissionAssignmentInProgress;
-    private Permission _selectedPermission;
-    private RoleOverview? _selectedRole;
+    public bool IsLoading { get; set; }
+    public Permission SelectedPermission { get; set; }
+    public RoleOverview? SelectedRole { get; set; }
 
     [Parameter] public required bool IsVisible { get; set; }
     [Parameter] public required EventCallback OnSuccess{ get; set; }
@@ -48,31 +41,30 @@
 
     private async Task OnSubmit()
     {
-        if (string.IsNullOrWhiteSpace(_selectedRole?.Name))
+        if (string.IsNullOrWhiteSpace(SelectedRole?.Name))
         {
             return;
         }
 
-        _isPermissionAssignmentInProgress = true;
+        IsLoading = true;
 
-        var resourceResponse = await PermissionService.AssignPermission(_selectedPermission, _selectedRole, CancellationToken);
+        var resourceResponse = await PermissionService.AssignPermission(SelectedPermission, SelectedRole, CancellationToken);
         if (resourceResponse.IsSuccess)
         {
             await OnSuccess.InvokeAsync();
             IsVisible = false;
         }
 
-        _isPermissionAssignmentInProgress = false;
+        IsLoading = false;
     }
 
     private void OnSelectedRoleChanged(RoleOverview? role)
     {
-        _selectedRole = role;
+        SelectedRole = role;
     }
 
     private void OnSelectedPermissionChanged(Permission permission)
     {
-        _selectedPermission = permission;
+        SelectedPermission = permission;
     }
-
 }

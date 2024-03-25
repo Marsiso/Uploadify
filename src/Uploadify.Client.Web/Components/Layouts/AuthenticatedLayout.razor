@@ -8,13 +8,13 @@
 <MudBreakpointProvider OnBreakpointChanged="OnBreakpointChanged"/>
 
 <MudLayout>
-    <MudAppBar Class="pt-10 px-5" Fixed="false">
+    <MudAppBar Class="@(MobileViewManager.IsDesktop ? "pt-10 px-5" : "pt-10")" Fixed="false">
         <AppLogo/>
         <MudSpacer/>
         <Avatar/>
         <LocaleSelector/>
     </MudAppBar>
-    
+
     <MudMainContent>
         @if (MobileViewManager.IsDesktop)
         {

@@ -1,118 +1,18 @@
 ﻿@attribute [Permission]
 @attribute [Route(PageRoutes.Shared)]
 
-@inject FileService FilesService
-@inject ISnackbar Snackbar
-@inject IStringLocalizer<TranslationDictionary> Localizer
-@using Uploadify.Client.Domain.Resources.Models
-@using Uploadify.Client.Web.Components.Shared
-@using Uploadify.Client.Application.Files.Services
+@using Uploadify.Client.Web.Components.Files.Shared
+
 @implements IDisposable
 
-<LoadingWrapper Title="@Localizer[Translations.Pages.Shared.Title]">
-    <Children>
-        <MudTextField Adornment="@Adornment.Start"
-                      AdornmentIcon="@Icons.Material.Filled.Search"
-                      Class="mud-width-full mb-5 px-0"
-                      DebounceInterval="250"
-                      DisableUnderLine
-                      FullWidth
-                      InputMode="@InputMode.text"
-                      MaxLength="255"
-                      OnDebounceIntervalElapsed="@HandleSearchTermValueChanged"
-                      Placeholder="@Localizer[Translations.Pages.Shared.SearchLabel]"
-                      T="string"
-                      Variant="@Variant.Outlined">
-        </MudTextField>
-        <MudTable Bordered="false"
-                  Breakpoint="@Breakpoint.Always"
-                  Elevation="0"
-                  Outlined="false"
-                  ReadOnly
-                  @ref="@DashboardRef"
-                  ServerData="@(new Func<TableState, Task<TableData<PublicFileOverview>>>(HandleServerData))"
-                  T="PublicFileOverview"
-                  Virtualize>
-            <RowTemplate>
-                <MudTd Class="mud-width-full px-0">
-                    <div class="d-flex align-center mud-width-full">
-                        <MudIcon Class="pr-2"
-                                 Icon="@Icons.Material.Rounded.InsertPhoto"/>
-                        <MudText Style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;max-width:calc(100vw - 140px);">
-                            @context.Name
-                        </MudText>
-                    </div>
-                </MudTd>
-                <MudTd Class="mud-width-full px-0 pt-0">
-                    <MudSpacer/>
-                    <MudButton Color="@Color.Tertiary"
-                               OnClick="@(() => HandleDownload(context))"
-                               Size="@Size.Small"
-                               StartIcon="@Icons.Material.Rounded.FileDownload"
-                               Variant="@Variant.Text">
-                        @Localizer[Translations.Pages.Shared.DownloadButton]
-                    </MudButton>
-                </MudTd>
-            </RowTemplate>
-            <NoRecordsContent>
-                <MudText>@Localizer[Translations.Pages.Shared.MatchesNotFound]</MudText>
-            </NoRecordsContent>
-            <LoadingContent>
-                <PrimarySkeleton FullWidth
-                                 Height="500px"/>
-            </LoadingContent>
-            <PagerContent>
-                <MudTablePager InfoFormat="@Localizer[Translations.Pages.Shared.PaginationFormat]"
-                               PageSizeOptions="@( [10, 25, 50])"
-                               RowsPerPageString=""/>
-            </PagerContent>
-        </MudTable>
-    </Children>
-</LoadingWrapper>
+<Dashboard CancellationToken="@CancellationTokenSource.Token"/>
 
 @code {
-    private readonly CancellationTokenSource _cancellationTokenSource = new();
-
-    public MudTable<PublicFileOverview> DashboardRef { get; set; }
-    public ResourceResponse<ICollection<PublicFileOverview>>? PublicFilesResponse { get; set; }
-    public int TotalItems { get; set; }
-    public string? SearchTerm { get; set; }
-
-    private async Task<TableData<PublicFileOverview>> HandleServerData(TableState state)
-    {
-        PublicFilesResponse = await FilesService.GetPublicFiles(state.Page, state.PageSize, SearchTerm, _cancellationTokenSource.Token);
-        if (!PublicFilesResponse.IsSuccess)
-        {
-            return new() { TotalItems = 0, Items = [] };
-        }
-
-        TotalItems = PublicFilesResponse.Resource.Count;
-        return new() { TotalItems = TotalItems, Items = PublicFilesResponse.Resource };
-    }
-
-    private Task HandleSearchTermValueChanged(string searchTerm)
-    {
-        SearchTerm = searchTerm;
-        return DashboardRef.ReloadServerData();
-    }
-
-    private async Task HandleDownload(PublicFileOverview file)
-    {
-        var isSuccess = await FilesService.Download(file.FileId.Value, file.Name, _cancellationTokenSource.Token);
-        if (isSuccess)
-        {
-            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadSuccess], file.Name), Severity.Success);
-        }
-        else
-        {
-            Snackbar.Add(string.Format(Localizer[Translations.Pages.Shared.DownloadFailure], file.Name), Severity.Error);
-        }
-    }
+    protected readonly CancellationTokenSource CancellationTokenSource = new();
 
     void IDisposable.Dispose()
     {
-        _cancellationTokenSource.Cancel();
-        _cancellationTokenSource.Dispose();
+        CancellationTokenSource.Cancel();
+        CancellationTokenSource.Dispose();
     }
-
 }

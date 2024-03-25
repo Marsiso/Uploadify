@@ -1,18 +1,23 @@
 :root {
-    --text-primary: #0a0a0a;
-    --text-error: #cc4b37;
-    --light-gray: #e6e6e6;
-    --medium-gray: #cacaca;
-    --background-contrast: #1779ba;
-    --secondary: #767676;
+    --text-error: #CC4B37;
+    --light-gray: #E6E6E6;
+    --color: #FFFFFF;
+    --color-darken: #FFFFFFA0;
+    --background: #212121;
+    --success: #0BBA83;
+    --success-darken: #0BBA83A0;
 }
 
-html, body {
+* {
+    background-color: var(--background) !important;
+    color: var(--color) !important;
+}
+
+html, body, body > div {
     position: relative;
-}
-
-body > div {
-    height: 100vh;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 1rem;
 }
 
 div:has(> h1) {
@@ -53,22 +58,14 @@ form {
 }
 
 .fieldset {
-    border-color: var(--light-gray) !important;
+    border-color: var(--color-darken) !important;
 }
 
 .card {
     padding: 3rem .5rem .5rem;
 }
 
-label.validation-error {
-    color: var(--text-error);
-}
-
-.help-text {
-    color: var(--text-error);
-}
-
-label.validation-error:has(> input.validation-error) {
+.help-text, label.validation-error, label.validation-error:has(> input.validation-error) {
     color: var(--text-error) !important;
 }
 
@@ -77,13 +74,32 @@ input.validation-error {
 }
 
 .button {
-    border-radius: 1.5rem !important;
+    border-radius: 3rem !important;
+    background-color: var(--success) !important;
+    color: var(--color) !important;
 }
 
-fieldset {
-    border-radius: 1rem !important;
+.button.secondary {
+    background-color: var(--color) !important;
+    color: var(--background) !important;
 }
 
-input {
+.button:hover, .button:focus {
+    background-color: var(--success-darken) !important;
+    color: var(--color)20 !important;
+}
+
+.button.secondary:hover, .button.secondary:focus {
+    background-color: var(--color-darken) !important;
+    color: var(--background) !important;
+}
+
+input, fieldset {
     border-radius: .5rem !important;
+}
+
+table, table > * {
+    border-color: transparent !important;
+    outline-color: transparent !important;
+    box-shadow: transparent !important;
 }

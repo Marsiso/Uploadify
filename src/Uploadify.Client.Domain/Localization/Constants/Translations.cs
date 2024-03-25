@@ -7,6 +7,8 @@ public static class Translations
         public const string BaseCommon = "common";
         public const string AppName = $"{BaseCommon}.app_name";
         public const string TranslationNotFound = $"{BaseCommon}.translation_not_found";
+        public const string Folder = $"{BaseCommon}.folder";
+        public const string File = $"{BaseCommon}.file";
     }
 
     public static class Components

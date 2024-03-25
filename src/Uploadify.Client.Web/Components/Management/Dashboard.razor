@@ -1,0 +1,45 @@
+﻿@using Uploadify.Client.Web.Components.Shared
+@using Uploadify.Client.Web.Components.Management.Permissions
+
+@inject IStringLocalizer<TranslationDictionary> Localizer
+
+<Heading Title="@Localizer[Translations.Pages.Management.Title]"/>
+<MudText Class="mt-5">
+    @Localizer[Translations.Pages.Management.Description]
+</MudText>
+
+<MudTabs Class="mt-10" Rounded ActivePanelIndex="1">
+    <PermissionView Permission="@Permission.ViewUsers">
+        <Authorized>
+            <MudTabPanel Icon="@Icons.Material.Rounded.PeopleAlt" Text="@Localizer[Translations.Pages.Management.UsersLabel]" Disabled>
+                <ChildContent>
+                    <MudText Class="mt-5 mb-10">
+                        @Localizer[Translations.Pages.Management.UsersDescription]
+                    </MudText>
+                </ChildContent>
+            </MudTabPanel>
+        </Authorized>
+        <NotAuthorized>
+            <MudTabPanel Disabled Icon="@Icons.Material.Rounded.PeopleAlt" Text="@Localizer[Translations.Pages.Management.UsersLabel]"/>
+        </NotAuthorized>
+    </PermissionView>
+    <PermissionView Permission="@Permission.ViewPermissions">
+        <Authorized>
+            <MudTabPanel Icon="@Icons.Material.Rounded.AdminPanelSettings" Text="@Localizer[Translations.Pages.Management.PermissionsLabel]">
+                <ChildContent>
+                    <MudText Class="mt-5 mb-10">
+                        @Localizer[Translations.Pages.Management.PermissionsDescription]
+                    </MudText>
+                    <PermissionDashboard CancellationToken="@CancellationToken"/>
+                </ChildContent>
+            </MudTabPanel>
+        </Authorized>
+        <NotAuthorized>
+            <MudTabPanel Disabled Icon="@Icons.Material.Rounded.AdminPanelSettings" Text="@Localizer[Translations.Pages.Management.PermissionsLabel]"/>
+        </NotAuthorized>
+    </PermissionView>
+</MudTabs>
+
+@code{
+    [Parameter, EditorRequired] public required CancellationToken CancellationToken { get; set; }
+}

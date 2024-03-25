@@ -1,0 +1,29 @@
+﻿@using Uploadify.Client.Application.Files.Models
+@using Uploadify.Client.Web.Components.Shared
+
+@inject IStringLocalizer Localizer
+
+<MudCard Elevation="1" Outlined Class="pa-5">
+    <div class="d-flex flex-grow-1 align-center justify-space-between">
+        <div class="d-flex align-center gap-2">
+            <MudIcon Title="@Localizer[Translations.Common.File]"
+                     Icon="@Icons.Material.Rounded.Image"
+                     Color="@Color.Primary"/>
+            <MudText>@File.Name</MudText>
+        </div>
+        <PrimaryButton Color="@Color.Success"
+                       Size="@Size.Small"
+                       Variant="@Variant.Filled"
+                       Icon="@Icons.Material.Rounded.FileUpload"
+                       Text="@Localizer[Translations.Pages.Shared.DownloadButton]"
+                       OnClick="@HandleDownload"/>
+    </div>
+</MudCard>
+
+@code {
+    [Parameter, EditorRequired] public required PublicFileOverview File { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<PublicFileOverview> OnDownload { get; set; }
+    [Parameter, EditorRequired] public required CancellationToken CancellationToken { get; set; }
+
+    protected Task HandleDownload() => OnDownload.InvokeAsync(File);
+}

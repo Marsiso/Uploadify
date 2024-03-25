@@ -1,62 +1,47 @@
-﻿@inject RoleService RoleService
-@inject PermissionService PermissionService
-@inject IStringLocalizer<TranslationDictionary> Localizer
-@using Mapster
+﻿@using Mapster
 @using Uploadify.Client.Application.Application.Services
 @using Uploadify.Client.Core.Auth.Constants
-@implements IDisposable
 
-<MudStack>
-    <MudToolBar Class="px-0">
+@inject RoleService RoleService
+@inject PermissionService PermissionService
+@inject IStringLocalizer Localizer
+
+<div>
+    <div class="d-flex justify-space-between align-center">
         <MudText Typo="Typo.h3">@Localizer[Translations.Components.PermissionDashboard.Title]</MudText>
-        <MudSpacer/>
         <PermissionView Permission="Permission.EditPermissions">
             <Authorized>
-                <MudIconButton Icon="@Icons.Material.Rounded.GroupAdd"
-                               OnClick="@(() => OnAssignPermission())"/>
+                <MudIconButton Icon="@Icons.Material.Rounded.GroupAdd" OnClick="@(() => OnAssignPermission())" Color="@Color.Primary"/>
             </Authorized>
             <NotAuthorized>
-                <MudIconButton Disabled="true"
-                               Icon="@Icons.Material.Rounded.GroupAdd"/>
+                <MudIconButton Disabled Icon="@Icons.Material.Rounded.GroupAdd" Color="@Color.Primary"/>
             </NotAuthorized>
         </PermissionView>
-    </MudToolBar>
+    </div>
 
     <MudDataGrid Culture="@CultureInfo.CurrentCulture"
                  Filterable="false"
                  Groupable
-                 GroupStyle="color:var(--mud-palette-dark);background-color:var(--mud-palette-white);"
-                 Items="@ProjectByPermission(_summary?.Roles ?? Enumerable.Empty<RoleOverview>())"
-                 Loading="@(_isLoading || _summary is not { Roles: not null })"
-                 LoadingProgressColor="@Color.Dark"
+                 Items="@ProjectByPermission(Summary?.Roles ?? Enumerable.Empty<RoleOverview>())"
+                 Loading="@(IsLoading || Summary is not { Roles: not null })"
+                 LoadingProgressColor="@Color.Primary"
                  SortMode="@SortMode.None"
                  T="Element">
         <Columns>
-            <PropertyColumn Groupable="false"
-                            Property="element => element.Role.Name"
-                            Title="@Localizer[Translations.Components.PermissionDashboard.RoleNameLabel]"/>
-
-            <TemplateColumn CellClass="d-flex justify-end"
-                            Groupable="false">
+            <PropertyColumn Groupable="false" Property="element => element.Role.Name" Title="@Localizer[Translations.Components.PermissionDashboard.RoleNameLabel]"/>
+            <TemplateColumn CellClass="d-flex justify-end" Groupable="false">
                 <CellTemplate>
-                    <MudToolBar Class="px-0"
-                                Dense>
+                    <MudToolBar Class="px-0" Dense>
                         @{
                             var element = context.Item;
                         }
 
-                        <PermissionView Context="AuthenticationState"
-                                        Permission="Permission.EditPermissions">
+                        <PermissionView Context="AuthenticationState" Permission="Permission.EditPermissions">
                             <Authorized>
-                                <MudIconButton Icon="@Icons.Material.Rounded.GroupRemove"
-                                               OnClick="@(() => OnRevokePermission(context.Item))"/>
-                                <MudIconButton Icon="@Icons.Material.Rounded.Delete"/>
+                                <MudIconButton Icon="@Icons.Material.Rounded.GroupRemove" OnClick="@(() => OnRevokePermission(context.Item))" Color="@Color.Primary"/>
                             </Authorized>
                             <NotAuthorized>
-                                <MudIconButton Disabled
-                                               Icon="@Icons.Material.Rounded.GroupRemove"/>
-                                <MudIconButton Disabled
-                                               Icon="@Icons.Material.Rounded.Delete"/>
+                                <MudIconButton Disabled Icon="@Icons.Material.Rounded.GroupRemove"/>
                             </NotAuthorized>
                         </PermissionView>
                     </MudToolBar>
@@ -68,16 +53,13 @@
                             Hidden
                             Property="@(element => element.Permission)">
                 <GroupTemplate>
-                    <MudText Class="ps-2"
-                             Inline
-                             Style="font-weight: 700; width: 100%;">
+                    <MudText Class="text-center ps-2" Inline>
                         @if (context.Grouping.Key is Permission permission)
                         {
                             @Localizer[PermissionTranslationKeys.Values[permission]]
                         }
-                        <MudChip Color="@Color.Primary"
-                                 Size="@Size.Small"
-                                 Variant="@Variant.Text">
+
+                        <MudChip Color="@Color.Primary" Size="@Size.Small" Variant="@Variant.Text">
                             @context.Grouping.Count()
                         </MudChip>
                     </MudText>
@@ -85,29 +67,25 @@
             </PropertyColumn>
         </Columns>
     </MudDataGrid>
-</MudStack>
+</div>
 
-<PermissionAssignment CancellationToken="@_cancellationTokenSource.Token"
-                      OnSuccess="FetchRoleSummary"
-                      @ref="@PermissionAssignment"/>
+<PermissionAssignment CancellationToken="@CancellationToken" OnSuccess="FetchRoleSummary" @ref="@PermissionAssignment"/>
 
 @code {
-    private readonly IEnumerable<Permission> _permissions = PermissionHelpers.GetValues();
+    [Parameter, EditorRequired] public CancellationToken CancellationToken { get; set; }
 
-    private bool _isLoading = true;
-    private RolesSummary? _summary;
-    private readonly CancellationTokenSource _cancellationTokenSource = new();
+    public readonly IEnumerable<Permission> Permissions = PermissionHelpers.GetValues();
+
+    public bool IsLoading { get; set; } = true;
+    public RolesSummary? Summary { get; set; }
 
     protected PermissionAssignment? PermissionAssignment { get; set; }
 
-    protected override Task OnInitializedAsync()
-    {
-        return FetchRoleSummary();
-    }
+    protected override Task OnInitializedAsync() => FetchRoleSummary();
 
-    private async Task FetchRoleSummary()
+    protected async Task FetchRoleSummary()
     {
-        _isLoading = true;
+        IsLoading = true;
 
         var resourceResponse = await RoleService.GetSummary();
 
@@ -116,11 +94,11 @@
             return;
         }
 
-        _summary = resourceResponse.Resource;
-        _isLoading = false;
+        Summary = resourceResponse.Resource;
+        IsLoading = false;
     }
 
-    private IEnumerable<Element> ProjectByPermission(IEnumerable<RoleOverview> roles)
+    protected IEnumerable<Element> ProjectByPermission(IEnumerable<RoleOverview> roles)
     {
         var elements = new List<Element>();
         foreach (var projectedRoles in roles.Select(ProjectByPermission))
@@ -131,9 +109,9 @@
         return elements.DistinctBy(element => new { element.Permission, element.Role.Name });
     }
 
-    private IEnumerable<RoleOverview> ProjectByPermission(RoleOverview role)
+    protected IEnumerable<RoleOverview> ProjectByPermission(RoleOverview role)
     {
-        var permissions = _permissions.Where(permission => role.Permission.HasValue && role.Permission.Value.HasFlag(permission));
+        var permissions = Permissions.Where(permission => role.Permission.HasValue && role.Permission.Value.HasFlag(permission));
         var roles = permissions.Select(permission =>
         {
             var projectedRole = role.Adapt<RoleOverview>();
@@ -146,14 +124,11 @@
         return roles;
     }
 
-    private object GroupByPermission(RoleOverview role)
-    {
-        return role.Permission ?? Permission.None;
-    }
+    protected object GroupByPermission(RoleOverview role) => role.Permission ?? Permission.None;
 
-    private record Element(Permission Permission, RoleOverview Role);
+    protected record Element(Permission Permission, RoleOverview Role);
 
-    private void OnAssignPermission()
+    protected void OnAssignPermission()
     {
         if (PermissionAssignment == null)
         {
@@ -163,25 +138,18 @@
         PermissionAssignment.IsVisible = true;
     }
 
-    private async Task OnRevokePermission(Element element)
+    protected async Task OnRevokePermission(Element element)
     {
-        var resourceResponse = await PermissionService.RevokePermission(element.Permission, element.Role, _cancellationTokenSource.Token);
-
+        var resourceResponse = await PermissionService.RevokePermission(element.Permission, element.Role, CancellationToken);
         if (!resourceResponse.IsSuccess)
         {
             return;
         }
 
-        var role = _summary?.Roles.SingleOrDefault(role => role.Name == element.Role.Name);
+        var role = Summary?.Roles.SingleOrDefault(role => role.Name == element.Role.Name);
         if (role != null)
         {
             role.Permission &= ~element.Permission;
         }
-    }
-
-    void IDisposable.Dispose()
-    {
-        _cancellationTokenSource.Cancel();
-        _cancellationTokenSource.Dispose();
     }
 }

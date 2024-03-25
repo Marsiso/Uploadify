@@ -1,6 +1,7 @@
 ﻿@using Uploadify.Client.Application.Application.Services
+
 @inject RoleService RoleService
-@inject IStringLocalizer<TranslationDictionary> Localizer
+@inject IStringLocalizer Localizer
 
 @if (_isLoading || _selectedValue == null || _summary is not { Roles.Count: > 0 })
 {

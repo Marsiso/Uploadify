@@ -1,0 +1,32 @@
+﻿@using Uploadify.Client.Application.Files.Models
+
+@inject IStringLocalizer Localizer
+
+<MudBreadcrumbs Items="@FolderLinks" Separator=">" MaxItems="2">
+    <ItemTemplate Context="breadcrumb">
+        @{
+            var link = breadcrumb as DashboardBreadcrumbItem;
+        }
+        <MudLink Disabled="@breadcrumb.Disabled" Underline="@Underline.None" OnClick="@(() => HandleClick(link?.FolderID))">
+            @breadcrumb.Text
+        </MudLink>
+    </ItemTemplate>
+</MudBreadcrumbs>
+
+@code {
+    [Parameter, EditorRequired] public required FolderSummary Summary { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<int?> OnClick { get; set; }
+
+    protected List<BreadcrumbItem>? FolderLinks => Summary.Links
+        .Select(link => new DashboardBreadcrumbItem(
+            text: link.ParentId.HasValue ? link.Name : Localizer[Translations.Pages.Dashboard.Title],
+            href: string.Empty,
+            folderID: link.FolderId,
+            disabled: Summary.FolderId == link.FolderId) as BreadcrumbItem)
+        .ToList();
+
+    protected Task HandleClick(int? folderID)
+    {
+        return OnClick.InvokeAsync(folderID);
+    }
+}

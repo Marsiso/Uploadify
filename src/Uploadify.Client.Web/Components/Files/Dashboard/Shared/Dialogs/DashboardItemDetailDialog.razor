@@ -1,0 +1,79 @@
+﻿@using Uploadify.Client.Application.Files.Models
+@using Uploadify.Client.Web.Components.Shared.Dialogs
+
+@inject IStringLocalizer Localizer
+
+<Dialog IsVisible="@IsVisible" Title="@Name" OnClose="@(() => IsVisible = false)">
+    <Content>
+        <MudForm ReadOnly>
+            <MudTextField DisableUnderLine Label="@NameLabel" Value="@Name"/>
+            <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.DateCreatedLabel]" Value="@DateCreated"/>
+            <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.UserCreatedByLabel]" Value="@CreatedBy"/>
+            <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.DateUpdatedLabel]" Value="@DateUpdated"/>
+            <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.UserUpdatedByLabel]" Value="@UpdatedBy"/>
+
+            @if (!Item.IsFolder)
+            {
+                <MudTextField DisableUnderLine
+                              Label="@Localizer[Translations.Components.Files.Detail.SharedLabel]"
+                              Value="@(Item.File.IsPublic.Value ? Localizer[Translations.Components.Files.Detail.PublicAccessibilityText] : Localizer[Translations.Components.Files.Detail.PrivateAccessibilityText])"/>
+            }
+
+            <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.ResourceTypeLabel]" Value="@TypeLabel"/>
+
+            @if (ParentFolder != null)
+            {
+                <MudTextField Adornment="@Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Rounded.Folder"
+                              DisableUnderLine
+                              Label="@Localizer[Translations.Components.Files.Detail.LocationLabel]"
+                              Value="@Location"/>
+            }
+
+            @if (!Item.IsFolder)
+            {
+                <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.ExtensionLabel]" Value="@Item.File.Extension"/>
+                <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.MimeLabel]" Value="@Item.File.MimeType"/>
+                <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.SizeLabel]" Value="@($"{Item.File.Size.ToString()} B")"/>
+                <MudTextField DisableUnderLine Label="@Localizer[Translations.Components.Files.Detail.DriveSizeLabel]" Value="@($"{Item.File.Size.ToString()} B")"/>
+            }
+        </MudForm>
+    </Content>
+</Dialog>
+
+@code {
+    [Parameter] [EditorRequired] public required bool IsVisible { get; set; }
+    [Parameter] [EditorRequired] public required DashboardItem Item { get; set; }
+    [Parameter] [EditorRequired] public required FolderOverview? ParentFolder { get; set; }
+
+
+    public string Name => Item.IsFolder
+        ? Item.Folder.Name
+        : Item.File.Name;
+
+    public string NameLabel => Item.IsFolder
+        ? Localizer[Translations.Components.Files.Detail.FolderNameLabel]
+        : Localizer[Translations.Components.Files.Detail.FileNameLabel];
+
+    public string DateCreated => (Item.IsFolder
+        ? Item.Folder.DateCreated?.ToShortDateString()
+        : Item.File.DateCreated?.ToShortDateString()) ?? string.Empty;
+
+    public string DateUpdated => (Item.IsFolder
+        ? Item.Folder.DateUpdated?.ToShortDateString()
+        : Item.File.DateUpdated?.ToShortDateString()) ?? string.Empty;
+
+    public string CreatedBy => (Item.IsFolder
+        ? Item.Folder.CreatedBy
+        : Item.File.CreatedBy) ?? Localizer[Translations.Components.Files.Detail.ContactText];
+
+    public string UpdatedBy => (Item.IsFolder
+        ? Item.Folder.UpdatedBy
+        : Item.File.UpdatedBy) ?? Localizer[Translations.Components.Files.Detail.ContactText];
+
+    public string TypeLabel => Item.IsFolder
+        ? Localizer[Translations.Components.Files.Detail.FolderTypeText]
+        : Localizer[Translations.Components.Files.Detail.FileTypeText];
+
+    public string Location => ParentFolder?.Name ?? string.Empty;
+}

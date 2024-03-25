@@ -1,16 +1,13 @@
 ﻿@using Uploadify.Client.Application.Files.Services
+
 @inject FileService FileService
 @inject ISnackbar Snackbar
 @inject IStringLocalizer Localizer
 
-<div class="mud-width-full mb-4">
-    @Children
-</div>
-
 <MudFileUpload AppendMultipleFiles
-               Disabled="@IsDisabled"
+               Disabled="@(IsDisabled || IsLoading)"
                Hidden="false"
-               MaximumFileCount="50"
+               MaximumFileCount="@MaximumFileCount"
                InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
                InputStyle="opacity:0"
                @ondragend="@ClearDropzoneClass"
@@ -19,31 +16,36 @@
                OnFilesChanged="@(args => HandleFilesChanged(args))"
                T="IReadOnlyList<IBrowserFile>">
     <ButtonTemplate>
-        <MudPaper Class="@DropzoneClass"
-                  Outlined>
-            <MudStack AlignItems="@AlignItems.Center"
-                      Justify="@Justify.Center"
-                      Row
-                      Style="height:50px">
-                <MudIconButton Disabled
-                               Icon="@Icons.Material.Rounded.FileUpload"/>
+        <MudPaper Class="@DropzoneClass" Outlined>
+            <MudStack AlignItems="@AlignItems.Center" Justify="@Justify.Center" Row Style="height:50px">
+                <MudIconButton Disabled Icon="@Icons.Material.Rounded.FileUpload"/>
             </MudStack>
         </MudPaper>
-        <MudToolBar Class="relative d-flex justify-end gap-4 z-30">
-            <MudIconButton for="@context.Id"
-                           HtmlTag="label"
-                           Icon="@Icons.Material.Rounded.FileUpload"/>
-        </MudToolBar>
+        <div class="relative d-flex justify-end z-30 mt-2">
+            <MudButton for="@context.Id"
+                       Style="border-radius:3rem;"
+                       Class="px-5"
+                       Color="@Color.Surface"
+                       Size="@Size.Small"
+                       Variant="@Variant.Filled"
+                       HtmlTag="label"
+                       StartIcon="@Icons.Material.Rounded.FileUpload"
+                       Disabled="@(IsDisabled || IsLoading)">
+                Nahrát
+            </MudButton>
+        </div>
     </ButtonTemplate>
 </MudFileUpload>
 
 @code {
+    public const int MaximumFileCount = 50;
+    public const long MaximumFileSize = 104857600L;
     public const string DefaultDropzoneClass = "relative rounded-lg border-2 border-dashed pa-4 mud-width-full mud-height-full z-10";
 
-    [Parameter] [EditorRequired] public required bool IsDisabled { get; set; }
-    [Parameter] [EditorRequired] public required RenderFragment Children { get; set; }
-    [Parameter] [EditorRequired] public required FolderOverview? Destination { get; set; }
-    [Parameter] [EditorRequired] public required EventCallback OnUploaded { get; set; }
+    [Parameter, EditorRequired] public required FolderOverview Destination { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<int?> OnSuccess { get; set; }
+    [Parameter] public bool IsDisabled { get; set; }
+    public bool IsLoading { get; set; }
 
     public string? DropzoneClass { get; set; } = DefaultDropzoneClass;
 
@@ -59,22 +61,22 @@
 
     public async Task HandleFilesChanged(InputFileChangeEventArgs args)
     {
-        if (args.FileCount == 0 || Destination == null)
+        switch (args.FileCount)
         {
-            ClearDropzoneClass();
-            return;
+            case 0:
+                ClearDropzoneClass();
+                return;
+
+            case > MaximumFileCount:
+                Snackbar.Add(Localizer[Translations.Components.Files.Inputs.DragAndDropWrapper.TooManyFiles], Severity.Info);
+                break;
         }
 
-        IsDisabled = true;
-
-        if (args.FileCount > 50)
-        {
-            Snackbar.Add(Localizer[Translations.Components.Files.Inputs.DragAndDropWrapper.TooManyFiles], Severity.Info);
-        }
+        IsLoading = true;
 
         var files = args.GetMultipleFiles();
 
-        foreach (var file in files.Where(file => file.Size <= 104857600L))
+        foreach (var file in files.Where(file => file.Size <= MaximumFileSize))
         {
             var resourceResponse = await FileService.Upload(Destination, file);
             if (resourceResponse.IsSuccess)
@@ -87,15 +89,14 @@
             }
         }
 
-        foreach (var file in files.Where(file => file.Size > 104857600L))
+        foreach (var file in files.Where(file => file.Size > MaximumFileSize))
         {
             Snackbar.Add(string.Format(Localizer[Translations.Components.Files.Inputs.DragAndDropWrapper.FileTooLarge], file.Name), Severity.Info);
         }
 
         ClearDropzoneClass();
-        IsDisabled = false;
 
-        await OnUploaded.InvokeAsync();
+        IsLoading = false;
+        await OnSuccess.InvokeAsync(Destination.FolderId);
     }
-
 }

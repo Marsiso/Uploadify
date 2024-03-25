@@ -159,6 +159,24 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Soubor.
+        /// </summary>
+        internal static string common_file {
+            get {
+                return ResourceManager.GetString("common.file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Složka.
+        /// </summary>
+        internal static string common_folder {
+            get {
+                return ResourceManager.GetString("common.folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Překlad nebyl nalezen..
         /// </summary>
         internal static string common_translation_not_found {

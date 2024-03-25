@@ -1,0 +1,59 @@
+﻿@using Uploadify.Client.Domain.Resources.Models
+@using Uploadify.Client.Web.Components.Shared.Dialogs
+@using Uploadify.Client.Web.Components.Shared
+@using Uploadify.Client.Application.Files.Services
+@using Uploadify.Client.Application.Files.Models
+
+@inject FileService FileService
+@inject FolderService FolderService
+@inject IStringLocalizer Localizer
+
+<Dialog IsVisible="@IsVisible" Title="@Localizer[Translations.Components.Files.Dialogs.Delete.Title]" OnClose="@(() => IsVisible = false)">
+    <Content>
+        <MudForm Errors="@(ResourceResponse?.ErrorMessages ?? Array.Empty<string>())">
+            <MudStack Spacing="5">
+                <MudText>@Localizer[Translations.Components.Files.Dialogs.Delete.Description]</MudText>
+                <PrimaryButton IsDisabled="@(IsLoading || IsDisabled)"
+                               IsLoading="@IsLoading"
+                               FullWidth
+                               Color="@Color.Success"
+                               OnClick="@HandleSubmit"
+                               Size="@Size.Large"
+                               Text="@Localizer[Translations.Components.Files.Dialogs.Delete.SubmitButton]"/>
+            </MudStack>
+        </MudForm>
+    </Content>
+</Dialog>
+
+@code {
+    [Parameter] [EditorRequired] public required DashboardItem Item { get; set; }
+    [Parameter] [EditorRequired] public required bool IsVisible { get; set; }
+    [Parameter] [EditorRequired] public required EventCallback OnSuccess { get; set; }
+    [Parameter] [EditorRequired] public required CancellationToken CancellationToken { get; set; }
+
+    public bool IsLoading { get; set; }
+    public bool IsDisabled { get; set; }
+    public ResourceResponse? ResourceResponse { get; set; }
+
+    private async Task HandleSubmit()
+    {
+        IsLoading = true;
+
+        if (Item.IsFolder)
+        {
+            ResourceResponse = await FolderService.Delete(Item.Folder, CancellationToken);
+        }
+        else
+        {
+            ResourceResponse = await FileService.Delete(Item.File, CancellationToken);
+        }
+
+        if (ResourceResponse.IsSuccess)
+        {
+            await OnSuccess.InvokeAsync();
+            IsVisible = false;
+        }
+
+        IsLoading = false;
+    }
+}

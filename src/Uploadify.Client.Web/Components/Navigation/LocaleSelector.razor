@@ -4,7 +4,7 @@
 
 <MudMenu AnchorOrigin="@Origin.BottomLeft" TransformOrigin="@Origin.BottomLeft" Variant="@Variant.Text">
     <ActivatorContent>
-        <MudIconButton Icon="@Icons.Material.Rounded.Language" Size="@Size.Medium"/>
+        <MudIconButton Icon="@Icons.Material.Rounded.Language" Size="@Size.Medium" Color="@Color.Primary"/>
     </ActivatorContent>
     <ChildContent>
         <MudMenuItem Disabled="@CultureInfo.CurrentCulture.Name.Equals(Locales.Czech)" OnClick="@(() => OnCultureChange(Locales.Czech))">

@@ -23,7 +23,8 @@ public class GetAllPublicFilesQuery : IBaseRequest<GetAllPublicFilesQueryRespons
 public class GetAllPublicFilesQueryHandler : IQueryHandler<GetAllPublicFilesQuery, GetAllPublicFilesQueryResponse>
 {
     public static readonly Func<DataContext, int, int, string, IAsyncEnumerable<PublicFileOverview>> Query = EF.CompileAsyncQuery((DataContext context, int skip, int take, string searchTerm) =>
-        context.Files.Where(file => file.IsPublic)
+        context.Files
+            .Where(file => file.IsPublic)
             .Where(file => IsNullOrWhiteSpace(searchTerm) || file.SearchVector.Matches(EF.Functions.PlainToTsQuery("english",searchTerm)))
             .OrderBy(file => file.SearchVector.Rank(EF.Functions.PlainToTsQuery("english", searchTerm)))
             .Skip(skip)
@@ -39,6 +40,11 @@ public class GetAllPublicFilesQueryHandler : IQueryHandler<GetAllPublicFilesQuer
                 Size = file.Size
             }));
 
+    public static readonly Func<DataContext, string, Task<int>> CountQuery = EF.CompileAsyncQuery((DataContext context, string searchTerm) =>
+        context.Files
+            .Where(file => file.IsPublic)
+            .Count(file => IsNullOrWhiteSpace(searchTerm) || file.SearchVector.Matches(EF.Functions.PlainToTsQuery("english",searchTerm))));
+
     private readonly DataContext _context;
 
     public GetAllPublicFilesQueryHandler(DataContext context)
@@ -50,24 +56,31 @@ public class GetAllPublicFilesQueryHandler : IQueryHandler<GetAllPublicFilesQuer
     {
         request.QueryString.SearchTerm ??= Empty;
         request.QueryString.SearchTerm = request.QueryString.SearchTerm.Trim().Normalize();
-        // request.QueryString.SearchTerm = $"{request.QueryString.SearchTerm}:*";
 
         var files = new List<PublicFileOverview>();
-        await foreach (var file in Query(_context, request.QueryString.PageNumber - 1, request.QueryString.PageSize, request.QueryString.SearchTerm))
+        await foreach (var file in Query(_context, (request.QueryString.PageNumber - 1) * request.QueryString.PageSize, request.QueryString.PageSize, request.QueryString.SearchTerm))
         {
             files.Add(file);
         }
 
-        return new(files);
+        return new(new(
+            files,
+            await CountQuery(_context, request.QueryString.SearchTerm),
+            request.QueryString.PageNumber,
+            request.QueryString.PageSize));
     }
 }
 
 public class GetAllPublicFilesQueryResponse : BaseResponse
 {
-    public GetAllPublicFilesQueryResponse(List<PublicFileOverview> files) : base(Ok)
+    public GetAllPublicFilesQueryResponse() : base(InternalServerError)
     {
-        Files = files;
     }
 
-    public List<PublicFileOverview>? Files { get; set; }
+    public GetAllPublicFilesQueryResponse(PublicFilesSummary summary) : base(Ok)
+    {
+        Summary = summary;
+    }
+
+    public PublicFilesSummary? Summary { get; set; }
 }

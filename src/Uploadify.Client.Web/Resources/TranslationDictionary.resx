@@ -202,7 +202,7 @@
         <value>You do not have permission to perform the action or view the item.</value>
     </data>
     <data name="request_statuses.not_found" xml:space="preserve">
-        <value>Item was not found.</value>
+        <value>File was not found.</value>
     </data>
     <data name="request_statuses.forbidden" xml:space="preserve">
         <value>Access to the item has been denied.</value>
@@ -214,7 +214,7 @@
         <value>Required role name.</value>
     </data>
     <data name="validations.permission.required" xml:space="preserve">
-        <value>Item owner permission required.</value>
+        <value>File owner permission required.</value>
     </data>
     <data name="components.permission_dashboard.title" xml:space="preserve">
         <value>Permission overview</value>
@@ -440,5 +440,11 @@
     </data>
     <data name="pages.dashboard.visibility_changed.failure" xml:space="preserve">
         <value>File {0} has been made private</value>
+    </data>
+    <data name="common.file" xml:space="preserve">
+        <value>File</value>
+    </data>
+    <data name="common.folder" xml:space="preserve">
+        <value>Folder</value>
     </data>
 </root>

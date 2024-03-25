@@ -45,6 +45,7 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Components\Shared\Title.razor" />
+      <_ContentIncludedByDefault Remove="Components\Files\Inputs\DragAndDropWrapper.razor" />
     </ItemGroup>
 
 </Project>

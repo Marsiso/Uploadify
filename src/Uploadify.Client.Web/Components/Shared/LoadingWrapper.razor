@@ -6,7 +6,9 @@
 
 @if (IsLoading && Skeleton != null)
 {
-    @Skeleton
+    <div class="@(ShowTitle ? "mud-width-full mud-height-full mt-5" : "mud-width-full mud-height-full")">
+         @Skeleton
+    </div>
 }
 
 @if (IsLoading && Skeleton == null)

@@ -7,10 +7,9 @@
     <Authorized>
         <MudMenu AnchorOrigin="@Origin.BottomLeft"
                  TransformOrigin="@Origin.BottomLeft"
-                 Variant="@Variant.Text"
-                 ListClass="py-0">
+                 Variant="@Variant.Text">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Rounded.AccountCircle" Size="@Size.Medium"/>
+                <MudIconButton Icon="@Icons.Material.Rounded.AccountCircle" Size="@Size.Medium" Color="@Color.Primary"/>
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem Disabled
@@ -28,13 +27,16 @@
                     </MudText>
                 </MudMenuItem>
                 <MudMenuItem Href="@PageRoutes.Profile"
-                             Icon="@Icons.Material.Rounded.AccountBox">
+                             Icon="@Icons.Material.Rounded.AccountBox"
+                             IconColor="@Color.Primary">
                     <MudText>@Localizer[Translations.Components.AuthenticatedLayout.ProfileLink]</MudText>
                 </MudMenuItem>
                 <form action="@ApiRoutes.Logout" method="post">
                     <AntiForgeryTokenInput/>
                     <button class="mud-width-full" type="submit">
-                        <MudMenuItem AutoClose="false" Icon="@Icons.Material.Rounded.Logout">
+                        <MudMenuItem AutoClose="false"
+                                     Icon="@Icons.Material.Rounded.Logout"
+                                     IconColor="@Color.Primary">
                             <MudText>@Localizer[Translations.Components.AuthenticatedLayout.LogOutButton]</MudText>
                         </MudMenuItem>
                     </button>

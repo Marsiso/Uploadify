@@ -1,0 +1,35 @@
+﻿@using Uploadify.Client.Application.Files.Models
+
+@inject IStringLocalizer Localizer
+
+<MudCard Elevation="1" Outlined Class="pa-5">
+    <div class="d-flex flex-grow-1 align-center justify-space-between">
+        <div class="d-flex align-center gap-2">
+            <MudIcon Title="@(Item.IsFolder ? Localizer[Translations.Common.Folder] : Localizer[Translations.Common.File])"
+                     Icon="@(Item.IsFolder ? Icons.Material.Rounded.Folder : Icons.Material.Rounded.Image)"
+                     Color="@Color.Primary"/>
+            <MudText>@Item.Name</MudText>
+        </div>
+        <DashboardCardOptions Item="@Item"
+                              OnOpen="@OnOpenOptions"
+                              OnOpenDetailDialog="@OnOpenDetailDialog"
+                              OnOpenFolder="@OnOpenFolder"
+                              OnOpenRenameItemDialog="@OnOpenRenameItemDialog"
+                              OnPublishFile="@OnPublishFile"
+                              OnOpenMoveItemDialog="@OnOpenMoveItemDialog"
+                              OnDownloadFile="@OnDownloadFile"
+                              OnOpenDeleteItemDialog="@OnOpenDeleteItemDialog"/>
+    </div>
+</MudCard>
+
+@code {
+    [Parameter, EditorRequired] public required DashboardItem Item { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnOpenOptions { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnOpenDetailDialog { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnOpenMoveItemDialog { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnOpenFolder { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnOpenDeleteItemDialog { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnOpenRenameItemDialog { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnDownloadFile { get; set; }
+    [Parameter, EditorRequired] public required EventCallback<DashboardItem> OnPublishFile { get; set; }
+}

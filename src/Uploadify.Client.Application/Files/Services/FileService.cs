@@ -38,9 +38,9 @@ public class FileService : BaseResourceService<FileService>
         };
     }
 
-    public async Task<ResourceResponse<FileOverview>> Move(int? fileId, int? destinationFolderId, CancellationToken cancellationToken = default)
+    public async Task<ResourceResponse<FileOverview>> Move(int? fileID, int? destinationFolderId, CancellationToken cancellationToken = default)
     {
-        var response = await ApiCallWrapper.Call(client => client.ApiFileMoveAsync(new() { FileId = fileId, DestinationFolderId = destinationFolderId }, cancellationToken));
+        var response = await ApiCallWrapper.Call(client => client.ApiFileMoveAsync(new() { FileId = fileID, DestinationFolderId = destinationFolderId }, cancellationToken));
         return response?.Status switch
         {
             Status.Ok => new(response.File),
@@ -62,11 +62,11 @@ public class FileService : BaseResourceService<FileService>
         };
     }
 
-    public async Task<bool> Download(int identifier, string filename, CancellationToken cancellationToken = default)
+    public async Task<bool> Download(int fileID, string filename, CancellationToken cancellationToken = default)
     {
         try
         {
-            var response = await ApiCallWrapper.Call(client => client.ApiFileGetAsync(identifier, cancellationToken));
+            var response = await ApiCallWrapper.Call(client => client.ApiFileGetAsync(fileID, cancellationToken));
             if (response == null)
             {
                 return false;
@@ -83,19 +83,19 @@ public class FileService : BaseResourceService<FileService>
         }
     }
 
-    public async Task<ResourceResponse<ICollection<PublicFileOverview>>> GetPublicFiles(int pageNumber, int pageSize, string? searchTerm, CancellationToken cancellationToken = default)
+    public async Task<ResourceResponse<PublicFilesSummary>> GetPublicFiles(int pageNumber, int pageSize, string? searchTerm, CancellationToken cancellationToken = default)
     {
         var response = await ApiCallWrapper.Call(client => client.ApiFilesPublicAsync(pageNumber:pageNumber, pageSize: pageSize, searchTerm: searchTerm ,cancellationToken: cancellationToken));
         return response?.Status switch
         {
-            Status.Ok => new(response.Files),
+            Status.Ok => new(response.Summary),
             _ => new(HandleServerErrorMessages(response?.Failure))
         };
     }
 
-    public async Task<ResourceResponse> ChangeVisibility(int identifier, bool isPublic, CancellationToken cancellationToken = default)
+    public async Task<ResourceResponse> ChangeVisibility(int fileID, bool isPublic, CancellationToken cancellationToken = default)
     {
-        var response = await ApiCallWrapper.Call(client => client.ApiFileChangeVisibilityAsync(new ChangeFileVisibilityCommand { FileId = identifier, Visibility = isPublic },cancellationToken: cancellationToken));
+        var response = await ApiCallWrapper.Call(client => client.ApiFileChangeVisibilityAsync(new ChangeFileVisibilityCommand { FileId = fileID, Visibility = isPublic },cancellationToken: cancellationToken));
         return response?.Status switch
         {
             Status.Ok => new(),
