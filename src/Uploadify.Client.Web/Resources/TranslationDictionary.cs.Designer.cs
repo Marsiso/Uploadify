@@ -582,7 +582,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vytvořil.
+        ///   Looks up a localized string similar to Přidat.
         /// </summary>
         internal static string components_files_detail_user_created_by_label {
             get {
@@ -600,6 +600,24 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Soubory.
+        /// </summary>
+        internal static string components_files_dialogs_create_files_tab {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.files_tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Složky.
+        /// </summary>
+        internal static string components_files_dialogs_create_folders_tab {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.folders_tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Název.
         /// </summary>
         internal static string components_files_dialogs_create_name_label {
@@ -609,7 +627,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Přidat.
+        ///   Looks up a localized string similar to Vytvořit.
         /// </summary>
         internal static string components_files_dialogs_create_submit_button {
             get {
@@ -618,7 +636,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Přidat složku.
+        ///   Looks up a localized string similar to Přidat.
         /// </summary>
         internal static string components_files_dialogs_create_title {
             get {

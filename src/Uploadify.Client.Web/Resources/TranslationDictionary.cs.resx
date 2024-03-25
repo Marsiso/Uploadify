@@ -193,13 +193,13 @@
         <value>Přehled oprávnění</value>
     </data>
     <data name="components.files.dialogs.create.title" xml:space="preserve">
-        <value>Přidat složku</value>
+        <value>Přidat</value>
     </data>
     <data name="components.files.dialogs.create.name_label" xml:space="preserve">
         <value>Název</value>
     </data>
     <data name="components.files.dialogs.create.submit_button" xml:space="preserve">
-        <value>Přidat</value>
+        <value>Vytvořit</value>
     </data>
     <data name="components.files.dialogs.delete.title" xml:space="preserve">
         <value>Přesunout složku do koše</value>
@@ -262,7 +262,7 @@
         <value>Vytvořeno uživatelem</value>
     </data>
     <data name="components.files.detail.user_created_by_label" xml:space="preserve">
-        <value>Vytvořil</value>
+        <value>Přidat</value>
     </data>
     <data name="components.files.detail.date_created_label" xml:space="preserve">
         <value>Vytvořeno</value>
@@ -443,5 +443,11 @@
     </data>
     <data name="common.folder" xml:space="preserve">
         <value>Složka</value>
+    </data>
+    <data name="components.files.dialogs.create.folders_tab" xml:space="preserve">
+        <value>Složky</value>
+    </data>
+    <data name="components.files.dialogs.create.files_tab" xml:space="preserve">
+        <value>Soubory</value>
     </data>
 </root>

@@ -600,6 +600,24 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        internal static string components_files_dialogs_create_files_tab {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.files_tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folders.
+        /// </summary>
+        internal static string components_files_dialogs_create_folders_tab {
+            get {
+                return ResourceManager.GetString("components.files.dialogs.create.folders_tab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string components_files_dialogs_create_name_label {
@@ -618,7 +636,7 @@ namespace Uploadify.Client.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add folder.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         internal static string components_files_dialogs_create_title {
             get {

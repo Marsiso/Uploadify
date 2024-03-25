@@ -220,7 +220,7 @@
         <value>Permission overview</value>
     </data>
     <data name="components.files.dialogs.create.title" xml:space="preserve">
-        <value>Add folder</value>
+        <value>Add</value>
     </data>
     <data name="components.files.dialogs.create.name_label" xml:space="preserve">
         <value>Name</value>
@@ -446,5 +446,11 @@
     </data>
     <data name="common.folder" xml:space="preserve">
         <value>Folder</value>
+    </data>
+    <data name="components.files.dialogs.create.folders_tab" xml:space="preserve">
+        <value>Folders</value>
+    </data>
+    <data name="components.files.dialogs.create.files_tab" xml:space="preserve">
+        <value>Files</value>
     </data>
 </root>

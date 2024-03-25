@@ -25,7 +25,7 @@
             <MudButton for="@context.Id"
                        Style="border-radius:3rem;"
                        Class="px-5"
-                       Color="@Color.Surface"
+                       Color="@Color"
                        Size="@Size.Small"
                        Variant="@Variant.Filled"
                        HtmlTag="label"
@@ -44,6 +44,7 @@
 
     [Parameter, EditorRequired] public required FolderOverview Destination { get; set; }
     [Parameter, EditorRequired] public required EventCallback<int?> OnSuccess { get; set; }
+    [Parameter] public Color Color { get; set; } = Color.Surface;
     [Parameter] public bool IsDisabled { get; set; }
     public bool IsLoading { get; set; }
 

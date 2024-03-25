@@ -25,7 +25,7 @@
                     <PrimaryButton Icon="@Icons.Material.Rounded.Add"
                                    Text="Přidat"
                                    Class="px-5"
-                                   OnClick="@(() => { })"
+                                   OnClick="@HandleCreateItem"
                                    Size="@Size.Small"
                                    Color="@Color.Success"/>
                 </div>
@@ -89,6 +89,11 @@
                         break;
                 }
             }
+
+            if (Dialog == VisibleDialog.CreateItem)
+            {
+                <DashboardItemCreateDialog IsVisible ParentFolder="@FolderSummaryResponse.Resource" OnSuccess="@(() => FetchFolderSummary(FolderSummaryResponse.Resource.FolderId))" CancellationToken="@CancellationToken"/>
+            }
         }
     </Children>
 </LoadingWrapper>
@@ -123,6 +128,7 @@
     {
         SelectedItem = item;
         Dialog = VisibleDialog.Detail;
+
         return Task.CompletedTask;
     }
 
@@ -130,6 +136,7 @@
     {
         SelectedItem = item;
         Dialog = VisibleDialog.RenameItem;
+
         return Task.CompletedTask;
     }
 
@@ -190,6 +197,13 @@
     {
         SelectedItem = item;
         Dialog = VisibleDialog.DeleteItem;
+
+        return Task.CompletedTask;
+    }
+
+    protected Task HandleCreateItem()
+    {
+        Dialog = VisibleDialog.CreateItem;
         return Task.CompletedTask;
     }
 
@@ -197,6 +211,7 @@
     {
         SelectedItem = item;
         Dialog = VisibleDialog.MoveItem;
+
         return Task.CompletedTask;
     }
 
@@ -208,6 +223,7 @@
         Detail,
         RenameItem,
         DeleteItem,
-        MoveItem
+        MoveItem,
+        CreateItem
     }
 }

@@ -80,6 +80,8 @@ public static class Translations
                     public const string Title = $"{BaseCreate}.title";
                     public const string NameLabel = $"{BaseCreate}.name_label";
                     public const string SubmitButton = $"{BaseCreate}.submit_button";
+                    public const string FoldersTab = $"{BaseCreate}.folders_tab";
+                    public const string FilesTab = $"{BaseCreate}.files_tab";
                 }
 
                 public static class Delete
